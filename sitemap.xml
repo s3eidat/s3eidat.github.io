@@ -1,52 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://s3eidat.github.io/</loc></url>
+  <url><loc>https://s3eidat.github.io/ar/</loc></url>
   <url><loc>https://s3eidat.github.io/coffee/</loc></url>
   <url><loc>https://s3eidat.github.io/privacy/</loc></url>
   <url><loc>https://s3eidat.github.io/age-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/arabic-keyboard/</loc></url>
   <url><loc>https://s3eidat.github.io/arabic-tools/</loc></url>
+  <url><loc>https://s3eidat.github.io/ascii-art/</loc></url>
+  <url><loc>https://s3eidat.github.io/attendance-sheet/</loc></url>
   <url><loc>https://s3eidat.github.io/audio-trimmer/</loc></url>
+  <url><loc>https://s3eidat.github.io/bg-remover/</loc></url>
   <url><loc>https://s3eidat.github.io/barcode-gen/</loc></url>
   <url><loc>https://s3eidat.github.io/base-convert/</loc></url>
   <url><loc>https://s3eidat.github.io/base64-kit/</loc></url>
+  <url><loc>https://s3eidat.github.io/bingo-maker/</loc></url>
   <url><loc>https://s3eidat.github.io/blob-maker/</loc></url>
   <url><loc>https://s3eidat.github.io/bmi-calc/</loc></url>
   <url><loc>https://s3eidat.github.io/box-shadow/</loc></url>
+  <url><loc>https://s3eidat.github.io/business-card/</loc></url>
+  <url><loc>https://s3eidat.github.io/calendar-maker/</loc></url>
   <url><loc>https://s3eidat.github.io/case-convert/</loc></url>
+  <url><loc>https://s3eidat.github.io/cash-counter/</loc></url>
   <url><loc>https://s3eidat.github.io/char-map/</loc></url>
   <url><loc>https://s3eidat.github.io/chmod-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/citation-gen/</loc></url>
   <url><loc>https://s3eidat.github.io/collage-maker/</loc></url>
   <url><loc>https://s3eidat.github.io/color-convert/</loc></url>
+  <url><loc>https://s3eidat.github.io/colorblind-sim/</loc></url>
   <url><loc>https://s3eidat.github.io/compound-interest/</loc></url>
   <url><loc>https://s3eidat.github.io/contrast-check/</loc></url>
   <url><loc>https://s3eidat.github.io/countdown-maker/</loc></url>
   <url><loc>https://s3eidat.github.io/cv-letter/</loc></url>
   <url><loc>https://s3eidat.github.io/cron-explain/</loc></url>
   <url><loc>https://s3eidat.github.io/css-gradient/</loc></url>
+  <url><loc>https://s3eidat.github.io/css-units/</loc></url>
   <url><loc>https://s3eidat.github.io/csv-json/</loc></url>
+  <url><loc>https://s3eidat.github.io/curl-convert/</loc></url>
   <url><loc>https://s3eidat.github.io/date-diff/</loc></url>
   <url><loc>https://s3eidat.github.io/device-check/</loc></url>
   <url><loc>https://s3eidat.github.io/dice-roller/</loc></url>
   <url><loc>https://s3eidat.github.io/diff-view/</loc></url>
   <url><loc>https://s3eidat.github.io/discount-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/due-date/</loc></url>
+  <url><loc>https://s3eidat.github.io/email-signature/</loc></url>
   <url><loc>https://s3eidat.github.io/emoji-search/</loc></url>
+  <url><loc>https://s3eidat.github.io/equation-solver/</loc></url>
   <url><loc>https://s3eidat.github.io/exif-cleaner/</loc></url>
   <url><loc>https://s3eidat.github.io/fancy-text/</loc></url>
   <url><loc>https://s3eidat.github.io/favicon-forge/</loc></url>
   <url><loc>https://s3eidat.github.io/file-encrypt/</loc></url>
   <url><loc>https://s3eidat.github.io/flashcards/</loc></url>
   <url><loc>https://s3eidat.github.io/focus-timer/</loc></url>
+  <url><loc>https://s3eidat.github.io/fraction-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/fuel-cost/</loc></url>
+  <url><loc>https://s3eidat.github.io/gif-maker/</loc></url>
+  <url><loc>https://s3eidat.github.io/gitignore-gen/</loc></url>
   <url><loc>https://s3eidat.github.io/glass-gen/</loc></url>
   <url><loc>https://s3eidat.github.io/gpa-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/graph-plotter/</loc></url>
   <url><loc>https://s3eidat.github.io/guitar-tuner/</loc></url>
   <url><loc>https://s3eidat.github.io/habit-tracker/</loc></url>
   <url><loc>https://s3eidat.github.io/hash-lab/</loc></url>
+  <url><loc>https://s3eidat.github.io/heic-to-jpg/</loc></url>
+  <url><loc>https://s3eidat.github.io/hijri-converter/</loc></url>
+  <url><loc>https://s3eidat.github.io/hours-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/html-css-format/</loc></url>
   <url><loc>https://s3eidat.github.io/http-status/</loc></url>
   <url><loc>https://s3eidat.github.io/icon-maker/</loc></url>
+  <url><loc>https://s3eidat.github.io/image-compare/</loc></url>
   <url><loc>https://s3eidat.github.io/image-convert/</loc></url>
+  <url><loc>https://s3eidat.github.io/image-redact/</loc></url>
   <url><loc>https://s3eidat.github.io/image-resize/</loc></url>
   <url><loc>https://s3eidat.github.io/image-squeeze/</loc></url>
   <url><loc>https://s3eidat.github.io/image-to-base64/</loc></url>
+  <url><loc>https://s3eidat.github.io/image-to-text/</loc></url>
+  <url><loc>https://s3eidat.github.io/image-upscale/</loc></url>
   <url><loc>https://s3eidat.github.io/images-to-pdf/</loc></url>
   <url><loc>https://s3eidat.github.io/invoice-maker/</loc></url>
   <url><loc>https://s3eidat.github.io/json-studio/</loc></url>
@@ -54,32 +83,47 @@
   <url><loc>https://s3eidat.github.io/jwt-inspector/</loc></url>
   <url><loc>https://s3eidat.github.io/kanban-board/</loc></url>
   <url><loc>https://s3eidat.github.io/keyboard-tester/</loc></url>
+  <url><loc>https://s3eidat.github.io/label-maker/</loc></url>
+  <url><loc>https://s3eidat.github.io/layout-fixer/</loc></url>
   <url><loc>https://s3eidat.github.io/loan-calc/</loc></url>
   <url><loc>https://s3eidat.github.io/local-notes/</loc></url>
   <url><loc>https://s3eidat.github.io/lorem-gen/</loc></url>
   <url><loc>https://s3eidat.github.io/markdown-studio/</loc></url>
   <url><loc>https://s3eidat.github.io/markdown-table/</loc></url>
+  <url><loc>https://s3eidat.github.io/math-worksheet/</loc></url>
   <url><loc>https://s3eidat.github.io/meme-maker/</loc></url>
   <url><loc>https://s3eidat.github.io/meta-tags/</loc></url>
   <url><loc>https://s3eidat.github.io/metronome/</loc></url>
   <url><loc>https://s3eidat.github.io/morse-code/</loc></url>
+  <url><loc>https://s3eidat.github.io/mp3-converter/</loc></url>
   <url><loc>https://s3eidat.github.io/noise-machine/</loc></url>
   <url><loc>https://s3eidat.github.io/number-words/</loc></url>
   <url><loc>https://s3eidat.github.io/palette-from-image/</loc></url>
   <url><loc>https://s3eidat.github.io/palette-gen/</loc></url>
   <url><loc>https://s3eidat.github.io/pass-forge/</loc></url>
+  <url><loc>https://s3eidat.github.io/passport-photo/</loc></url>
   <url><loc>https://s3eidat.github.io/password-check/</loc></url>
+  <url><loc>https://s3eidat.github.io/pdf-compress/</loc></url>
+  <url><loc>https://s3eidat.github.io/pdf-fill/</loc></url>
   <url><loc>https://s3eidat.github.io/pdf-merge/</loc></url>
+  <url><loc>https://s3eidat.github.io/pdf-metadata/</loc></url>
   <url><loc>https://s3eidat.github.io/pdf-organizer/</loc></url>
+  <url><loc>https://s3eidat.github.io/pdf-page-numbers/</loc></url>
+  <url><loc>https://s3eidat.github.io/pdf-sign/</loc></url>
   <url><loc>https://s3eidat.github.io/pdf-split/</loc></url>
   <url><loc>https://s3eidat.github.io/pdf-to-images/</loc></url>
+  <url><loc>https://s3eidat.github.io/pdf-to-text/</loc></url>
+  <url><loc>https://s3eidat.github.io/pdf-watermark/</loc></url>
   <url><loc>https://s3eidat.github.io/percentage-calc/</loc></url>
   <url><loc>https://s3eidat.github.io/photo-filters/</loc></url>
   <url><loc>https://s3eidat.github.io/placeholder-image/</loc></url>
   <url><loc>https://s3eidat.github.io/prayer-times/</loc></url>
+  <url><loc>https://s3eidat.github.io/prime-tools/</loc></url>
+  <url><loc>https://s3eidat.github.io/profile-pic/</loc></url>
   <url><loc>https://s3eidat.github.io/qibla-finder/</loc></url>
   <url><loc>https://s3eidat.github.io/qr-scanner/</loc></url>
   <url><loc>https://s3eidat.github.io/qr-studio/</loc></url>
+  <url><loc>https://s3eidat.github.io/quote-card/</loc></url>
   <url><loc>https://s3eidat.github.io/read-aloud/</loc></url>
   <url><loc>https://s3eidat.github.io/readability/</loc></url>
   <url><loc>https://s3eidat.github.io/receipt-maker/</loc></url>
@@ -87,31 +131,48 @@
   <url><loc>https://s3eidat.github.io/resume-builder/</loc></url>
   <url><loc>https://s3eidat.github.io/roman-numerals/</loc></url>
   <url><loc>https://s3eidat.github.io/salary-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/sci-calc/</loc></url>
   <url><loc>https://s3eidat.github.io/scoreboard/</loc></url>
+  <url><loc>https://s3eidat.github.io/screen-eyedropper/</loc></url>
   <url><loc>https://s3eidat.github.io/screen-recorder/</loc></url>
   <url><loc>https://s3eidat.github.io/screenshot-frame/</loc></url>
+  <url><loc>https://s3eidat.github.io/secret-santa/</loc></url>
   <url><loc>https://s3eidat.github.io/shade-gen/</loc></url>
   <url><loc>https://s3eidat.github.io/signature-maker/</loc></url>
+  <url><loc>https://s3eidat.github.io/sleep-calc/</loc></url>
   <url><loc>https://s3eidat.github.io/slugify/</loc></url>
+  <url><loc>https://s3eidat.github.io/social-counter/</loc></url>
+  <url><loc>https://s3eidat.github.io/speed-reader/</loc></url>
   <url><loc>https://s3eidat.github.io/split-bill/</loc></url>
+  <url><loc>https://s3eidat.github.io/sql-format/</loc></url>
+  <url><loc>https://s3eidat.github.io/stats-calc/</loc></url>
   <url><loc>https://s3eidat.github.io/stego-image/</loc></url>
   <url><loc>https://s3eidat.github.io/stopwatch/</loc></url>
+  <url><loc>https://s3eidat.github.io/subnet-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/sudoku/</loc></url>
   <url><loc>https://s3eidat.github.io/svg-to-png/</loc></url>
+  <url><loc>https://s3eidat.github.io/tasbih-counter/</loc></url>
   <url><loc>https://s3eidat.github.io/team-maker/</loc></url>
   <url><loc>https://s3eidat.github.io/text-cleaner/</loc></url>
   <url><loc>https://s3eidat.github.io/text-encrypt/</loc></url>
+  <url><loc>https://s3eidat.github.io/text-escape/</loc></url>
   <url><loc>https://s3eidat.github.io/timestamp-convert/</loc></url>
   <url><loc>https://s3eidat.github.io/todo-list/</loc></url>
+  <url><loc>https://s3eidat.github.io/transcribe/</loc></url>
   <url><loc>https://s3eidat.github.io/typing-test/</loc></url>
   <url><loc>https://s3eidat.github.io/unit-convert/</loc></url>
   <url><loc>https://s3eidat.github.io/url-toolkit/</loc></url>
+  <url><loc>https://s3eidat.github.io/ua-parser/</loc></url>
   <url><loc>https://s3eidat.github.io/uuid-forge/</loc></url>
   <url><loc>https://s3eidat.github.io/video-frames/</loc></url>
   <url><loc>https://s3eidat.github.io/voice-recorder/</loc></url>
   <url><loc>https://s3eidat.github.io/watermark/</loc></url>
   <url><loc>https://s3eidat.github.io/wheel-picker/</loc></url>
+  <url><loc>https://s3eidat.github.io/whiteboard/</loc></url>
   <url><loc>https://s3eidat.github.io/wifi-card/</loc></url>
   <url><loc>https://s3eidat.github.io/word-count/</loc></url>
   <url><loc>https://s3eidat.github.io/world-clock/</loc></url>
+  <url><loc>https://s3eidat.github.io/xml-format/</loc></url>
+  <url><loc>https://s3eidat.github.io/yaml-json/</loc></url>
   <url><loc>https://s3eidat.github.io/zakat-calc/</loc></url>
 </urlset>

@@ -4,14 +4,20 @@
 .hub-hero p { margin: 0; max-width: 620px; color: var(--text-2); font-size: 16.5px; }
 .hub-hero p b { color: var(--text); }
 .hub-search { position: relative; width: min(560px, 100%); margin-top: 8px; }
-.hub-search svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-3); }
-.hub-search .input { height: 50px; padding-left: 42px; font-size: 16px; border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
+.hub-search svg { position: absolute; inset-inline-start: 14px; top: 50%; transform: translateY(-50%); color: var(--text-3); }
+.hub-search .input { height: 50px; padding-inline-start: 42px; font-size: 16px; border-radius: 14px; background: var(--surface); box-shadow: var(--shadow); }
 .hub-cats { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 820px; }
 .hub-cats button { padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--text-2); background: var(--surface); border: 1px solid var(--line); transition: all var(--dur); }
 .hub-cats button:hover { color: var(--text); border-color: var(--line-strong); }
 .hub-cats button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
-.hub-cats button span { color: var(--text-3); margin-left: 4px; font-weight: 500; }
+.hub-cats button span { color: var(--text-3); margin-inline-start: 5px; font-weight: 500; }
 
+.hub-recent { margin-top: 18px; }
+.hub-recent h2 { margin: 0 0 8px; font-size: 13px; font-weight: 650; color: var(--text-2); text-transform: uppercase; letter-spacing: .04em; }
+.hub-recent-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.hub-recent-row a { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; border-radius: 999px; font-weight: 600; font-size: 13px;
+  color: var(--text); background: var(--surface); border: 1px solid var(--line); }
+.hub-recent-row a:hover { text-decoration: none; border-color: var(--accent); }
 .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin-top: 18px; }
 .hub-card {
   display: grid; gap: 4px; align-content: start; padding: 16px; border-radius: 16px; color: var(--text);
@@ -45,7 +51,7 @@
 .cf-soon { max-width: 560px; margin: 22px auto 0; }
 .cf-alt { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
 .cf-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 820px; margin: 36px auto 0; }
-.cf-cols ul { margin: 0; padding-left: 18px; color: var(--text-2); display: grid; gap: 6px; }
+.cf-cols ul { margin: 0; padding-inline-start: 18px; color: var(--text-2); display: grid; gap: 6px; }
 .cf-cols p { margin: 0 0 10px; color: var(--text-2); }
 .cf-cols p b { color: var(--text); }
 @media (max-width: 760px) { .cf-cols { grid-template-columns: 1fr; } }
