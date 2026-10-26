@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>S3eidat Tools — 100+ free, private tools that run in your browser</title>
+<meta name="description" content="Free online tools for PDFs, images, text, code, QR codes, calculators and more. No sign-up, no uploads, no tracking. Everything runs in your browser.">
+<meta property="og:title" content="S3eidat Tools — free, private browser tools">
+<meta property="og:description" content="100+ free tools. No sign-up, no uploads, no tracking.">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/kit/kit.js"></script>
+</head>
+<body data-more="off">
+<main class="s3-main">
+  <section class="hub-hero">
+    <span class="chip accent"><svg class="i"><use href="#i-lock"/></svg> No sign-up · No uploads · No tracking</span>
+    <h1>Free tools that <span class="hl">respect you</span>.</h1>
+    <p><b id="count">100+</b> handy tools for PDFs, images, text, code and everyday life. Everything runs inside your browser, so your files never leave your device.</p>
+    <label class="hub-search">
+      <svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" class="input" type="search" placeholder="Search tools… (press /)" autocomplete="off" aria-label="Search tools">
+    </label>
+    <div class="hub-cats" id="cats" role="group" aria-label="Categories"></div>
+  </section>
+
+  <section id="grid" class="hub-grid" aria-live="polite"></section>
+  <div id="none" class="empty" hidden><b>No tool matches that.</b>Try another word, or tell me what you need on GitHub.</div>
+
+  <section class="hub-why">
+    <div class="card"><h2><svg class="i"><use href="#i-lock"/></svg> Nothing leaves your device</h2><p class="muted">There is no server behind these tools. Your PDFs, photos and text are processed by your own browser.</p></div>
+    <div class="card"><h2><svg class="i"><use href="#i-check"/></svg> Locked down by design</h2><p class="muted">Every page ships with a strict security policy that makes the browser block any attempt to send data out.</p></div>
+    <div class="card"><h2><svg class="i"><use href="#i-github"/></svg> Open source</h2><p class="muted">Every tool is its own public GitHub repo under the MIT license. Read the code, fork it, run it offline.</p></div>
+  </section>
+</main>
+<script src="/hub.js"></script>
+</body>
+</html>
