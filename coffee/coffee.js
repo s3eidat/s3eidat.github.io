@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var s = S3.config.support || {};
-  var tiers = (s.stripe || []).filter(function (t) { return t && /^https:\/\/buy\.stripe\.com\//.test(t.url); });
+  var tiers = (s.stripe || []).filter(function (t) { return t && /^https:\/\/(buy|donate)\.stripe\.com\//.test(t.url); });
   var box = S3.$("#tiers");
   tiers.forEach(function (t, i) {
     box.appendChild(S3.h("a", { "class": "cf-tier" + (t.popular ? " pop" : ""), href: t.url, target: "_blank", rel: "noopener" }, [
