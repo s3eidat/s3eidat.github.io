@@ -12,6 +12,17 @@
 .hub-cats button[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
 .hub-cats button span { color: var(--text-3); margin-inline-start: 5px; font-weight: 500; }
 
+.hub-flagship { margin-top: 22px; }
+.hub-flagship h2 { margin: 0 0 10px; font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+.hub-flagship h2 small { font-size: 13px; font-weight: 500; color: var(--text-3); margin-inline-start: 8px; }
+.hub-flag-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.hub-flag { display: grid; gap: 4px; padding: 18px; border-radius: 16px; color: var(--text);
+  background: linear-gradient(135deg, var(--accent-soft), transparent 70%), var(--surface); border: 1px solid var(--line);
+  transition: transform 180ms var(--ease), border-color var(--dur), box-shadow var(--dur); }
+.hub-flag:hover { text-decoration: none; transform: translateY(-2px); border-color: var(--accent); box-shadow: var(--shadow); }
+.hub-flag b { font-size: 17px; font-weight: 700; letter-spacing: -.01em; }
+.hub-flag span { color: var(--text-2); font-size: 13px; }
+.hub-flag em { font-style: normal; font-size: 11.5px; font-weight: 650; color: var(--accent); margin-top: 6px; }
 .hub-recent { margin-top: 18px; }
 .hub-recent h2 { margin: 0 0 8px; font-size: 13px; font-weight: 650; color: var(--text-2); text-transform: uppercase; letter-spacing: .04em; }
 .hub-recent-row { display: flex; flex-wrap: wrap; gap: 8px; }

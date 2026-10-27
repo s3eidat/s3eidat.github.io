@@ -1,6 +1,6 @@
 # S3eidat Tools
 
-**171 free, private tools that run entirely in your browser.** No sign-up, no uploads, no tracking.
+**178 free, private tools that run entirely in your browser.** No sign-up, no uploads, no tracking.
 
 ### ▶ [Open the tools](https://s3eidat.github.io/)
 
@@ -19,6 +19,7 @@ Every tool is its own open-source repo. Each one is a static page with a strict 
 | [Noise Machine](https://s3eidat.github.io/noise-machine/) | White, pink and brown noise for focus and sleep | [repo](https://github.com/s3eidat/noise-machine) |
 | [Screen Recorder](https://s3eidat.github.io/screen-recorder/) | Record your screen with audio, no install | [repo](https://github.com/s3eidat/screen-recorder) |
 | [Transcribe](https://s3eidat.github.io/transcribe/) | Audio and video to text and subtitles, privately | [repo](https://github.com/s3eidat/transcribe) |
+| [Video Editor](https://s3eidat.github.io/video-editor/) | Cut, caption and export videos free | [repo](https://github.com/s3eidat/video-editor) |
 | [Video Frames](https://s3eidat.github.io/video-frames/) | Grab frames and thumbnails from a video | [repo](https://github.com/s3eidat/video-frames) |
 | [Voice Recorder](https://s3eidat.github.io/voice-recorder/) | Record voice memos with a live waveform | [repo](https://github.com/s3eidat/voice-recorder) |
 
@@ -61,6 +62,7 @@ Every tool is its own open-source repo. Each one is a static page with a strict 
 | [Colorblind Sim](https://s3eidat.github.io/colorblind-sim/) | See images as colour-blind people do | [repo](https://github.com/s3eidat/colorblind-sim) |
 | [Contrast Check](https://s3eidat.github.io/contrast-check/) | WCAG color contrast checker | [repo](https://github.com/s3eidat/contrast-check) |
 | [CSS Gradient](https://s3eidat.github.io/css-gradient/) | Build beautiful CSS gradients visually | [repo](https://github.com/s3eidat/css-gradient) |
+| [Design Studio](https://s3eidat.github.io/design-studio/) | Design social posts, flyers and CVs free | [repo](https://github.com/s3eidat/design-studio) |
 | [Favicon Forge](https://s3eidat.github.io/favicon-forge/) | Make a full favicon set from one image | [repo](https://github.com/s3eidat/favicon-forge) |
 | [Glass Gen](https://s3eidat.github.io/glass-gen/) | Glassmorphism CSS generator | [repo](https://github.com/s3eidat/glass-gen) |
 | [Icon Maker](https://s3eidat.github.io/icon-maker/) | App icons from an emoji or letter | [repo](https://github.com/s3eidat/icon-maker) |
@@ -139,6 +141,7 @@ Every tool is its own open-source repo. Each one is a static page with a strict 
 | [Image Upscaler](https://s3eidat.github.io/image-upscale/) | Enlarge images 2x with AI, free | [repo](https://github.com/s3eidat/image-upscale) |
 | [Meme Maker](https://s3eidat.github.io/meme-maker/) | Classic top/bottom text memes in seconds | [repo](https://github.com/s3eidat/meme-maker) |
 | [Passport Photo](https://s3eidat.github.io/passport-photo/) | Passport and ID photos, print-ready | [repo](https://github.com/s3eidat/passport-photo) |
+| [Photo Editor](https://s3eidat.github.io/photo-editor/) | A layered photo editor in your browser | [repo](https://github.com/s3eidat/photo-editor) |
 | [Photo Filters](https://s3eidat.github.io/photo-filters/) | Quick photo edits: light, color, filters | [repo](https://github.com/s3eidat/photo-filters) |
 | [Placeholder Image](https://s3eidat.github.io/placeholder-image/) | Generate placeholder images of any size | [repo](https://github.com/s3eidat/placeholder-image) |
 | [Profile Picture](https://s3eidat.github.io/profile-pic/) | Round profile pictures with borders | [repo](https://github.com/s3eidat/profile-pic) |
@@ -155,6 +158,7 @@ Every tool is its own open-source repo. Each one is a static page with a strict 
 | [Business Card](https://s3eidat.github.io/business-card/) | Design and print business cards | [repo](https://github.com/s3eidat/business-card) |
 | [Calendar Maker](https://s3eidat.github.io/calendar-maker/) | Printable monthly and yearly calendars | [repo](https://github.com/s3eidat/calendar-maker) |
 | [Cover Letter](https://s3eidat.github.io/cv-letter/) | Fill-in-the-blanks cover letter builder | [repo](https://github.com/s3eidat/cv-letter) |
+| [Docs](https://s3eidat.github.io/docs/) | Write documents and export Word or PDF | [repo](https://github.com/s3eidat/docs) |
 | [Email Signature](https://s3eidat.github.io/email-signature/) | Professional email signatures in a minute | [repo](https://github.com/s3eidat/email-signature) |
 | [Images to PDF](https://s3eidat.github.io/images-to-pdf/) | Turn photos and scans into one PDF | [repo](https://github.com/s3eidat/images-to-pdf) |
 | [Invoice Maker](https://s3eidat.github.io/invoice-maker/) | Clean invoices you can print or save as PDF | [repo](https://github.com/s3eidat/invoice-maker) |
@@ -182,6 +186,9 @@ Every tool is its own open-source repo. Each one is a static page with a strict 
 | [Habit Tracker](https://s3eidat.github.io/habit-tracker/) | Build streaks, privately in your browser | [repo](https://github.com/s3eidat/habit-tracker) |
 | [Kanban Board](https://s3eidat.github.io/kanban-board/) | A simple private Kanban board | [repo](https://github.com/s3eidat/kanban-board) |
 | [Local Notes](https://s3eidat.github.io/local-notes/) | Private notes that live only in your browser | [repo](https://github.com/s3eidat/local-notes) |
+| [Pages](https://s3eidat.github.io/pages/) | Notes and docs with blocks, all private | [repo](https://github.com/s3eidat/pages) |
+| [Sheets](https://s3eidat.github.io/sheets/) | A free spreadsheet that opens Excel files | [repo](https://github.com/s3eidat/sheets) |
+| [Slides](https://s3eidat.github.io/slides/) | Make presentations free and present anywhere | [repo](https://github.com/s3eidat/slides) |
 | [Stopwatch](https://s3eidat.github.io/stopwatch/) | Stopwatch, laps and countdown timer | [repo](https://github.com/s3eidat/stopwatch) |
 | [Todo List](https://s3eidat.github.io/todo-list/) | Fast, keyboard-friendly to-do list | [repo](https://github.com/s3eidat/todo-list) |
 | [Typing Test](https://s3eidat.github.io/typing-test/) | Measure your typing speed and accuracy | [repo](https://github.com/s3eidat/typing-test) |

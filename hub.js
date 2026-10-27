@@ -56,6 +56,21 @@
 
   var bySlug = {};
   tools.forEach(function (t) { bySlug[t.slug] = t; });
+
+  // Flagship apps: free versions of the big paid apps people use every day.
+  var FLAGSHIP = [
+    ["design-studio", "Canva"], ["pages", "Notion"], ["sheets", "Excel"], ["slides", "PowerPoint"],
+    ["docs", "Word"], ["photo-editor", "Photoshop"], ["video-editor", "CapCut"]
+  ].filter(function (f) { return bySlug[f[0]]; });
+  var flag = S3.$("#flagship-row");
+  FLAGSHIP.forEach(function (f) {
+    var t = bySlug[f[0]];
+    flag.appendChild(S3.h("a", { "class": "hub-flag", href: "/" + t.slug + "/" }, [
+      S3.h("b", { text: nm(t) }), S3.h("span", { text: tg(t) }),
+      S3.h("em", { text: (AR ? "بديل مجاني لـ " : "Free alternative to ") + f[1] })
+    ]));
+  });
+  S3.$("#flagship").hidden = !FLAGSHIP.length;
   var recent = (S3.store("recent") || []).filter(function (s) { return bySlug[s]; });
   recent.forEach(function (s) {
     S3.$("#recent-row").appendChild(S3.h("a", { href: "/" + s + "/" }, [nm(bySlug[s])]));
