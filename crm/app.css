@@ -92,3 +92,4 @@
 .crm-stage { flex-wrap: nowrap; gap: 6px; }
 .crm-stage .input:first-child { flex: 1; min-width: 0; }
 .crm-prob { width: 74px; }
+.crm-keys { display: grid; gap: 7px; } .crm-keys kbd { min-width: 110px; text-align: center; }

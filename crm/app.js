@@ -513,6 +513,36 @@
     document.body.appendChild(m); cur.focus();
   }
 
+  function help() {
+    var keys = [["C", "New contact"], ["D", "New deal"], ["T", "New task"], ["1 – 5", "Dashboard, Deals, Contacts, Companies, Tasks"], ["/", "Search"], ["Ctrl+Enter", "Log the activity you typed"], ["Esc", "Close the panel"]];
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Keyboard shortcuts" });
+    var sheet = h("div", { "class": "s3-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: "Keyboard shortcuts" }), btn("", close, "ghost icon", "x", "Close")]),
+      h("div", { "class": "crm-keys" }, keys.map(function (k) { return h("div", { "class": "row" }, [h("kbd", { text: k[0] }), h("span", { "class": "muted", text: k[1] })]); }))]);
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m); sheet.querySelector("button").focus();
+  }
+
+  // ---------- self-test ----------
+  window.S3_SELFTEST = async function () {
+    try {
+      var ok = true;
+      var rows = parseCsv('\uFEFFName,Notes\r\n"Ali, Jr.","says ""hi""\nline2"\r\n\r\nBob,x');
+      ok = ok && rows.length === 3 && rows[1][0] === "Ali, Jr." && rows[1][1] === 'says "hi"\nline2' && rows[2][1] === "x";
+      var semi = parseCsv("Name;Email\nAna;a@b.c"); ok = ok && semi[1][1] === "a@b.c";
+      var out = toCsv([["=SUM(A1)", 'a"b', "plain"]]);
+      ok = ok && out === "\uFEFF'=SUM(A1),\"a\"\"b\",plain\r\n";
+      var c = clean({ contacts: [{ id: "a", name: "X", company: "nope", tags: ["t", 5, ""] }], deals: [{ id: "d", stage: "zzz", value: -5, contact: "a" }], tasks: [{ due: "tomorrow" }], acts: [{ type: "fax", contact: "a" }], currency: "XXX" });
+      ok = ok && c.contacts[0].company === "" && c.contacts[0].tags.join() === "t" && c.deals[0].stage === c.stages[0].id && c.deals[0].value === 0 && c.deals[0].contact === "a" && c.tasks[0].due === "" && c.acts[0].type === "note" && c.currency === "USD";
+      ok = ok && GUESS.email.test("E-mail 1 - Value") && GUESS.phone.test("Phone 1 - Value") && GUESS.company.test("Organization 1 - Name") && GUESS.first.test("Given Name") && !GUESS.name.test("Nickname");
+      ok = ok && clean(null) === null && /\d/.test(money(1234.5));
+      return ok;
+    } catch (e) { return false; }
+  };
+
   // ---------- actions ----------
   function menu(label, ic, items) {
     var d = h("details", { "class": "crm-menu" }, [h("summary", { "class": "btn" + (label === "New" ? " primary" : "") }, [icon(ic), label])]);
@@ -527,6 +557,7 @@
     var a = $("#crm-actions");
     a.appendChild(menu("Data", "file", [["Import contacts (CSV)…", importCsv], ["Export contacts (CSV)", function () { exportCsv("contacts"); }], ["Export companies (CSV)", function () { exportCsv("companies"); }],
       ["Export deals (CSV)", function () { exportCsv("deals"); }], null, ["Save backup file", backup], ["Restore backup…", restore], null, ["Load example data", example], ["Settings…", settings]]));
+    a.appendChild(btn("?", help, "ghost icon", "", "Keyboard shortcuts (?)"));
     a.appendChild(menu("New", "plus", [["Contact", function () { newContact(); }], ["Company", newCompany], ["Deal", function () { newDeal(); }], ["Task", function () { newTask(); }]]));
   }
   $("#crm-q").addEventListener("input", S3.debounce(function (e) { q = e.target.value.trim(); if (view === "dash") { view = "contacts"; render(); } else renderView(); }, 150));
@@ -537,6 +568,7 @@
     if (k === "/") { e.preventDefault(); $("#crm-q").focus(); }
     else if (k === "c") newContact(); else if (k === "d") newDeal(); else if (k === "t") newTask();
     else if (/^[1-5]$/.test(k)) go(VIEWS[+k - 1][0]);
+    else if (k === "?") help();
   });
   actions();
   if (!VIEWS.some(function (v) { return v[0] === view; })) view = "dash";
