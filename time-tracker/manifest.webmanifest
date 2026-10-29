@@ -1,0 +1,11 @@
+{
+  "name": "Time Tracker — S3eidat Tools",
+  "short_name": "Time Tracker",
+  "description": "A free, private time tracker with timesheets, reports and invoices.",
+  "start_url": "/time-tracker/",
+  "scope": "/time-tracker/",
+  "display": "standalone",
+  "background_color": "#0d0f12",
+  "theme_color": "#0d0f12",
+  "icons": [{ "src": "/kit/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

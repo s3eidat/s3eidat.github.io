@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Time Tracker — Free Timer, Timesheet and Invoices, No Sign-Up | S3eidat Tools</title>
+<meta name="description" content="Track time per project and client with a one-click timer, weekly timesheet, reports with billable rates, CSV export and printable invoices. Free, no sign-up, nothing uploaded.">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+<link rel="canonical" href="https://s3eidat.github.io/time-tracker/">
+<meta name="theme-color" content="#0d0f12">
+<script src="core.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body data-tool="time-tracker">
+<main class="s3-main tt">
+  <form class="tt-timer" id="timerBar" autocomplete="off">
+    <input class="input tt-desc" id="tDesc" maxlength="500" placeholder="What are you working on?" dir="auto" aria-label="Description">
+    <select class="select tt-proj" id="tProj" aria-label="Project"></select>
+    <button class="btn ghost small tt-tagbtn" id="tTags" type="button" title="Tags" aria-label="Tags"># <span id="tTagsN"></span></button>
+    <button class="btn ghost icon tt-bill" id="tBill" type="button" title="Billable" aria-label="Billable" aria-pressed="false">$</button>
+    <span class="tt-clock" id="tTime" aria-live="off">0:00:00</span>
+    <button class="btn primary tt-go" id="tGo" type="submit">Start</button>
+  </form>
+
+  <div class="tt-nav">
+    <div class="seg" id="tabs" role="tablist">
+      <button type="button" data-view="log" aria-pressed="true">Timer</button>
+      <button type="button" data-view="sheet" aria-pressed="false">Timesheet</button>
+      <button type="button" data-view="reports" aria-pressed="false">Reports</button>
+      <button type="button" data-view="projects" aria-pressed="false">Projects</button>
+    </div>
+    <span class="grow"></span>
+    <button class="btn ghost icon small" id="undoBtn" type="button" title="Undo (Ctrl+Z)" aria-label="Undo" disabled><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+    <button class="btn ghost icon small" id="helpBtn" type="button" title="Shortcuts (?)" aria-label="Shortcuts">?</button>
+    <button class="btn ghost icon small" id="setBtn" type="button" title="Settings, backup and import" aria-label="Settings"><svg class="i"><use href="#i-settings"/></svg></button>
+    <button class="btn small" id="addBtn" type="button"><svg class="i"><use href="#i-plus"/></svg>Add entry</button>
+  </div>
+
+  <section class="view" id="view-log">
+    <div id="log"></div>
+  </section>
+
+  <section class="view" id="view-sheet" hidden>
+    <div class="row tt-weekbar">
+      <button class="btn icon small" id="wPrev" type="button" aria-label="Previous week">‹</button>
+      <h2 id="wLabel"></h2>
+      <button class="btn icon small" id="wNext" type="button" aria-label="Next week">›</button>
+      <button class="btn ghost small" id="wNow" type="button">This week</button>
+    </div>
+    <div class="card"><div class="tbl-wrap"><table class="tbl tt-sheet" id="sheet"></table></div>
+      <p class="faint" style="margin:10px 0 0">Click a cell to add time to that project on that day.</p></div>
+  </section>
+
+  <section class="view" id="view-reports" hidden>
+    <div class="card tt-filters">
+      <label class="field">Period<select class="select" id="rRange">
+        <option value="week">This week</option><option value="lastweek">Last week</option><option value="month" selected>This month</option>
+        <option value="lastmonth">Last month</option><option value="year">This year</option><option value="custom">Custom dates</option></select></label>
+      <label class="field">From<input class="input" type="date" id="rFrom"></label>
+      <label class="field">To<input class="input" type="date" id="rTo"></label>
+      <label class="field">Client<select class="select" id="rClient"></select></label>
+      <label class="field">Project<select class="select" id="rProject"></select></label>
+      <label class="field">Tag<select class="select" id="rTag"></select></label>
+      <label class="field">Billable<select class="select" id="rBill"><option value="">All</option><option value="yes">Billable</option><option value="no">Not billable</option></select></label>
+    </div>
+    <div class="stats mt" id="rStats"></div>
+    <div class="grid-2 mt">
+      <div class="card"><h2>Hours by day</h2><div id="rChart"></div></div>
+      <div class="card"><h2>By project</h2><div id="rProjects"></div></div>
+    </div>
+    <div class="row mt">
+      <button class="btn primary" id="rInvoice" type="button"><svg class="i"><use href="#i-file"/></svg>Create invoice</button>
+      <button class="btn" id="rCsv" type="button"><svg class="i"><use href="#i-download"/></svg>Detailed CSV</button>
+      <button class="btn" id="rCsv2" type="button"><svg class="i"><use href="#i-download"/></svg>Summary CSV</button>
+    </div>
+  </section>
+
+  <section class="view" id="view-projects" hidden>
+    <div class="grid-2">
+      <div class="card">
+        <h2>Projects</h2>
+        <div id="pList"></div>
+        <form class="stack mt" id="pForm">
+          <div class="grid-2">
+            <label class="field">Project name<input class="input" id="pName" maxlength="120" dir="auto" required></label>
+            <label class="field">Client<select class="select" id="pClient"></select></label>
+            <label class="field">Hourly rate<input class="input" id="pRate" inputmode="decimal" placeholder="Client or default rate"></label>
+            <label class="field">Colour<input type="color" id="pColor" value="#0e9f9a"></label>
+          </div>
+          <div class="row"><button class="btn primary small" type="submit">Add project</button></div>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Clients</h2>
+        <div id="cList"></div>
+        <form class="stack mt" id="cForm">
+          <div class="grid-2">
+            <label class="field">Client name<input class="input" id="cName" maxlength="120" dir="auto" required></label>
+            <label class="field">Hourly rate<input class="input" id="cRate" inputmode="decimal" placeholder="Default rate"></label>
+          </div>
+          <div class="row"><button class="btn primary small" type="submit">Add client</button></div>
+        </form>
+        <h2 class="mt">Tags</h2>
+        <div class="row" id="tagList"></div>
+      </div>
+    </div>
+  </section>
+
+  <div id="printArea" class="tt-print" aria-hidden="true"></div>
+</main>
+</body>
+</html>
