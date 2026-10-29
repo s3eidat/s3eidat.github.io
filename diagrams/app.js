@@ -101,6 +101,7 @@
     doc.links.forEach(function (l) { linksG.appendChild(drawLink(l, byId)); });
     drawOverlay(byId);
     $("#empty").hidden = doc.shapes.length > 0 || doc.links.length > 0;
+    renderFloat();
     $("#undoBtn").disabled = !undoStack.length; $("#redoBtn").disabled = !redoStack.length;
   }
   function drawOverlay(byId) {
@@ -165,6 +166,25 @@
       height: Math.abs(marquee.y2 - marquee.y1), fill: "rgba(14,159,154,.08)", stroke: ACC, "stroke-width": k, "pointer-events": "none" }));
   }
 
+  // Small action bar on the canvas for the current selection (mainly for phones, where the style panel is below).
+  function renderFloat() {
+    var bar = $("#float"); bar.textContent = "";
+    var n = sel.s.length + sel.l.length;
+    bar.hidden = !n || !!drag || !!editing;
+    if (bar.hidden) return;
+    // act on pointerup: after a touch drag on the canvas some browsers drop the next click; keyboard still uses click
+    var btn = function (label, run, cls) {
+      var b = h("button", { "class": "btn small " + (cls || ""), type: "button", onclick: function (e) { if (e.detail === 0) run(); } }, [label]);
+      b.addEventListener("pointerup", function (e) { if (e.button === 0 || e.pointerType !== "mouse") { e.preventDefault(); run(); } });
+      return b;
+    };
+    if (sel.s.length === 1 && !sel.l.length) bar.appendChild(btn("Text", function () { startEdit(sel.s[0]); }));
+    if (sel.l.length === 1 && !sel.s.length) bar.appendChild(btn("Label", function () { startEditLink(sel.l[0]); }));
+    if (sel.s.length) bar.appendChild(btn("Copy", duplicate));
+    bar.appendChild(btn("Style", function () { $("#props").scrollIntoView({ behavior: "smooth", block: "start" }); }, "dg-style-btn"));
+    bar.appendChild(btn("Delete", deleteSel, "danger"));
+  }
+
   // ---------- model changes, undo, save ----------
   function snapshot() { return JSON.stringify(doc); }
   function commit() {
@@ -184,8 +204,10 @@
   function undo() { if (!undoStack.length) return; redoStack.push(snapshot()); restore(undoStack.pop()); }
   function redo() { if (!redoStack.length) return; undoStack.push(snapshot()); restore(redoStack.pop()); }
   function list() { return S3.store("diagrams:list") || []; }
+  function blank(d) { return !d.shapes.length && !d.links.length && d.name === "Untitled diagram"; }
   function saveNow() {
     if (!doc) return;
+    if (blank(doc)) { S3.store("diagrams:d:" + doc.id, undefined); S3.store("diagrams:list", list().filter(function (x) { return x.id !== doc.id; })); return; }
     var ok = S3.store("diagrams:d:" + doc.id, doc) !== undefined;
     var l = list().filter(function (x) { return x.id !== doc.id; });
     l.unshift({ id: doc.id, name: doc.name, updated: doc.updated, n: doc.shapes.length });
@@ -570,7 +592,7 @@
     if (!S.length && !L.length) {
       box.appendChild(sec("Diagram", [
         h("p", { "class": "tip", text: doc.shapes.length + " shape" + (doc.shapes.length === 1 ? "" : "s") + ", " + doc.links.length + " connector" + (doc.links.length === 1 ? "" : "s") + ". Saved in this browser as you work." }),
-        h("p", { "class": "tip", text: "Click a shape to style it. Double-click to type. Drag from a blue dot to connect two shapes. Drag empty space to select several." }),
+        h("p", { "class": "tip", text: "Click (tap) a shape to style it. Double-click (double-tap) to type. Drag from a blue dot to connect two shapes. Drag empty space to select several." }),
         h("label", { "class": "check" }, [(function () { var c = h("input", { type: "checkbox" }); c.checked = !!doc.grid; c.addEventListener("change", function () { doc.grid = c.checked; commit(); }); return c; })(), "Snap to grid"])]));
       box.appendChild(sec("Keyboard", [h("p", { "class": "tip", text: "Press ? for all shortcuts. Hold Space and drag, or use two fingers, to move around. Ctrl + wheel or pinch to zoom." })]));
       return;
@@ -843,6 +865,7 @@
   function typing(e) { var t = e.target; return t && (/INPUT|TEXTAREA|SELECT/.test(t.tagName) || t.isContentEditable); }
   function onKey(e) {
     if (!doc || $(".s3-modal")) return;
+    if (menuEl && e.key === "Escape") { closeMenu(); return; }
     var mod = e.ctrlKey || e.metaKey, k = e.key;
     if (mod && k.toLowerCase() === "s") { e.preventDefault(); if (!editor.hidden) commitEdit(); saveFile(); return; }
     if (typing(e)) return;
@@ -948,7 +971,7 @@
     window.addEventListener("resize", S3.debounce(function () { render(); placeEditor(); }, 100));
     window.addEventListener("pagehide", saveNow);
     document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") saveNow(); });
-    var id = S3.store("diagrams:open"), d = id ? loadDoc(id) : null;
+    var id = S3.store("diagrams:open"), d = (id ? loadDoc(id) : null) || (list()[0] ? loadDoc(list()[0].id) : null);
     openDoc(d || D.newDoc(), !!d);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();

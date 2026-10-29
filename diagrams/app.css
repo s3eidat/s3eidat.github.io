@@ -51,6 +51,13 @@
   color: #0f172a; font-family: Arial, Helvetica, "Noto Sans Arabic", sans-serif; line-height: 1.25; padding: 2px 4px; outline: none; overflow: hidden;
   box-shadow: 0 6px 24px -8px rgba(15,23,42,.35);
 }
+.dg-float {
+  position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); z-index: 4; display: flex; gap: 6px; padding: 6px;
+  border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-pop);
+}
+.dg-style-btn { display: none !important; }
+@media (min-width: 901px) { .dg-float { display: none !important; } }
+@media (max-width: 900px) { .dg-style-btn { display: inline-flex !important; } }
 .dg-empty {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(420px, calc(100% - 32px));
   display: grid; gap: 8px; justify-items: center; text-align: center; padding: 22px; border-radius: 16px;

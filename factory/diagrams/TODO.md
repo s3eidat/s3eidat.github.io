@@ -1,5 +1,7 @@
 # Diagrams — TODO
 
-Core done: all must-haves plus PDF export, quick-add, align/distribute, saved-diagrams list, shortcuts, self-test.
-For `full`: touch flows on a phone (select, connect, edit text, delete), properties panel on mobile, empty
-states, manifest + SEO meta + screenshot, Arabic text check, final Playwright pass.
+Core and full done. For `launched`: final test, list it (apps.json, kit.js TOOLS, hub.js FLAGSHIP, Arabic hub
+name, guide, sitemaps, launch posts), screenshot.png once the header shows the tool name.
+
+Later (could): swimlanes, groups, layers panel, Mermaid import, rotation, images on canvas, UML/network shapes,
+connectors that route around shapes.

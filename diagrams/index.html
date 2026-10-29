@@ -12,7 +12,20 @@
 <link rel="stylesheet" href="app.css">
 <script src="/kit/kit.js"></script>
 <link rel="canonical" href="https://s3eidat.github.io/diagrams/">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0d0f12">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="S3eidat Tools">
+<meta property="og:title" content="Diagrams — a free, private flowchart and diagram maker">
+<meta property="og:description" content="Flowcharts, org charts and ER diagrams with connectors that follow shapes. No limits, no sign-up, nothing uploaded.">
+<meta property="og:url" content="https://s3eidat.github.io/diagrams/">
+<meta property="og:image" content="https://s3eidat.github.io/diagrams/screenshot.png">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Diagrams — a free, private flowchart and diagram maker">
+<meta name="twitter:description" content="Flowcharts, org charts and ER diagrams. Free, private and runs 100% in your browser: no sign-up, no uploads.">
+<meta name="twitter:image" content="https://s3eidat.github.io/diagrams/screenshot.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Diagrams", "url": "https://s3eidat.github.io/diagrams/", "description": "A free diagram maker that runs 100% in your browser: flowcharts, org charts and ER diagrams with connectors that follow shapes, snapping, templates and PNG, SVG and PDF export. No sign-up, nothing uploaded.", "applicationCategory": "DesignApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "image": "https://s3eidat.github.io/diagrams/screenshot.png", "author": {"@type": "Person", "name": "s3eidat", "url": "https://github.com/s3eidat"}}</script>
 <script src="core.js"></script>
 <script src="app.js" defer></script>
 </head>
@@ -54,6 +67,7 @@
           <g id="overlay"></g>
         </g>
       </svg>
+      <div class="dg-float" id="float" hidden></div>
       <textarea id="editor" class="dg-editor" hidden spellcheck="false" dir="auto" aria-label="Edit text"></textarea>
       <div class="dg-empty" id="empty" hidden>
         <b>Start your diagram</b>
