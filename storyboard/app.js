@@ -229,6 +229,24 @@
     t.appendChild(asp);
     t.appendChild(btn("Play", play, "", "play"));
     t.appendChild(btn("Export PDF", pdfDialog, "primary", "download"));
+    var menu = h("details", { "class": "sb-menu" }, [h("summary", { "class": "btn", "aria-label": "More: file, video, shot list" }, [icon("file"), "More"])]);
+    var list = h("div", { "class": "sb-menu-list", role: "menu" });
+    [["New storyboard", newProject], ["Open project file…", openProject], ["Save project file", saveProject], null,
+     ["Export video (WebM)", videoDialog], ["Export shot list (CSV)", exportCsv], ["Export frames (PNG, ZIP)", exportPngs], ["Print", function () { window.print(); }], null,
+     ["Keyboard shortcuts", showHelp]].forEach(function (it) {
+      if (!it) return list.appendChild(h("hr"));
+      list.appendChild(h("button", { type: "button", role: "menuitem", onclick: function () { menu.open = false; it[1](); } }, [it[0]]));
+    });
+    menu.appendChild(list);
+    // keep the open menu on screen whichever side of the toolbar the button wrapped to
+    menu.addEventListener("toggle", function () {
+      if (!menu.open) return;
+      list.style.left = ""; list.style.right = "";
+      var r = list.getBoundingClientRect();
+      if (r.left < 8) { list.style.left = "0"; list.style.right = "auto"; }
+    });
+    document.addEventListener("click", function (e) { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+    t.appendChild(menu);
   }
 
   // ---------- sketch editor ----------
@@ -530,6 +548,187 @@
     document.body.appendChild(m);
     go.focus();
   }
+
+
+  // ---------- files: project, CSV, PNGs ----------
+  function newProject() {
+    var before = snapshot();
+    P = blank(); saveSoon(); tools(); render();
+    var t = S3.toast("New storyboard ");
+    t.appendChild(h("button", { "class": "btn small", type: "button", onclick: function () { P = clean(JSON.parse(before)) || P; saveSoon(); tools(); render(); t.remove(); } }, ["Undo"]));
+  }
+  function saveProject() {
+    var data = JSON.stringify(Object.assign({ app: "s3eidat-storyboard", saved: new Date().toISOString() }, P));
+    S3.download(data, fileBase() + ".storyboard.json", "application/json");
+    S3.done();
+  }
+  function openProject() {
+    var inp = h("input", { type: "file", accept: ".json,application/json", hidden: true });
+    inp.addEventListener("change", function () {
+      var f = inp.files[0]; inp.remove(); if (!f) return;
+      S3.readFile(f, "text").then(function (txt) {
+        var d; try { d = clean(JSON.parse(txt)); } catch (e) { d = null; }
+        if (!d) return S3.toast("That isn't a Storyboard project file", "error");
+        var before = snapshot();
+        P = d; saveSoon(); tools(); render();
+        var t = S3.toast("Opened " + (P.title || "storyboard") + " ");
+        t.appendChild(h("button", { "class": "btn small", type: "button", onclick: function () { P = clean(JSON.parse(before)) || P; saveSoon(); tools(); render(); t.remove(); } }, ["Undo"]));
+      });
+    });
+    document.body.appendChild(inp); inp.click();
+  }
+  function csvCell(v) {
+    v = String(v == null ? "" : v);
+    if (/^[=+\-@\t\r]/.test(v)) v = "'" + v; // keep spreadsheets from running it as a formula
+    return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  }
+  function shotListCsv() {
+    var rows = [["Frame", "Start (s)", "Duration (s)", "Shot", "Camera move", "Action", "Dialogue", "Notes"]], at = 0;
+    P.frames.forEach(function (f, i) { rows.push([i + 1, Math.round(at * 10) / 10, f.dur, f.shot, f.move, f.action, f.dialogue, f.notes]); at += f.dur; });
+    return "﻿" + rows.map(function (r) { return r.map(csvCell).join(","); }).join("\r\n") + "\r\n";
+  }
+  function exportCsv() { S3.download(shotListCsv(), fileBase() + "-shot-list.csv", "text/csv"); S3.done(); }
+  function frameCanvas(f) {
+    var d = dims(), c = document.createElement("canvas"); c.width = d[0]; c.height = d[1];
+    return drawFrame(c.getContext("2d"), f, 0, 0, d[0], d[1]).then(function () { return c; });
+  }
+  function exportPngs() {
+    if (!P.frames.length) return S3.toast("Add a frame first", "error");
+    S3.toast("Making images…");
+    var files = [];
+    P.frames.reduce(function (chain, f, i) {
+      return chain.then(function () { return frameCanvas(f); }).then(function (c) {
+        return new Promise(function (res) { c.toBlob(function (b) { b.arrayBuffer().then(function (ab) { files.push({ name: "frame-" + String(i + 1).padStart(3, "0") + ".png", data: new Uint8Array(ab) }); res(); }); }, "image/png"); });
+      });
+    }, Promise.resolve()).then(function () {
+      S3.download(S3.zip(files), fileBase() + "-frames.zip"); S3.done();
+    }, function () { S3.toast("Couldn't make the images", "error"); });
+  }
+
+  // ---------- video (WebM, recorded in real time from a canvas) ----------
+  function videoType() {
+    if (!window.MediaRecorder || !HTMLCanvasElement.prototype.captureStream) return "";
+    return ["video/webm;codecs=vp9", "video/webm;codecs=vp8", "video/webm"].filter(function (t) { return MediaRecorder.isTypeSupported(t); })[0] || "";
+  }
+  function drawCaption(x, text, W, H) {
+    if (!text) return;
+    var fs = Math.round(H * 0.045);
+    x.font = "600 " + fs + "px Inter, system-ui, sans-serif";
+    var rtl = isRtl(text); x.direction = rtl ? "rtl" : "ltr"; x.textAlign = "center"; x.textBaseline = "top";
+    var lines = wrap(x, text, W * 0.82, 3), lh = fs * 1.3, bh = lines.length * lh + fs * 0.6, y = H - bh - H * 0.05;
+    var bw = Math.max.apply(null, lines.map(function (l) { return x.measureText(l).width; })) + fs * 1.2;
+    x.fillStyle = "rgba(0,0,0,.72)"; x.fillRect((W - bw) / 2, y, bw, bh);
+    x.fillStyle = "#fff"; lines.forEach(function (l, i) { x.fillText(l, W / 2, y + fs * 0.3 + i * lh); });
+    x.direction = "ltr"; x.textAlign = "left";
+  }
+  function videoDialog() {
+    if (!P.frames.length) return S3.toast("Add a frame first", "error");
+    var type = videoType();
+    if (!type) return S3.toast("This browser can't record video. Try Chrome, Edge or Firefox.", "error");
+    var d = dims(), W = d[0], H = d[1], caps = true, rec = null, stopped = false, timer = 0;
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Export video" });
+    var capBox = h("input", { type: "checkbox" }); capBox.checked = true;
+    capBox.addEventListener("change", function () { caps = capBox.checked; });
+    var prog = h("div", { "class": "sb-prog", hidden: true }, [h("span")]);
+    var note = h("p", { text: "Records the animatic in real time (" + fmtTime(total()) + ") as a WebM video, " + W + "×" + H + ". Keep this tab open while it records." });
+    var go = btn("Record video", start, "primary", "play");
+    var sheet = h("div", { "class": "s3-sheet" }, [
+      h("div", { "class": "row between" }, [h("h2", { text: "Export video" }), btn("", close, "ghost icon", "x", "Close")]),
+      note, h("label", { "class": "check" }, [capBox, "Show dialogue as captions"]), prog,
+      h("div", { "class": "row end mt" }, [btn("Cancel", close, "ghost"), go])
+    ]);
+    m.appendChild(sheet);
+    function close() { stopped = true; clearInterval(timer); if (rec && rec.state !== "inactive") rec.stop(); m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m); go.focus();
+    function start() {
+      go.disabled = true; capBox.disabled = true; prog.hidden = false;
+      Promise.all(P.frames.map(frameCanvas)).then(function (frames) {
+        if (stopped) return;
+        var c = document.createElement("canvas"); c.width = W; c.height = H;
+        var x = c.getContext("2d"), chunks = [], starts = [], end = 0;
+        P.frames.forEach(function (f) { starts.push(end); end += f.dur; });
+        function paint(t) {
+          var k = 0; for (var i = starts.length - 1; i >= 0; i--) if (t >= starts[i]) { k = i; break; }
+          x.drawImage(frames[k], 0, 0); if (caps) drawCaption(x, P.frames[k].dialogue, W, H);
+        }
+        paint(0);
+        var stream = c.captureStream(30);
+        rec = new MediaRecorder(stream, { mimeType: type, videoBitsPerSecond: 4e6 });
+        rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+        rec.onstop = function () {
+          stream.getTracks().forEach(function (tr) { tr.stop(); });
+          if (stopped && !done) return;
+          S3.download(new Blob(chunks, { type: "video/webm" }), fileBase() + ".webm"); S3.done(); close();
+        };
+        var t0 = performance.now(), done = false;
+        rec.start(500);
+        timer = setInterval(function () {
+          var t = (performance.now() - t0) / 1000;
+          prog.firstChild.style.width = Math.min(100, t / end * 100) + "%";
+          if (t >= end) { clearInterval(timer); paint(end - 0.001); done = true; setTimeout(function () { if (rec.state !== "inactive") rec.stop(); }, 150); return; }
+          paint(t);
+        }, 1000 / 30);
+      }, function () { S3.toast("Couldn't prepare the frames", "error"); close(); });
+    }
+  }
+
+  // ---------- keyboard ----------
+  function showHelp() {
+    var keys = [["N", "New frame at the end"], ["P", "Play the animatic"], ["?", "Show this help"], ["Space", "Play / pause (animatic)"], ["← →", "Previous / next frame (animatic)"],
+      ["B / E", "Pen / eraser (drawing)"], ["Ctrl+Z / Ctrl+Y", "Undo / redo (drawing)"], ["Esc", "Close; in drawing, keep the drawing"]];
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Keyboard shortcuts" });
+    var sheet = h("div", { "class": "s3-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: "Keyboard shortcuts" }), btn("", close, "ghost icon", "x", "Close")]),
+      h("div", { "class": "sb-keys" }, keys.map(function (k) { return h("div", { "class": "row" }, [h("kbd", { text: k[0] }), h("span", { "class": "muted", text: k[1] })]); }))]);
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m); sheet.querySelector("button").focus();
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented || $(".s3-modal")) return;
+    var tag = e.target && e.target.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") return;
+    if (e.key === "n" || e.key === "N") { e.preventDefault(); addFrame(); var c = S3.$$(".sb-card"); if (c.length) { c[c.length - 1].scrollIntoView({ block: "nearest" }); c[c.length - 1].querySelector(".sb-pic").focus(); } }
+    else if (e.key === "p" || e.key === "P") { e.preventDefault(); play(); }
+    else if (e.key === "?") { e.preventDefault(); showHelp(); }
+  });
+
+  // ---------- self-test (works on copies, never touches the saved project) ----------
+  window.S3_SELFTEST = async function () {
+    var real = P, ok = true;
+    function expect(c) { if (!c) ok = false; }
+    try {
+      expect(clean(null) === null && clean({ frames: "x" }) === null);
+      var c = clean({ title: "T", aspect: "9:16", frames: [{ bg: "javascript:alert(1)", dur: 999, shot: "CU", move: "Nope" }, {}] });
+      expect(c.aspect === "9:16" && c.frames.length === 2 && c.frames[0].bg === "" && c.frames[0].dur === 60 && c.frames[0].shot === "CU" && c.frames[0].move === "");
+      var cv = document.createElement("canvas"), x = cv.getContext("2d"); x.font = "16px sans-serif";
+      var w = wrap(x, "one two three four five six seven eight nine ten eleven twelve", 80, 2);
+      expect(w.length === 2 && /…$/.test(w[1]));
+      // a red frame drawn through the same path the PDF uses
+      cv.width = 64; cv.height = 36; var r = document.createElement("canvas"); r.width = 64; r.height = 36;
+      var rx = r.getContext("2d"); rx.fillStyle = "#f00"; rx.fillRect(0, 0, 64, 36);
+      await drawFrame(cv.getContext("2d"), { bg: r.toDataURL("image/png"), ink: "" }, 0, 0, 64, 36);
+      var px = cv.getContext("2d").getImageData(32, 18, 1, 1).data;
+      expect(px[0] > 200 && px[1] < 40);
+      // PDF: header, every xref offset points at its object
+      var jpeg = await canvasJpeg(cv);
+      var pdf = new Uint8Array(await buildPdf([{ w: 100, h: 50, px: [64, 36], jpeg: jpeg }, { w: 100, h: 50, px: [64, 36], jpeg: jpeg }]).arrayBuffer());
+      var txt = ""; for (var i = 0; i < pdf.length; i++) txt += String.fromCharCode(pdf[i]);
+      var sx = +/startxref\n(\d+)/.exec(txt)[1], xl = txt.slice(sx).split("\n"), n = +xl[1].split(" ")[1];
+      expect(txt.indexOf("%PDF-1.4") === 0 && n === 9 && /%%EOF\n$/.test(txt));
+      for (var k = 1; k < n; k++) expect(txt.substr(+xl[2 + k].slice(0, 10), (k + " 0 obj").length) === k + " 0 obj");
+      // CSV escaping and formula guard
+      P = clean({ frames: [{ action: '=HYPERLINK("x")', dialogue: 'He said "hi", then left', dur: 2 }, { dur: 1.5 }] });
+      var csv = shotListCsv().split("\r\n");
+      expect(csv[1] === '1,0,2,,,"\'=HYPERLINK(""x"")","He said ""hi"", then left",' && csv[2] === "2,2,1.5,,,,,");
+    } catch (err) { ok = false; }
+    P = real;
+    return ok;
+  };
 
   // ---------- page wiring ----------
   $("#sb-title").addEventListener("input", function (e) { P.title = e.target.value.slice(0, 120); saveSoon(); });
