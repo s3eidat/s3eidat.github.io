@@ -51,9 +51,9 @@ async function showLibrary() {
   try { books = (await allBooks()).sort((a, b) => b.updated - a.updated); } catch (e) { books = []; S3.toast("This browser can't store notebooks (private mode?). Export your PDF before closing.", "error"); }
   const v = $("#pn-library"); v.textContent = "";
   v.appendChild(h("div", { "class": "pn-head" }, [h("div", { "class": "grow" }, [h("h1", { text: "PDF Notes" }), h("p", { "class": "muted", text: "Handwrite on PDFs and notebooks with a pen, finger or mouse. Unlimited notebooks, saved in this browser only." })]),
-    h("div", { "class": "row" }, [btn("New notebook", newDialog, "primary", "plus"), btn("Open a PDF", pickPdf, "", "upload")])]));
-  const drop = h("label", { "class": "drop pn-drop" }, [h("input", { type: "file", accept: "application/pdf,.pdf", hidden: true }), icon("upload"), h("b", { text: "Drop a PDF here to write on it" }), h("span", { text: "Lecture slides, worksheets, forms. It stays on your device." })]);
-  S3.drop(drop, (files) => importPdf(files[0]), { accept: ".pdf,application/pdf", multiple: false });
+    h("div", { "class": "row" }, [btn("New notebook", newDialog, "primary", "plus"), btn("Open a PDF", pickPdf, "", "upload"), btn("Open notebook file", pickNotes, "ghost", "file", "Open a .pdfnotes file saved from PDF Notes")])]));
+  const drop = h("label", { "class": "drop pn-drop" }, [h("input", { type: "file", hidden: true }), icon("upload"), h("b", { text: "Drop a PDF here to write on it" }), h("span", { text: "Lecture slides, worksheets, forms. It stays on your device." })]);
+  S3.drop(drop, (files) => /\.pdfnotes$/i.test(files[0].name) ? importNotes(files[0]) : importPdf(files[0]), { accept: ".pdf,application/pdf,.pdfnotes", multiple: false });
   v.appendChild(drop);
   if (!books.length) { v.appendChild(h("div", { "class": "empty" }, [h("b", { text: "No notebooks yet" }), h("span", { text: "Start a lined, grid, dotted or blank notebook, or open a PDF to write on." })])); return; }
   const grid = h("div", { "class": "pn-grid" });
@@ -101,6 +101,53 @@ function pickPdf() {
   inp.addEventListener("change", () => { if (inp.files[0]) importPdf(inp.files[0]); inp.remove(); });
   document.body.appendChild(inp); inp.click();
 }
+function pickNotes() {
+  const inp = h("input", { type: "file", accept: ".pdfnotes,application/json", hidden: true });
+  inp.addEventListener("change", () => { if (inp.files[0]) importNotes(inp.files[0]); inp.remove(); });
+  document.body.appendChild(inp); inp.click();
+}
+// ---------- notebook file (.pdfnotes: JSON with the strokes and, for PDFs, the original file as base64) ----------
+function b64(bytes) {
+  const u = new Uint8Array(bytes); let out = "";
+  for (let i = 0; i < u.length; i += 0x8000) out += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000));
+  return btoa(out);
+}
+function unb64(str) { const bin = atob(str), u = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u.buffer; }
+function cleanBook(raw) {
+  if (!raw || !Array.isArray(raw.pages) || !raw.pages.length) return null;
+  const num = (v, d) => { v = +v; return isFinite(v) && v >= 30 && v <= 5000 ? v : d; };
+  const pages = raw.pages.slice(0, 2000).map((p) => {
+    const pg = { id: uid(), kind: p && p.kind === "pdf" ? "pdf" : "paper", w: num(p && p.w, 595.28), h: num(p && p.h, 841.89), strokes: ((p && p.strokes) || []).map(cleanStroke).filter(Boolean) };
+    if (pg.kind === "pdf") pg.src = Math.max(0, Math.floor(+p.src || 0)); else pg.paper = PAPERS.some((x) => x[0] === p.paper) ? p.paper : "plain";
+    return pg;
+  });
+  return { id: uid(), title: String(raw.title || "Notebook").slice(0, 80), kind: raw.kind === "pdf" ? "pdf" : "paper", paper: PAPERS.some((x) => x[0] === raw.paper) ? raw.paper : "lined",
+    size: raw.size === "letter" ? "letter" : "a4", cover: COVERS.indexOf(raw.cover) >= 0 ? raw.cover : COVERS[0], created: Date.now(), updated: Date.now(), pages };
+}
+async function importNotes(file) {
+  try {
+    const data = JSON.parse(await file.text());
+    if (!data || data.app !== "s3-pdf-notes") throw new Error("not ours");
+    const b = cleanBook(data.book); if (!b) throw new Error("empty");
+    let buf = null;
+    if (b.pages.some((p) => p.kind === "pdf")) {
+      if (typeof data.pdf !== "string") throw new Error("pdf missing");
+      buf = unb64(data.pdf);
+      const doc = await pdfjsLib.getDocument({ data: buf.slice(0), isEvalSupported: false }).promise;
+      b.pages = b.pages.filter((p) => p.kind !== "pdf" || p.src < doc.numPages);
+      await putPdf(b.id, buf);
+    }
+    await putBook(b); openBook(b.id); S3.toast("Opened " + b.title);
+  } catch (e) { S3.toast("That isn't a PDF Notes file", "error"); }
+}
+async function saveNotes() {
+  const t = S3.toast("Saving the notebook file…");
+  try {
+    const data = { app: "s3-pdf-notes", v: 1, book: { title: book.title, kind: book.kind, paper: book.paper, size: book.size, cover: book.cover, pages: book.pages.map((p) => Object.assign({}, p)) }, pdf: pdfBytes ? b64(pdfBytes) : null };
+    S3.download(new Blob([JSON.stringify(data)], { type: "application/json" }), fileBase(book.title) + ".pdfnotes"); S3.done();
+  } catch (e) { S3.toast("Couldn't save the file", "error"); }
+  t.remove();
+}
 async function importPdf(file) {
   const t = S3.toast("Opening " + file.name + "…");
   try {
@@ -120,9 +167,10 @@ async function importPdf(file) {
 
 // ---------- editor ----------
 let book = null, pdfDoc = null, pdfBytes = null, zoom = 1, tool = "pen", ink = INKS[0], hl = HIGHLIGHTS[0], size = 2.2, penOnly = false;
-let undoStack = [], redoStack = [], observer = null, current = 0;
+let undoStack = [], redoStack = [], observer = null, current = 0, sel = null;
+penOnly = S3.store("pn-pen-only") === true;
 const saveSoon = S3.debounce(() => { if (book) { book.updated = Date.now(); putBook(book).catch(() => S3.toast("Couldn't save. Export your PDF to be safe.", "error")); } }, 600);
-function closeEditor() { if (observer) observer.disconnect(); observer = null; book = null; pdfDoc = null; pdfBytes = null; undoStack = []; redoStack = []; }
+function closeEditor() { if (observer) observer.disconnect(); observer = null; book = null; sel = null; pdfDoc = null; pdfBytes = null; undoStack = []; redoStack = []; }
 async function openBook(id) {
   const b = (await allBooks()).find((x) => x.id === id); if (!b) return showLibrary();
   b.pages.forEach((p) => { p.strokes = (p.strokes || []).map(cleanStroke).filter(Boolean); });
@@ -141,23 +189,59 @@ function buildEditor() {
   title.addEventListener("input", () => { book.title = title.value.slice(0, 80); saveSoon(); });
   const bar = h("div", { "class": "pn-bar" }, [
     btn("Library", () => showLibrary(), "ghost small", "", "Back to the library"),
-    h("div", { "class": "seg pn-tools", role: "group", "aria-label": "Tool" }, [["pen", "Pen", "P"], ["hl", "Highlighter", "H"], ["eraser", "Eraser", "E"]].map((t) =>
+    h("div", { "class": "seg pn-tools", role: "group", "aria-label": "Tool" }, [["pen", "Pen", "P"], ["hl", "Highlighter", "H"], ["eraser", "Eraser", "E"], ["lasso", "Select", "L"]].map((t) =>
       h("button", { type: "button", "data-tool": t[0], "aria-pressed": String(tool === t[0]), title: t[1] + " (" + t[2] + ")", onclick: () => setTool(t[0]) }, [t[1]]))),
     h("div", { "class": "pn-swatches", id: "pn-swatches", role: "group", "aria-label": "Colour" }),
     h("label", { "class": "pn-size" }, [h("span", { "class": "faint", text: "Size" }), sizeInput()]),
     btn("↶", undo, "ghost icon small", "", "Undo (Ctrl+Z)"), btn("↷", redo, "ghost icon small", "", "Redo (Ctrl+Shift+Z)"),
     btn("−", () => setZoom(zoom / 1.2), "ghost icon small", "", "Zoom out"), btn("+", () => setZoom(zoom * 1.2), "ghost icon small", "", "Zoom in"),
-    btn("Fit", () => setZoom(fitZoom()), "ghost small", "", "Fit width"),
+    btn("Fit", () => setZoom(fitZoom()), "ghost small", "", "Fit width (0)"),
+    btn("Pages", pagesSheet, "ghost small", "grid", "All pages (G)"),
     btn("Page", addPage, "small", "plus", "Add a page after this one"),
+    moreMenu(),
     btn("Export PDF", exportPdf, "primary small", "download")
   ]);
   v.appendChild(h("div", { "class": "pn-top" }, [title, h("span", { "class": "faint", id: "pn-pos" })]));
   v.appendChild(bar);
-  const pages = h("div", { "class": "pn-pages", id: "pn-pages" });
+  const pages = h("div", { "class": "pn-pages" + (penOnly ? " pen-only" : ""), id: "pn-pages", "data-tool": tool });
   v.appendChild(pages);
   swatches();
   zoom = fitZoom();
   drawPages();
+}
+function moreMenu() {
+  const menu = h("details", { "class": "pn-menu" }, [h("summary", { "class": "btn ghost small", title: "More" }, ["More"])]);
+  const list = h("div", { "class": "pn-menu-list", role: "menu" });
+  const pen = h("button", { type: "button", role: "menuitemcheckbox", "aria-checked": String(penOnly), onclick: () => { menu.open = false; setPenOnly(!penOnly, true); } }, ["Draw with a stylus only (fingers scroll)"]);
+  [["Save this page as PNG", () => pagePng(current)], ["Save notebook file (.pdfnotes)", saveNotes], null, pen, null, ["Keyboard shortcuts and help", help]].forEach((it) => {
+    if (!it) return list.appendChild(h("hr"));
+    if (it.nodeType) return list.appendChild(it);
+    list.appendChild(h("button", { type: "button", role: "menuitem", onclick: () => { menu.open = false; it[1](); } }, [it[0]]));
+  });
+  menu.appendChild(list);
+  menu.addEventListener("toggle", () => { if (!menu.open) return; pen.setAttribute("aria-checked", String(penOnly)); list.style.left = ""; list.style.right = ""; if (list.getBoundingClientRect().left < 8) { list.style.left = "0"; list.style.right = "auto"; } });
+  document.addEventListener("click", (e) => { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+  return menu;
+}
+function setPenOnly(on, user) {
+  penOnly = on; if (user !== false) S3.store("pn-pen-only", on);
+  const box = $("#pn-pages"); if (box) box.classList.toggle("pen-only", on);
+  S3.toast(user === false ? "Stylus found: now only the stylus draws and fingers scroll. Change it in More." : on ? "Stylus only: fingers scroll the pages" : "Fingers draw again");
+}
+function help() {
+  const m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Help" });
+  const keys = [["P", "Pen"], ["H", "Highlighter"], ["E", "Eraser (touch a line to remove it)"], ["L", "Select: draw round lines, then drag them or press Delete"], ["Ctrl+Z / Ctrl+Y", "Undo / redo"], ["+ / − / 0", "Zoom in / out / fit width"], ["G", "All pages"], ["Esc", "Clear the selection"], ["?", "This help"]];
+  const sheet = h("div", { "class": "s3-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: "Shortcuts and tips" }), btn("", close, "ghost icon", "x", "Close")]),
+    h("dl", { "class": "pn-keys" }, keys.reduce((a, k) => a.concat([h("dt", {}, [h("kbd", { text: k[0] })]), h("dd", { text: k[1] })]), [])),
+    h("ul", { "class": "pn-tips" }, ["On a tablet with a stylus, turn on More → Draw with a stylus only, so your hand and fingers scroll instead of drawing. It turns on by itself the first time you use a stylus.",
+      "Pressure from an Apple Pencil, Surface Pen or Wacom pen changes the line width.",
+      "Your notebooks are saved in this browser. Save a notebook file (More menu) to back it up or move it to another device.",
+      "Export PDF keeps the original PDF pages and adds your writing as sharp vector lines."].map((t) => h("li", { text: t })))]);
+  m.appendChild(sheet);
+  function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+  function onKey(e) { if (e.key === "Escape") close(); }
+  m.addEventListener("click", (e) => { if (e.target === m) close(); });
+  document.addEventListener("keydown", onKey); document.body.appendChild(m);
 }
 function sizeInput() {
   const r = h("input", { type: "range", min: "0.6", max: "12", step: "0.2", value: String(size), "aria-label": "Line size" });
@@ -168,9 +252,16 @@ function swatches() {
   const box = $("#pn-swatches"); if (!box) return; box.textContent = "";
   const list = tool === "hl" ? HIGHLIGHTS : INKS, cur = tool === "hl" ? hl : ink;
   if (tool === "eraser") { box.appendChild(h("span", { "class": "faint", text: "Touch a line to erase it" })); return; }
+  if (tool === "lasso") {
+    if (!sel) { box.appendChild(h("span", { "class": "faint", text: "Draw round lines to select them" })); return; }
+    box.appendChild(h("span", { "class": "faint", text: sel.items.length + " selected" }));
+    INKS.forEach((c) => box.appendChild(h("button", { type: "button", "class": "pn-sw", style: "background:" + c, "aria-label": "Recolour to " + c, onclick: () => recolour(c) })));
+    box.appendChild(btn("", deleteSel, "ghost icon small pn-del", "trash", "Delete selection (Delete)"));
+    return;
+  }
   list.forEach((c) => box.appendChild(h("button", { type: "button", "class": "pn-sw", style: "background:" + c, "aria-label": "Colour " + c, "aria-pressed": String(c === cur), onclick: () => { if (tool === "hl") hl = c; else ink = c; swatches(); } })));
 }
-function setTool(t) { tool = t; document.querySelectorAll(".pn-tools button").forEach((b) => b.setAttribute("aria-pressed", String(b.getAttribute("data-tool") === t))); swatches(); $("#pn-pages").setAttribute("data-tool", t); }
+function setTool(t) { if (t !== "lasso") clearSel(); tool = t; document.querySelectorAll(".pn-tools button").forEach((b) => b.setAttribute("aria-pressed", String(b.getAttribute("data-tool") === t))); swatches(); $("#pn-pages").setAttribute("data-tool", t); }
 function fitZoom() { const avail = Math.min(window.innerWidth, ($("#pn-editor").clientWidth || window.innerWidth)) - 24, maxW = Math.max(...book.pages.map((p) => p.w)); return Math.max(.3, Math.min(1.5, avail / maxW)); }
 function setZoom(z) {
   const box = $("#pn-pages"), anchor = current;
@@ -180,6 +271,7 @@ function setZoom(z) {
 function drawPages() {
   const box = $("#pn-pages"); box.textContent = "";
   if (observer) observer.disconnect();
+  sel = null; swatches();
   observer = new IntersectionObserver((entries) => entries.forEach((en) => {
     const i = +en.target.getAttribute("data-i");
     if (en.isIntersecting) { renderPage(i); if (en.intersectionRatio > .3) { current = i; pos(); } }
@@ -188,7 +280,15 @@ function drawPages() {
     const wrap = h("div", { "class": "pn-page", "data-i": String(i), style: "width:" + Math.round(p.w * zoom) + "px;height:" + Math.round(p.h * zoom) + "px" });
     const bg = h("canvas", { "class": "pn-bg", "aria-hidden": "true" }), inkC = h("canvas", { "class": "pn-ink", "aria-label": "Page " + (i + 1) + " of " + book.pages.length });
     wrap.appendChild(bg); wrap.appendChild(inkC);
-    wrap.appendChild(h("div", { "class": "pn-pagebar" }, [h("span", { text: (i + 1) + " / " + book.pages.length }), btn("", () => deletePage(i), "ghost icon small pn-del", "trash", "Delete page " + (i + 1))]));
+    const bar = h("div", { "class": "pn-pagebar" }, [h("span", { text: (i + 1) + " / " + book.pages.length })]);
+    if (p.kind === "paper") {
+      const ps = h("select", { "class": "pn-paper", "aria-label": "Paper of page " + (i + 1) }, PAPERS.map((x) => h("option", { value: x[0], text: x[1] })));
+      ps.value = p.paper || "plain"; ps.addEventListener("change", () => setPaper(i, ps.value, true));
+      bar.appendChild(ps);
+    }
+    bar.appendChild(btn("", () => pagePng(i), "ghost icon small", "image", "Save page " + (i + 1) + " as PNG"));
+    bar.appendChild(btn("", () => deletePage(i), "ghost icon small pn-del", "trash", "Delete page " + (i + 1)));
+    wrap.appendChild(bar);
     attachInput(inkC, i);
     box.appendChild(wrap); observer.observe(wrap);
   });
@@ -224,7 +324,7 @@ function drawStroke(x, s, k) {
   const pts = s.pts; if (pts.length < 3) return;
   x.save();
   x.lineCap = "round"; x.lineJoin = "round"; x.strokeStyle = s.color;
-  if (s.tool === "hl") { x.globalAlpha = .38; x.lineWidth = s.size * 5 * k; x.beginPath(); x.moveTo(pts[0] * k, pts[1] * k); for (let j = 3; j < pts.length; j += 3) x.lineTo(pts[j] * k, pts[j + 1] * k); x.stroke(); x.restore(); return; }
+  if (s.tool === "hl") { x.globalAlpha = .38; x.globalCompositeOperation = "multiply"; x.lineWidth = s.size * 5 * k; x.beginPath(); x.moveTo(pts[0] * k, pts[1] * k); for (let j = 3; j < pts.length; j += 3) x.lineTo(pts[j] * k, pts[j + 1] * k); x.stroke(); x.restore(); return; }
   if (pts.length === 3) { x.fillStyle = s.color; x.beginPath(); x.arc(pts[0] * k, pts[1] * k, s.size * k * .6, 0, 6.283); x.fill(); x.restore(); return; }
   // pressure-sensitive pen: short segments, each with its own width, smoothed through midpoints
   for (let j = 3; j < pts.length; j += 3) {
@@ -244,13 +344,55 @@ function redrawInk(i) {
   const c = wrap.querySelector(".pn-ink"), x = c.getContext("2d"), k = c.width / book.pages[i].w;
   x.clearRect(0, 0, c.width, c.height);
   book.pages[i].strokes.forEach((s) => drawStroke(x, s, k));
+  if (sel && sel.page === i) {
+    const b = selBox(); x.save(); x.setLineDash([6, 4]); x.strokeStyle = "#2f6fdb"; x.lineWidth = 1.5; x.fillStyle = "rgba(47,111,219,.06)";
+    x.fillRect(b[0] * k, b[1] * k, (b[2] - b[0]) * k, (b[3] - b[1]) * k); x.strokeRect(b[0] * k, b[1] * k, (b[2] - b[0]) * k, (b[3] - b[1]) * k); x.restore();
+  }
+}
+// ---------- selection (lasso) ----------
+function selBox() {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  sel.items.forEach((s) => { const pad = (s.tool === "hl" ? s.size * 2.5 : s.size) + 4; for (let j = 0; j < s.pts.length; j += 3) { x0 = Math.min(x0, s.pts[j] - pad); y0 = Math.min(y0, s.pts[j + 1] - pad); x1 = Math.max(x1, s.pts[j] + pad); y1 = Math.max(y1, s.pts[j + 1] + pad); } });
+  return [x0, y0, x1, y1];
+}
+function inPoly(poly, px, py) {
+  let inside = false;
+  for (let a = 0, b = poly.length - 2; a < poly.length; b = a, a += 2) {
+    const xa = poly[a], ya = poly[a + 1], xb = poly[b], yb = poly[b + 1];
+    if ((ya > py) !== (yb > py) && px < (xb - xa) * (py - ya) / (yb - ya) + xa) inside = !inside;
+  }
+  return inside;
+}
+// strokes with at least half their points inside the lasso
+function lassoPick(strokes, poly) {
+  return strokes.filter((s) => { let n = 0; for (let j = 0; j < s.pts.length; j += 3) if (inPoly(poly, s.pts[j], s.pts[j + 1])) n++; return n * 2 >= s.pts.length / 3; });
+}
+function clearSel() { if (!sel) return; const pg = sel.page; sel = null; if (book) { redrawInk(pg); swatches(); } }
+function shift(items, dx, dy) { items.forEach((s) => { for (let j = 0; j < s.pts.length; j += 3) { s.pts[j] = Math.round((s.pts[j] + dx) * 10) / 10; s.pts[j + 1] = Math.round((s.pts[j + 1] + dy) * 10) / 10; } }); }
+function deleteSel() {
+  if (!sel) return;
+  const list = book.pages[sel.page].strokes, items = [];
+  for (let j = list.length - 1; j >= 0; j--) if (sel.items.indexOf(list[j]) >= 0) { items.push({ s: list[j], at: j }); list.splice(j, 1); }
+  const pg = sel.page; sel = null; undoStack.push({ type: "erase", page: pg, items }); redoStack = []; saveSoon(); redrawInk(pg); swatches();
+}
+function recolour(c) {
+  if (!sel) return;
+  const items = sel.items.filter((s) => s.tool === "pen"); if (!items.length) return;
+  const from = items.map((s) => s.color); items.forEach((s) => { s.color = c; });
+  undoStack.push({ type: "colour", page: sel.page, items, from, to: c }); redoStack = []; saveSoon(); redrawInk(sel.page);
 }
 function attachInput(c, i) {
   let live = null;
   function pt(e) { const r = c.getBoundingClientRect(), p = book.pages[i]; return [(e.clientX - r.left) / r.width * p.w, (e.clientY - r.top) / r.height * p.h, e.pointerType === "pen" ? (e.pressure || .5) : .5]; }
   c.addEventListener("pointerdown", (e) => {
     if (e.button > 0 || (penOnly && e.pointerType === "touch")) return;
+    if (e.pointerType === "pen" && !penOnly && S3.store("pn-pen-only") === undefined) { S3.store("pn-pen-only", true); setPenOnly(true, false); }
     e.preventDefault(); c.setPointerCapture(e.pointerId); current = i; pos();
+    if (tool === "lasso") {
+      const p = pt(e);
+      if (sel && sel.page === i) { const b = selBox(); if (p[0] >= b[0] && p[0] <= b[2] && p[1] >= b[1] && p[1] <= b[3]) { live = { move: true, start: p, dx: 0, dy: 0 }; return; } }
+      clearSel(); live = { lasso: [p[0], p[1]] }; return;
+    }
     if (tool === "eraser") { live = { erase: [], page: i }; eraseAt(i, pt(e), live); return; }
     const p = pt(e);
     live = { page: i, s: { tool: tool === "hl" ? "hl" : "pen", color: tool === "hl" ? hl : ink, size, pts: [Math.round(p[0] * 10) / 10, Math.round(p[1] * 10) / 10, Math.round(p[2] * 100) / 100] } };
@@ -258,6 +400,18 @@ function attachInput(c, i) {
   });
   c.addEventListener("pointermove", (e) => {
     if (!live) return;
+    if (live.lasso) {
+      const p = pt(e), L = live.lasso; if (Math.hypot(p[0] - L[L.length - 2], p[1] - L[L.length - 1]) < 2) return;
+      L.push(p[0], p[1]); redrawInk(i);
+      const x = c.getContext("2d"), k = c.width / book.pages[i].w;
+      x.save(); x.setLineDash([5, 4]); x.strokeStyle = "#2f6fdb"; x.lineWidth = 1.5; x.beginPath(); x.moveTo(L[0] * k, L[1] * k);
+      for (let j = 2; j < L.length; j += 2) x.lineTo(L[j] * k, L[j + 1] * k); x.closePath(); x.stroke(); x.restore();
+      return;
+    }
+    if (live.move) {
+      const p = pt(e), dx = Math.round((p[0] - live.start[0]) * 10) / 10, dy = Math.round((p[1] - live.start[1]) * 10) / 10;
+      shift(sel.items, dx - live.dx, dy - live.dy); live.dx = dx; live.dy = dy; redrawInk(i); return;
+    }
     const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
     if (live.erase) { (evs.length ? evs : [e]).forEach((ev) => eraseAt(i, pt(ev), live)); return; }
     (evs.length ? evs : [e]).forEach((ev) => { const p = pt(ev), a = live.s.pts, n = a.length; if (Math.hypot(p[0] - a[n - 3], p[1] - a[n - 2]) < .4) return; a.push(Math.round(p[0] * 10) / 10, Math.round(p[1] * 10) / 10, Math.round(p[2] * 100) / 100); });
@@ -267,7 +421,9 @@ function attachInput(c, i) {
   });
   const end = () => {
     if (!live) return;
-    if (live.erase) { if (live.erase.length) { undoStack.push({ type: "erase", page: i, items: live.erase }); redoStack = []; saveSoon(); } }
+    if (live.lasso) { const items = live.lasso.length >= 6 ? lassoPick(book.pages[i].strokes, live.lasso) : []; sel = items.length ? { page: i, items } : null; redrawInk(i); swatches(); }
+    else if (live.move) { if (live.dx || live.dy) { undoStack.push({ type: "move", page: i, items: sel.items.slice(), dx: live.dx, dy: live.dy }); redoStack = []; saveSoon(); } }
+    else if (live.erase) { if (live.erase.length) { undoStack.push({ type: "erase", page: i, items: live.erase }); redoStack = []; saveSoon(); } }
     else { book.pages[i].strokes.push(live.s); undoStack.push({ type: "add", page: i, s: live.s }); redoStack = []; redrawInk(i); saveSoon(); }
     live = null;
   };
@@ -292,7 +448,11 @@ function eraseAt(i, p, live) {
 }
 function undo() {
   const op = undoStack.pop(); if (!op) return;
-  if (op.type === "add") { const l = book.pages[op.page].strokes, k = l.lastIndexOf(op.s); if (k >= 0) l.splice(k, 1); redrawInk(op.page); }
+  clearSel();
+  if (op.type === "move") { shift(op.items, -op.dx, -op.dy); redrawInk(op.page); }
+  else if (op.type === "colour") { op.items.forEach((s, n) => { s.color = op.from[n]; }); redrawInk(op.page); }
+  else if (op.type === "paper") setPaper(op.page, op.from);
+  else if (op.type === "add") { const l = book.pages[op.page].strokes, k = l.lastIndexOf(op.s); if (k >= 0) l.splice(k, 1); redrawInk(op.page); }
   else if (op.type === "erase") { const l = book.pages[op.page].strokes; op.items.slice().reverse().forEach((it) => l.splice(Math.min(it.at, l.length), 0, it.s)); redrawInk(op.page); }
   else if (op.type === "addpage") { book.pages.splice(op.at, 1); drawPages(); }
   else if (op.type === "delpage") { book.pages.splice(op.at, 0, op.page); drawPages(); }
@@ -300,7 +460,11 @@ function undo() {
 }
 function redo() {
   const op = redoStack.pop(); if (!op) return;
-  if (op.type === "add") { book.pages[op.page].strokes.push(op.s); redrawInk(op.page); }
+  clearSel();
+  if (op.type === "move") { shift(op.items, op.dx, op.dy); redrawInk(op.page); }
+  else if (op.type === "colour") { op.items.forEach((s) => { s.color = op.to; }); redrawInk(op.page); }
+  else if (op.type === "paper") setPaper(op.page, op.to);
+  else if (op.type === "add") { book.pages[op.page].strokes.push(op.s); redrawInk(op.page); }
   else if (op.type === "erase") { const l = book.pages[op.page].strokes; op.items.forEach((it) => { const k = l.indexOf(it.s); if (k >= 0) l.splice(k, 1); }); redrawInk(op.page); }
   else if (op.type === "addpage") { book.pages.splice(op.at, 0, op.page); drawPages(); }
   else if (op.type === "delpage") { book.pages.splice(op.at, 1); drawPages(); }
@@ -313,6 +477,50 @@ function addPage() {
   book.pages.splice(at, 0, pg); undoStack.push({ type: "addpage", at, page: pg }); redoStack = []; saveSoon();
   drawPages(); const el = $("#pn-pages").children[at]; if (el) el.scrollIntoView({ block: "start", behavior: "smooth" });
   S3.toast("Page added");
+}
+function setPaper(i, paper, user) {
+  const p = book.pages[i]; if (!p || p.kind !== "paper" || p.paper === paper) return;
+  if (user) { undoStack.push({ type: "paper", page: i, from: p.paper, to: paper }); redoStack = []; }
+  p.paper = paper; saveSoon();
+  const wrap = $("#pn-pages").children[i]; if (!wrap) return;
+  const ps = wrap.querySelector(".pn-paper"); if (ps) ps.value = paper;
+  rendered.delete(wrap); renderPage(i);
+}
+// draw a whole page (background and writing) into a new canvas, k pixels per pt
+async function pageCanvas(i, k) {
+  const p = book.pages[i], c = document.createElement("canvas"); c.width = Math.max(1, Math.round(p.w * k)); c.height = Math.max(1, Math.round(p.h * k));
+  const x = c.getContext("2d"); x.fillStyle = "#ffffff"; x.fillRect(0, 0, c.width, c.height);
+  if (p.kind === "pdf" && pdfDoc) { try { const pg = await pdfDoc.getPage(p.src + 1); await pg.render({ canvasContext: x, viewport: pg.getViewport({ scale: k }) }).promise; } catch (e) { /* stays white */ } }
+  else drawPaper(x, p.paper || "plain", c.width, c.height, k);
+  p.strokes.forEach((s) => drawStroke(x, s, k));
+  return c;
+}
+async function pagePng(i) {
+  if (!book || !book.pages[i]) return;
+  const c = await pageCanvas(i, Math.min(3, 2400 / Math.max(book.pages[i].w, book.pages[i].h)));
+  c.toBlob((blob) => { if (!blob) return S3.toast("Couldn't make the picture", "error"); S3.download(blob, fileBase(book.title) + "-page-" + (i + 1) + ".png"); S3.done(); }, "image/png");
+}
+function goPage(i) { const el = $("#pn-pages").children[i]; if (el) { current = i; pos(); el.scrollIntoView({ block: "start" }); window.scrollBy(0, -120); } }
+function pagesSheet() {
+  const m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "All pages" });
+  const grid = h("div", { "class": "pn-thumbs" });
+  const sheet = h("div", { "class": "s3-sheet pn-navsheet" }, [h("div", { "class": "row between" }, [h("h2", { text: "Pages (" + book.pages.length + ")" }), btn("", close, "ghost icon", "x", "Close")]), grid]);
+  const io = new IntersectionObserver((en) => en.forEach(async (e) => {
+    if (!e.isIntersecting || e.target.getAttribute("data-done")) return; e.target.setAttribute("data-done", "1"); io.unobserve(e.target);
+    const i = +e.target.getAttribute("data-i"), c = await pageCanvas(i, 110 / book.pages[i].w); c.setAttribute("aria-hidden", "true");
+    e.target.querySelector(".pn-thumb-img").appendChild(c);
+  }), { root: sheet, rootMargin: "200px" });
+  book.pages.forEach((p, i) => {
+    const b = h("button", { type: "button", "class": "pn-thumb" + (i === current ? " on" : ""), "data-i": String(i), "aria-label": "Go to page " + (i + 1), onclick: () => { close(); goPage(i); } },
+      [h("span", { "class": "pn-thumb-img", style: "aspect-ratio:" + p.w + "/" + p.h }), h("span", { text: String(i + 1) })]);
+    grid.appendChild(b); io.observe(b);
+  });
+  m.appendChild(sheet);
+  function close() { io.disconnect(); m.remove(); document.removeEventListener("keydown", onKey); }
+  function onKey(e) { if (e.key === "Escape") close(); }
+  m.addEventListener("click", (e) => { if (e.target === m) close(); });
+  document.addEventListener("keydown", onKey); document.body.appendChild(m);
+  const on = grid.children[current]; if (on) on.scrollIntoView({ block: "nearest" });
 }
 function deletePage(i) {
   if (book.pages.length < 2) return S3.toast("A notebook needs at least one page", "error");
@@ -387,11 +595,39 @@ document.addEventListener("keydown", (e) => {
     else if (e.key === "y" || e.key === "Y") { e.preventDefault(); redo(); }
     return;
   }
+  if (e.altKey) return;
   const k = e.key.toLowerCase();
-  if (k === "p") setTool("pen"); else if (k === "h") setTool("hl"); else if (k === "e") setTool("eraser");
-  else if (k === "+" || k === "=") setZoom(zoom * 1.2); else if (k === "-") setZoom(zoom / 1.2);
+  if (k === "p") setTool("pen"); else if (k === "h") setTool("hl"); else if (k === "e") setTool("eraser"); else if (k === "l") setTool("lasso");
+  else if (k === "+" || k === "=") setZoom(zoom * 1.2); else if (k === "-") setZoom(zoom / 1.2); else if (k === "0") setZoom(fitZoom());
+  else if (k === "g") pagesSheet(); else if (e.key === "?") help(); else if (e.key === "Escape") clearSel();
+  else if ((e.key === "Delete" || e.key === "Backspace") && sel) { e.preventDefault(); deleteSel(); }
 });
 window.addEventListener("resize", S3.debounce(() => { if (book) { const z = fitZoom(); if (Math.abs(z - zoom) / zoom > .15) setZoom(z); } }, 300));
 
-window.PN = { buildPdf, mapper, cleanStroke, state: () => ({ book, zoom, tool }) };
+window.PN = { buildPdf, mapper, cleanStroke, cleanBook, state: () => ({ book, zoom, tool, sel }) };
+window.S3_SELFTEST = async function () {
+  let ok = true; const expect = (c) => { if (!c) ok = false; };
+  try {
+    const box = { x: 0, y: 0, width: 600, height: 800 }, near = (a, b) => Math.abs(a[0] - b[0]) < 1e-6 && Math.abs(a[1] - b[1]) < 1e-6;
+    expect(near(mapper(0, box)(10, 20), [10, 780]));
+    expect(near(mapper(90, box)(10, 20), [20, 10]));
+    expect(near(mapper(180, box)(10, 20), [590, 20]));
+    expect(near(mapper(270, box)(10, 20), [580, 790]));
+    expect(near(mapper(0, { x: 5, y: 7, width: 100, height: 100 })(0, 0), [5, 107]));
+    expect(cleanStroke({ pts: [1, 2] }) === null);
+    const cs = cleanStroke({ tool: "x", color: "red", size: 999, pts: [1.234, 2, .5, 3, 4, .5] });
+    expect(cs.tool === "pen" && cs.color === "#1b1f24" && cs.size === 40 && cs.pts[0] === 1.2);
+    expect(hits([0, 0, .5, 100, 0, .5], 50, 3, 4) && !hits([0, 0, .5, 100, 0, .5], 50, 9, 4));
+    const sq = [0, 0, 10, 0, 10, 10, 0, 10];
+    expect(inPoly(sq, 5, 5) && !inPoly(sq, 15, 5));
+    expect(lassoPick([{ pts: [2, 2, .5, 8, 8, .5] }, { pts: [20, 20, .5, 30, 30, .5] }], sq).length === 1);
+    const bk = cleanBook({ title: "T", pages: [{ kind: "paper", paper: "grid", w: 200, h: 300, strokes: [{ pts: [10, 10, .5, 50, 50, .5] }, { pts: [] }] }, { kind: "weird", paper: "no", w: -1 }] });
+    expect(bk.pages.length === 2 && bk.pages[0].strokes.length === 1 && bk.pages[1].paper === "plain" && bk.pages[1].w === 595.28);
+    expect(new Uint8Array(unb64(b64(new Uint8Array([0, 1, 254, 255]).buffer)))[2] === 254);
+    const bytes = await buildPdf(bk, null), back = await PL.PDFDocument.load(bytes);
+    expect(back.getPageCount() === 2 && back.getPage(0).getWidth() === 200);
+    expect(fileBase("Ünits: week 1.pdf") === "nits-week-1");
+  } catch (e) { ok = false; }
+  return ok;
+};
 showLibrary();
