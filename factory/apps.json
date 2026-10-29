@@ -68,5 +68,12 @@
   "tagline": "Edit SRT/VTT on a timeline and burn captions in",
   "category": "Audio & Video",
   "alt": "Kapwing"
+ },
+ {
+  "slug": "beat-maker",
+  "name": "Beat Maker",
+  "tagline": "Drum machine, synths and piano roll, WAV export",
+  "category": "Audio & Video",
+  "alt": "FL Studio"
  }
 ]
