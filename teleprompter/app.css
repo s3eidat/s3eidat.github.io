@@ -40,3 +40,14 @@ body.tp-open { overflow: hidden; }
 .tp-ov.tp-hide { cursor: none; }
 @media (max-width: 560px) { .tp-ctl { gap: 4px; padding: 6px; } .tp-time { width: 100%; text-align: center; } }
 .tp-marker.is-flip .tp-arrow { left: auto; right: 4px; transform: translateY(-50%) scaleX(-1); }
+.tp-help { width: 38px; padding: 0; font-weight: 700; }
+.tp-lib-btns { gap: 6px; }
+.tp-del:hover:not(:disabled) { color: var(--danger); }
+.tp-keys { display: grid; gap: 8px; margin-bottom: 12px; }
+.tp-keys kbd { min-width: 150px; text-align: center; }
+.tp-script p.tp-cue { font-size: .5em; font-style: italic; opacity: .55; }
+.tp-script b { font-weight: 850; text-decoration: underline; text-decoration-thickness: .06em; text-underline-offset: .12em; }
+.tp-cam { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+.tp-ov.has-cam .tp-mirror { background: rgba(0, 0, 0, .5); }
+.tp-ctl .btn.tp-rec.is-on { background: #e5484d; color: #fff; border-color: transparent; font-variant-numeric: tabular-nums; }
+.tp-ov.has-cam .tp-script { color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.8); }

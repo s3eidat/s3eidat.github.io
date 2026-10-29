@@ -17,7 +17,19 @@
   }
   var saved = S3.store(KEY) || {};
   if (!saved.set && window.innerWidth < 600) saved.set = { size: 34 }; // first visit on a phone: smaller text
-  var st = { title: typeof saved.title === "string" ? saved.title : "", text: typeof saved.text === "string" ? saved.text : SAMPLE, set: cleanSet(saved.set) };
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+  function cleanDoc(d) { return { id: typeof d.id === "string" && d.id ? d.id.slice(0, 40) : uid(), title: typeof d.title === "string" ? d.title.slice(0, 120) : "", text: typeof d.text === "string" ? d.text.slice(0, 500000) : "" }; }
+  // Accepts stored data in either the old one-script format or the library format.
+  function load(d) {
+    d = d && typeof d === "object" ? d : {};
+    var list = Array.isArray(d.scripts) ? d.scripts.filter(function (x) { return x && typeof x === "object"; }).slice(0, 200).map(cleanDoc)
+      : typeof d.text === "string" ? [cleanDoc(d)] : [];
+    if (!list.length) list = [{ id: uid(), title: "", text: SAMPLE }];
+    var cur = list.some(function (x) { return x.id === d.cur; }) ? d.cur : list[0].id;
+    return { scripts: list, cur: cur, set: cleanSet(d.set) };
+  }
+  var st = load(saved);
+  function doc() { for (var i = 0; i < st.scripts.length; i++) if (st.scripts[i].id === st.cur) return st.scripts[i]; return st.scripts[0]; }
   var save = S3.debounce(function () { if (S3.store(KEY, st) === undefined) S3.toast("Couldn't save in this browser. Copy your script somewhere safe.", "error"); }, 300);
 
   function words(t) { var m = String(t).match(/[^\s]+/g); return m ? m.length : 0; }
@@ -31,17 +43,25 @@
   function paragraphs(text) {
     return String(text).replace(/\r\n?/g, "\n").split(/\n/).map(function (l) { return l.trim(); });
   }
+  // A line in [square brackets] is a cue for you (shown dim and small); **text** is shown bold.
+  function line(l) {
+    var p = h("p", { dir: "auto", "class": /^\[[^\]]*\]$/.test(l) ? "tp-cue" : null });
+    var parts = l.split("**");
+    if (parts.length % 2 === 0) { parts[parts.length - 2] += "**" + parts.pop(); } // unclosed ** stays as typed
+    parts.forEach(function (t, i) { if (t) p.appendChild(i % 2 ? h("b", { text: t }) : document.createTextNode(t)); });
+    return p;
+  }
   function renderScript(el, text) {
     el.textContent = "";
     paragraphs(text).forEach(function (l) {
-      el.appendChild(l ? h("p", { dir: "auto", text: l }) : h("p", { "class": "tp-gap", "aria-hidden": "true" }));
+      el.appendChild(l ? line(l) : h("p", { "class": "tp-gap", "aria-hidden": "true" }));
     });
   }
 
   // ---------- editor page ----------
   var ta, stats;
   function updateStats() {
-    var w = words(st.text);
+    var w = words(doc().text);
     stats.textContent = w + (w === 1 ? " word" : " words") + " · about " + fmt(w / WPM * 60) + " to read aloud";
   }
   function slider(label, key, min, max, step, unit) {
@@ -67,28 +87,31 @@
   function build() {
     stats = $("#tp-stats");
     var title = $("#tp-title");
-    title.value = st.title;
-    title.addEventListener("input", function () { st.title = title.value.slice(0, 120); save(); });
+    title.value = doc().title;
+    title.addEventListener("input", function () { doc().title = title.value.slice(0, 120); save(); var o = $("#tp-lib option[value=\"" + st.cur + "\"]"); if (o) o.textContent = doc().title || firstWords(doc().text) || "Untitled script"; });
     $("#tp-actions").appendChild(btn("Start prompter", function () { prompt(0); }, "primary big", "play"));
 
     ta = h("textarea", { "class": "textarea prose tp-text", dir: "auto", spellcheck: "true", placeholder: "Paste or type your script…", "aria-label": "Script" });
-    ta.value = st.text;
-    ta.addEventListener("input", function () { st.text = ta.value; updateStats(); save(); });
+    ta.value = doc().text;
+    ta.addEventListener("input", function () { doc().text = ta.value; updateStats(); save(); });
     var ed = $("#tp-editor");
     ed.appendChild(ta);
     ed.appendChild(h("div", { "class": "row between tp-edfoot" }, [
       h("span", { "class": "faint", text: "Blank lines become pauses. Start from the cursor with Ctrl+Enter." }),
       btn("Clear", function () {
-        var before = st.text;
-        ta.value = ""; st.text = ""; updateStats(); save(); ta.focus();
+        var d = doc(), before = d.text;
+        ta.value = ""; d.text = ""; updateStats(); save(); ta.focus();
         var t = S3.toast("Script cleared ");
-        t.appendChild(h("button", { "class": "btn small", type: "button", onclick: function () { ta.value = st.text = before; updateStats(); save(); t.remove(); } }, ["Undo"]));
+        t.appendChild(h("button", { "class": "btn small", type: "button", onclick: function () { d.text = before; if (doc() === d) ta.value = before; updateStats(); save(); t.remove(); } }, ["Undo"]));
       }, "ghost small", "trash")
     ]));
     ta.addEventListener("keydown", function (e) {
       if ((e.ctrlKey || e.metaKey) && e.key === "Enter") { e.preventDefault(); prompt(startFraction()); }
     });
 
+    $("#tp-side").appendChild(h("div", { "class": "card stack", id: "tp-lib" }));
+    library();
+    $("#tp-actions").insertBefore(btn("?", help, "ghost tp-help", "", "Keyboard shortcuts (?)"), $("#tp-actions").firstChild);
     $("#tp-side").appendChild(h("div", { "class": "card stack" }, [
       h("h2", { text: "Prompter" }),
       slider("Speed", "speed", 1, 30, 1, ""),
@@ -102,6 +125,62 @@
     ]));
     updateStats();
   }
+  // ---------- script library ----------
+  function fileBase(t) { return (t || "").replace(/[^A-Za-z0-9 _.-]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 60).replace(/ /g, "-") || "script"; }
+  function show() { $("#tp-title").value = doc().title; ta.value = doc().text; updateStats(); library(); }
+  function pick(id) { st.cur = id; save(); show(); }
+  function library() {
+    var box = $("#tp-lib"); box.textContent = "";
+    var sel = h("select", { "class": "select", "aria-label": "Script" }, st.scripts.map(function (x) { return h("option", { value: x.id, text: x.title || firstWords(x.text) || "Untitled script" }); }));
+    sel.value = st.cur;
+    sel.addEventListener("change", function () { pick(sel.value); });
+    var file = h("input", { type: "file", accept: ".txt,.md,.text,text/plain,text/markdown", hidden: true });
+    file.addEventListener("change", function () {
+      var f = file.files[0]; file.value = ""; if (!f) return;
+      if (f.size > 2e6) return S3.toast("That file is too big for a script", "error");
+      S3.readFile(f, "text").then(function (txt) {
+        var d = { id: uid(), title: f.name.replace(/\.[^.]+$/, "").slice(0, 120), text: txt.slice(0, 500000) };
+        st.scripts.unshift(d); pick(d.id); S3.toast("Opened " + f.name);
+      });
+    });
+    box.appendChild(h("h2", { text: "Scripts" }));
+    box.appendChild(sel);
+    box.appendChild(h("div", { "class": "row tp-lib-btns" }, [
+      btn("New", function () { var d = { id: uid(), title: "", text: "" }; st.scripts.unshift(d); pick(d.id); ta.focus(); }, "small", "plus"),
+      btn("Open .txt", function () { file.click(); }, "small", "upload"),
+      btn("Save .txt", function () { S3.download(doc().text, fileBase(doc().title || firstWords(doc().text)) + ".txt", "text/plain;charset=utf-8"); S3.done(); }, "small", "download"),
+      btn("", function () {
+        var d = doc(), at = st.scripts.indexOf(d);
+        st.scripts.splice(at, 1);
+        if (!st.scripts.length) st.scripts.push({ id: uid(), title: "", text: "" });
+        pick(st.scripts[Math.min(at, st.scripts.length - 1)].id);
+        var t = S3.toast("Script deleted ");
+        t.appendChild(h("button", { "class": "btn small", type: "button", onclick: function () { st.scripts.splice(at, 0, d); pick(d.id); t.remove(); } }, ["Undo"]));
+      }, "small ghost tp-del", "trash", "Delete this script"),
+      file
+    ]));
+  }
+  function firstWords(t) { return String(t || "").trim().split(/\s+/).slice(0, 6).join(" ").slice(0, 50); }
+  function help() {
+    var keys = [["Ctrl+Enter", "Start from the cursor (in the editor)"], ["Space / Enter / tap", "Play or pause"], ["↑ ↓", "Faster / slower"], ["← → / Page Up, Page Down", "Back / forward (clickers and pedals)"],
+      ["+ −", "Bigger / smaller text"], ["M", "Mirror left–right"], ["C", "Camera on/off"], ["R", "Start / stop recording"], ["Home / End", "Start / end of the script"], ["Esc", "Close the prompter"]];
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Keyboard shortcuts" });
+    var sheet = h("div", { "class": "s3-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: "Keyboard shortcuts" }), btn("", close, "ghost icon", "x", "Close")]),
+      h("div", { "class": "tp-keys" }, keys.map(function (k) { return h("div", { "class": "row" }, [h("kbd", { text: k[0] }), h("span", { "class": "muted", text: k[1] })]); })),
+      h("p", { "class": "faint", text: "Write a line in [square brackets] for a cue to yourself, like [smile] or [pause]; it shows small and dim. Put **two stars** around words to show them bold." })]);
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m); sheet.querySelector("button").focus();
+  }
+  document.addEventListener("keydown", function (e) {
+    var tag = e.target && e.target.tagName;
+    if (P || e.ctrlKey || e.metaKey || e.altKey || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || $(".s3-modal")) return;
+    if (e.key === "?") { e.preventDefault(); help(); }
+  });
+
   // Where the cursor is in the script, as a fraction of the text, so Ctrl+Enter starts from there.
   function startFraction() {
     var t = ta.value, at = ta.selectionStart || 0;
@@ -113,13 +192,13 @@
   var P = null; // the open prompter, if any
   function prompt(fromFraction) {
     if (P) return;
-    if (!st.text.trim()) { S3.toast("Write or paste a script first", "error"); ta.focus(); return; }
+    if (!doc().text.trim()) { S3.toast("Write or paste a script first", "error"); ta.focus(); return; }
     var s = st.set, colors = SCHEMES[s.scheme];
     var ov = h("div", { "class": "tp-ov", role: "dialog", "aria-modal": "true", "aria-label": "Prompter", style: "background:" + colors[0] + ";color:" + colors[1] });
     var mirror = h("div", { "class": "tp-mirror" });
     var roll = h("div", { "class": "tp-roll" });
     var script = h("div", { "class": "tp-script" });
-    renderScript(script, st.text);
+    renderScript(script, doc().text);
     roll.appendChild(script); mirror.appendChild(roll); ov.appendChild(mirror);
     var marker = h("div", { "class": "tp-marker" }, [h("span", { "class": "tp-arrow" }, ["▶"])]);
     ov.appendChild(marker);
@@ -130,13 +209,15 @@
     var time = h("span", { "class": "tp-time mono" });
     var spd = h("span", { "class": "tp-spd" });
     var pp = btn("", toggle, "primary icon", "play", "Play / pause (Space)");
+    var camBtn = btn("Camera", camToggle, "small", "", "Camera on/off (C)");
+    var recBtn = btn("Record", recToggle, "small tp-rec", "", "Start/stop recording (R)"); recBtn.hidden = true;
     var mBtn = btn("Mirror", function () { s.mirrorX = !s.mirrorX; apply(); save(); }, "small", "", "Mirror (M)");
     var ctl = h("div", { "class": "tp-ctl" }, [
       btn("", close, "icon", "x", "Close (Esc)"),
       btn("", function () { jump(-1); }, "icon", "", "Back (←)"), pp, btn("", function () { jump(1); }, "icon", "", "Forward (→)"),
       h("span", { "class": "tp-grp" }, [btn("−", function () { speed(-1); }, "small", "", "Slower (↓)"), spd, btn("+", function () { speed(1); }, "small", "", "Faster (↑)")]),
       h("span", { "class": "tp-grp" }, [btn("A−", function () { size(-4); }, "small", "", "Smaller text (−)"), btn("A+", function () { size(4); }, "small", "", "Bigger text (+)")]),
-      mBtn, btn("", restart, "small icon", "refresh", "Back to start (Home)"), time
+      mBtn, btn("", restart, "small icon", "refresh", "Back to start (Home)"), camBtn, recBtn, time
     ]);
     var ctlBtns = S3.$$(".btn", ctl); ctlBtns[1].textContent = "«"; ctlBtns[3].textContent = "»";
     ov.appendChild(ctl);
@@ -209,6 +290,59 @@
       if (lock || !navigator.wakeLock) return;
       navigator.wakeLock.request("screen").then(function (l) { lock = l; l.addEventListener("release", function () { lock = null; }); }, function () {});
     }
+    // ---- camera: shown behind the script; the recording is the camera video only ----
+    var cam = null, rec = null, recT = 0;
+    function camToggle() { if (cam) camOff(); else camOn(); }
+    function camOn() {
+      var md = navigator.mediaDevices;
+      if (!md || !md.getUserMedia || !window.isSecureContext) return S3.toast("This browser can't use the camera here", "error");
+      camBtn.disabled = true;
+      var want = { video: { facingMode: "user", width: { ideal: 1920 }, height: { ideal: 1080 } }, audio: true };
+      md.getUserMedia(want).catch(function () { return md.getUserMedia({ video: true, audio: false }); }).then(function (stream) {
+        if (!P) { stream.getTracks().forEach(function (t) { t.stop(); }); return; }
+        var v = h("video", { "class": "tp-cam", autoplay: true, playsinline: true });
+        v.muted = true; v.srcObject = stream;
+        ov.insertBefore(v, mirror); ov.classList.add("has-cam");
+        cam = { stream: stream, video: v };
+        camBtn.setAttribute("aria-pressed", "true"); recBtn.hidden = false;
+        if (!stream.getAudioTracks().length) S3.toast("Camera on, without microphone");
+      }, function () { S3.toast("Camera permission was not given", "error"); }).then(function () { camBtn.disabled = false; });
+    }
+    function camOff() {
+      if (rec) recStop();
+      if (cam) { cam.stream.getTracks().forEach(function (t) { t.stop(); }); cam.video.remove(); cam = null; }
+      ov.classList.remove("has-cam"); camBtn.setAttribute("aria-pressed", "false"); recBtn.hidden = true;
+    }
+    function recType() {
+      if (!window.MediaRecorder) return null;
+      return ["video/webm;codecs=vp9,opus", "video/webm;codecs=vp8,opus", "video/webm", "video/mp4"].filter(function (t) { return MediaRecorder.isTypeSupported(t); })[0] || "";
+    }
+    function recToggle() { if (rec) recStop(); else recStart(); }
+    function recStart() {
+      var type = recType();
+      if (!cam || type === null) return S3.toast("This browser can't record video", "error");
+      var chunks = [], r;
+      try { r = type ? new MediaRecorder(cam.stream, { mimeType: type }) : new MediaRecorder(cam.stream); } catch (e) { return S3.toast("This browser can't record video", "error"); }
+      r.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+      r.onstop = function () {
+        var mime = r.mimeType || type || "video/webm", ext = /mp4/.test(mime) ? "mp4" : "webm", d = new Date();
+        var stamp = d.getFullYear() + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0") + "-" + String(d.getHours()).padStart(2, "0") + String(d.getMinutes()).padStart(2, "0");
+        S3.download(new Blob(chunks, { type: mime.split(";")[0] }), fileBase(doc().title || "recording") + "-" + stamp + "." + ext);
+        S3.toast("Recording saved"); S3.done();
+      };
+      r.start(1000); rec = r;
+      var t0 = Date.now();
+      recBtn.classList.add("is-on"); recBtn.textContent = "● 0:00";
+      recT = setInterval(function () { recBtn.textContent = "● " + fmt((Date.now() - t0) / 1000); }, 500);
+      if (!playing && !count) toggle(); // recording starts the countdown and the scroll
+    }
+    function recStop() {
+      clearInterval(recT);
+      if (rec && rec.state !== "inactive") rec.stop();
+      rec = null; recBtn.classList.remove("is-on"); recBtn.textContent = "Record";
+      if (playing) setPlaying(false);
+    }
+
     function onKey(e) {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       var k = e.key, handled = true;
@@ -221,6 +355,8 @@
       else if (k === "-" || k === "_") size(-4);
       else if (k === "m" || k === "M") { s.mirrorX = !s.mirrorX; apply(); save(); }
       else if (k === "Home") restart();
+      else if (k === "c" || k === "C") camToggle();
+      else if ((k === "r" || k === "R") && cam) recToggle();
       else if (k === "End") { pos = max; draw(); }
       else if (k === "Escape") close();
       else handled = false;
@@ -241,7 +377,7 @@
     var onResize = S3.debounce(function () { var frac = max ? pos / max : 0; apply(); pos = frac * max; draw(); }, 100);
     window.addEventListener("resize", onResize);
     function close() {
-      stopCount(); cancelAnimationFrame(raf); clearTimeout(hideT);
+      camOff(); stopCount(); cancelAnimationFrame(raf); clearTimeout(hideT);
       document.removeEventListener("keydown", onKey, true); window.removeEventListener("resize", onResize);
       if (lock) lock.release().catch(function () {});
       if (document.fullscreenElement && document.exitFullscreen) document.exitFullscreen().catch(function () {});
@@ -255,7 +391,7 @@
     pos = Math.max(0, Math.min(max, (fromFraction || 0) * script.offsetHeight));
     if (fromFraction) {
       // snap to the paragraph that holds the cursor
-      var target = Math.round(fromFraction * st.text.length), seen = 0, ps = S3.$$("p", script), lines = paragraphs(st.text);
+      var target = Math.round(fromFraction * doc().text.length), seen = 0, ps = S3.$$("p", script), lines = paragraphs(doc().text);
       for (var i = 0; i < lines.length; i++) { if (seen + lines[i].length >= target) { pos = Math.min(max, ps[i].offsetTop); break; } seen += lines[i].length + 1; }
     }
     draw(); setPlaying(false); pp.focus();
@@ -264,5 +400,19 @@
   }
 
   build();
+  window.S3_SELFTEST = async function () {
+    try {
+      var a = load({ title: "Old", text: "Hello there" }), b = load(null), c = load({ scripts: [{ id: "x", text: "1" }, { id: "y", title: "Two", text: "2" }], cur: "y", set: { speed: 999, scheme: "nope" } });
+      var ok = a.scripts.length === 1 && a.scripts[0].title === "Old" && a.scripts[0].text === "Hello there" && b.scripts[0].text === SAMPLE &&
+        c.cur === "y" && c.scripts.length === 2 && c.set.speed === 30 && c.set.scheme === "dark";
+      ok = ok && words("  one two\n three ") === 3 && paragraphs("a\r\nb\rc").length === 3;
+      var cue = line("[smile]"), bold = line("say **this** now"), open = line("a ** b"), ar = line("مرحبا **بكم**");
+      ok = ok && cue.className === "tp-cue" && bold.querySelector("b").textContent === "this" && bold.textContent === "say this now" &&
+        !open.querySelector("b") && open.textContent === "a ** b" && ar.querySelector("b").textContent === "بكم" && ar.getAttribute("dir") === "auto";
+      var el = document.createElement("div"); renderScript(el, "One\n\n<b>x</b>");
+      ok = ok && el.children.length === 3 && el.children[1].className === "tp-gap" && el.children[2].textContent === "<b>x</b>" && !el.querySelector("b");
+      return ok;
+    } catch (e) { return false; }
+  };
   window.TP = { state: function () { return st; }, paragraphs: paragraphs, words: words };
 })();
