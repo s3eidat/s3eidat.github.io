@@ -1,6 +1,4 @@
-# Base — TODO
+# Base — later (could)
 
-Core and full done. For `launched`: final test, list it (apps.json, kit.js TOOLS, hub.js FLAGSHIP, Arabic hub name,
-guide, sitemaps, launch posts), screenshot.png once the header shows the tool name.
-
-Later (could): formulas, rollups and lookups, group by in grid, forms, timeline view, print.
+Launched 2026-10-29. Ideas not built yet: formulas, rollups and lookups, group by in grid, forms, timeline view,
+print, virtual scrolling for very large tables (the grid pages 500 rows at a time today).

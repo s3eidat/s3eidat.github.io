@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Free Online Database, No Record Limit: an Airtable Alternative</title>
+<meta name="description" content="Build tables with typed fields, linked records and attachments, then view them as a grid, kanban, calendar or gallery. Free, no sign-up.">
+<link rel="canonical" href="https://s3eidat.github.io/guides/base/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/kit/kit.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Is there a limit on records?", "acceptedAnswer": {"@type": "Answer", "text": "There is no record cap in the tool. The only limit is the storage your browser gives the page; large attachments use the most of it. Big tables show in the grid 500 rows at a time."}},
+    {"@type": "Question", "name": "Can I link records between tables?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Add a field of type Link to another table. A matching field appears in the other table, and the links show on both sides and stay in sync."}},
+    {"@type": "Question", "name": "Can I import my Airtable or Excel data?", "acceptedAnswer": {"@type": "Answer", "text": "Yes, through CSV. Export a CSV from Airtable, Excel or Google Sheets and press Import CSV. Field types such as numbers, dates, emails, checkboxes and option lists are guessed, and you can change any type afterwards. You can also paste a block of cells straight into the grid."}},
+    {"@type": "Question", "name": "Does it have formulas or automations?", "acceptedAnswer": {"@type": "Answer", "text": "Not yet. There are no formula, rollup or lookup fields, no forms and no automations. The sum row at the bottom of the grid adds up number fields for the records you can see."}},
+    {"@type": "Question", "name": "Can I share a base with my team?", "acceptedAnswer": {"@type": "Answer", "text": "There is no live sharing because nothing is stored on a server. Download a backup file (attachments included) and send it; the other person opens it from the base menu. You can also export any view as CSV."}}
+  ]
+}
+</script>
+</head>
+<body data-more="off">
+<main class="s3-main prose">
+  <h1>A free online database with no record limit</h1>
+  <p>If you like the idea of Airtable but not the record cap on the free plan or the price per seat, open <b>Base</b>. It gives you tables with real field types, links between tables, attachments and four ways to look at the same records. There is no account, and your data stays in your browser on your own device.</p>
+  <p><a class="btn primary big" href="/base/">Open Base</a></p>
+
+  <h2>Step by step</h2>
+  <ol>
+    <li>Open <a href="/base/">Base</a>. The first time, it shows a small Contacts example. Open the base menu at the top left to start a blank base or the Content calendar or Inventory template.</li>
+    <li>Click the <b>+</b> at the end of the column names to add a field and pick its type: text, long text, number, currency, percent, single or multiple select, date, checkbox, URL, email, phone, rating, link to another table or attachment.</li>
+    <li>Type into the grid like a spreadsheet: arrows and Tab move, Enter edits, and typing over a cell replaces it. Press <b>⤢</b> or Space to open the whole record.</li>
+    <li>Use <b>Filter</b>, <b>Sort</b> and <b>Fields</b> to shape the view. Each view remembers its own settings.</li>
+    <li>Open the view menu to add a <b>Kanban</b> view (cards stacked by a single select such as Status, which you can drag between columns), a <b>Calendar</b> (records on their date, which you can drag to another day) or a <b>Gallery</b> (cards with the first picture from an attachment field).</li>
+    <li>Bring data in with <b>Import CSV</b> or by pasting cells from a spreadsheet, and take it out with <b>CSV</b>. Press <b>Backup</b> to save everything, attachments included, as one file.</li>
+  </ol>
+
+  <h2>Who it helps</h2>
+  <ul>
+    <li><b>Small shops.</b> Products, suppliers and stock in linked tables, with product photos in a gallery.</li>
+    <li><b>Content and social media teams of one.</b> A posts table with status, channels and publish dates, viewed as a board and a calendar.</li>
+    <li><b>Freelancers and clubs.</b> Contacts, members or clients with stages and notes, instead of a messy spreadsheet.</li>
+    <li><b>Students and researchers.</b> Reading lists, survey results or lab samples with proper types, filters and sorting.</li>
+  </ul>
+
+  <h2>Why it's private</h2>
+  <p>Base is a static page. Tables and attachments are stored in your browser's own storage (IndexedDB) on this device and are never uploaded. The page's security policy blocks it from sending data to other websites, CSV files are read on your device, and it works offline after the first visit. Clearing your browser's site data deletes your bases, so download a backup now and then.</p>
+
+  <h2>Tips and limits</h2>
+  <ul>
+    <li><b>Change a field type</b> by clicking its column name and choosing Edit field. Values are converted through their text, and Ctrl+Z undoes it.</li>
+    <li><b>Dates</b> typed or imported as 05/11/2026 are read as day/month/year, unless that is impossible.</li>
+    <li><b>New records follow the view:</b> adding a record while a filter like "Status is Done" is on fills in that status.</li>
+    <li><b>The first field</b> is the record's name; it is used in links, cards and the calendar.</li>
+    <li><b>Not included yet:</b> formulas, rollups and lookups, forms, automations, comments, live sharing or sync between devices.</li>
+    <li>Press <b>?</b> in the app for all keyboard shortcuts.</li>
+  </ul>
+
+  <h2>FAQ</h2>
+  <h3>Is there a limit on records?</h3>
+  <p>There is no record cap in the tool. The only limit is the storage your browser gives the page; large attachments use the most of it. Big tables show in the grid 500 rows at a time.</p>
+  <h3>Can I link records between tables?</h3>
+  <p>Yes. Add a field of type Link to another table. A matching field appears in the other table, and the links show on both sides and stay in sync.</p>
+  <h3>Can I import my Airtable or Excel data?</h3>
+  <p>Yes, through CSV. Export a CSV from Airtable, Excel or Google Sheets and press <b>Import CSV</b>. Field types such as numbers, dates, emails, checkboxes and option lists are guessed, and you can change any type afterwards. You can also paste a block of cells straight into the grid.</p>
+  <h3>Does it have formulas or automations?</h3>
+  <p>Not yet. There are no formula, rollup or lookup fields, no forms and no automations. The sum row at the bottom of the grid adds up number fields for the records you can see.</p>
+  <h3>Can I share a base with my team?</h3>
+  <p>There is no live sharing because nothing is stored on a server. Download a backup file (attachments included) and send it; the other person opens it from the base menu. You can also export any view as CSV.</p>
+
+  <h2>Related tools</h2>
+  <ul>
+    <li><a href="/sheets/">Sheets</a>: a full spreadsheet when you need formulas and charts.</li>
+    <li><a href="/csv-json/">CSV ⇄ JSON</a>: convert exports between formats.</li>
+    <li><a href="/kanban-board/">Kanban Board</a>: a quick board when you don't need a database.</li>
+    <li><a href="/gantt/">Gantt</a>: plan the project behind your tables.</li>
+    <li><a href="/guides/">All guides</a></li>
+  </ul>
+</main>
+</body>
+</html>

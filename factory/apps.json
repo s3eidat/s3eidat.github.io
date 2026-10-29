@@ -75,5 +75,12 @@
   "tagline": "Drum machine, synths and piano roll, WAV export",
   "category": "Audio & Video",
   "alt": "FL Studio"
+ },
+ {
+  "slug": "base",
+  "name": "Base",
+  "tagline": "Your own database: grid, kanban and calendar",
+  "category": "Productivity",
+  "alt": "Airtable"
  }
 ]

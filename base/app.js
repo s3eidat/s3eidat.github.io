@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var C = window.BaseCore, h = S3.h, $ = S3.$, $$ = S3.$$;
-  var B = null, T = null, V = null, q = "", cur = null, undoStack = [], calMonth = null;
+  var B = null, T = null, V = null, q = "", cur = null, undoStack = [], calMonth = null, limit = 500;
   var GLYPH = { text: "Aa", long: "¶", number: "#", currency: "$", percent: "%", select: "◉", multi: "☰", date: "▦", check: "☑", url: "↗", email: "@", phone: "✆", rating: "★", link: "⇄", file: "⎙" };
   var WIDTH = { text: 180, long: 240, number: 110, currency: 120, percent: 100, select: 150, multi: 200, date: 130, check: 80, url: 180, email: 200, phone: 150, rating: 120, link: 200, file: 160 };
 
@@ -83,7 +83,7 @@
   function view(t, id) { for (var i = 0; i < t.views.length; i++) if (t.views[i].id === id) return t.views[i]; return t.views[0]; }
   function openBase(b) {
     if (B) saveNow();
-    B = b; T = B.tables[0]; V = T.views[0]; cur = null; q = ""; $("#search").value = ""; undoStack = []; commit.snap = JSON.stringify(B);
+    B = b; T = B.tables[0]; V = T.views[0]; cur = null; limit = 500; q = ""; $("#search").value = ""; undoStack = []; commit.snap = JSON.stringify(B);
     saveNow(); render();
   }
 
@@ -208,7 +208,8 @@
     });
     hr.appendChild(h("th", { "class": "addf", title: "Add a field", text: "+", onclick: function () { fieldSheet(null); } }));
     tbl.appendChild(h("thead", {}, [hr]));
-    var tb = h("tbody");
+    var tb = h("tbody"), all = rows.length;
+    rows = rows.slice(0, limit); // big tables render in pages so the grid stays fast
     rows.forEach(function (r, k) {
       var tr = h("tr", { "data-r": r.id }, [h("td", { "class": "rn" }, [h("span", { text: String(k + 1) }), " ", h("button", { type: "button", title: "Open record (Space)", "aria-label": "Open record", text: "⤢", onclick: function () { recordSheet(r.id); } })])]);
       fs.forEach(function (f, i) {
@@ -219,12 +220,13 @@
       tr.appendChild(h("td"));
       tb.appendChild(tr);
     });
+    if (all > rows.length) tb.appendChild(h("tr", { "class": "addrow" }, [h("td", { "class": "rn", text: "…" }), h("td", { colspan: fs.length + 1, text: "Show " + Math.min(500, all - rows.length) + " more (" + (all - rows.length) + " not shown)", onclick: function () { limit += 500; render(); } })]));
     tb.appendChild(h("tr", { "class": "addrow" }, [h("td", { "class": "rn", text: "+" }), h("td", { colspan: fs.length + 1, text: "Add a record", onclick: function () { addRecord(); } })]));
     var sums = h("tr", { "class": "sumrow" }, [h("td", { "class": "rn", text: "" })]);
     fs.forEach(function (f, i) {
-      var txt = i === 0 ? rows.length + " record" + (rows.length === 1 ? "" : "s") : "";
-      if (/number|currency|percent/.test(f.type)) { var s = 0, n = 0; rows.forEach(function (r) { var v = r.c[f.id]; if (typeof v === "number") { s += v; n++; } }); if (n) txt = "Sum " + C.display(B, f, Math.round(s * 1e6) / 1e6); }
-      if (f.type === "check") { var on = rows.filter(function (r) { return r.c[f.id]; }).length; txt = on + " checked"; }
+      var txt = i === 0 ? all + " record" + (all === 1 ? "" : "s") : "";
+      if (/number|currency|percent/.test(f.type)) { var s = 0, n = 0; currentRows().forEach(function (r) { var v = r.c[f.id]; if (typeof v === "number") { s += v; n++; } }); if (n) txt = "Sum " + C.display(B, f, Math.round(s * 1e6) / 1e6); }
+      if (f.type === "check") { var on = currentRows().filter(function (r) { return r.c[f.id]; }).length; txt = on + " checked"; }
       sums.appendChild(h("td", { "class": /number|currency|percent/.test(f.type) ? "num" : "", text: txt }));
     });
     sums.appendChild(h("td"));
