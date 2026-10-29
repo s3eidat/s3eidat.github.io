@@ -1,4 +1,8 @@
 # Mind Map — TODO
 
-Core done (all must-haves; PDF, FreeMind import, themes, find, templates, touch also working).
-For `full`: check Arabic topics, touch drag and pinch, dark theme, final Playwright pass.
+Full: all features checked at 1280px and 390px (touch drag to reparent, pinch zoom, pan, double-tap edit), Arabic topics, light/dark/colour styles, exports and imports.
+
+Later ideas (not promised anywhere):
+- Free-floating topics and cross-links between branches.
+- Images inside topics.
+- OPML import/export.
