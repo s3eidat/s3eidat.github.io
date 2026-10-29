@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Diagrams — Free Flowchart and Diagram Maker, No Sign-Up | S3eidat Tools</title>
+<meta name="description" content="Draw flowcharts, org charts and ER diagrams in your browser. Connectors that follow shapes, snapping, templates, PNG/SVG/PDF export. No limits, no sign-up, nothing uploaded.">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+<link rel="canonical" href="https://s3eidat.github.io/diagrams/">
+<meta name="theme-color" content="#0d0f12">
+<script src="core.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body data-tool="diagrams">
+<main class="s3-main dg">
+  <div class="dg-bar" id="bar">
+    <input class="input dg-name" id="docName" maxlength="120" dir="auto" aria-label="Diagram name" autocomplete="off">
+    <div class="dg-group">
+      <button class="btn small" id="newBtn" type="button" title="New diagram"><svg class="i"><use href="#i-plus"/></svg><span class="lbl">New</span></button>
+      <button class="btn small" id="openBtn" type="button" title="Open a saved diagram or a file"><svg class="i"><use href="#i-file"/></svg><span class="lbl">Open</span></button>
+      <button class="btn small" id="saveBtn" type="button" title="Save as a file you can open later (Ctrl+S)"><svg class="i"><use href="#i-download"/></svg><span class="lbl">Save file</span></button>
+      <button class="btn primary small" id="exportBtn" type="button" title="Export PNG, SVG or PDF"><svg class="i"><use href="#i-image"/></svg>Export</button>
+    </div>
+    <div class="dg-group">
+      <button class="btn ghost icon small" id="undoBtn" type="button" title="Undo (Ctrl+Z)" aria-label="Undo"><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+      <button class="btn ghost icon small" id="redoBtn" type="button" title="Redo (Ctrl+Shift+Z)" aria-label="Redo"><svg class="i" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button>
+    </div>
+    <div class="dg-group">
+      <button class="btn ghost icon small" id="zoomOut" type="button" title="Zoom out (-)" aria-label="Zoom out">−</button>
+      <button class="btn ghost small dg-zoom" id="zoomFit" type="button" title="Fit diagram to screen (F)">100%</button>
+      <button class="btn ghost icon small" id="zoomIn" type="button" title="Zoom in (+)" aria-label="Zoom in">+</button>
+      <button class="btn ghost small" id="gridBtn" type="button" title="Snap to grid" aria-pressed="true">Grid</button>
+      <button class="btn ghost icon small" id="helpBtn" type="button" title="Shortcuts and help (?)" aria-label="Help">?</button>
+    </div>
+  </div>
+
+  <div class="dg-work">
+    <aside class="dg-lib" id="lib" aria-label="Shapes">
+      <div class="dg-lib-title">Shapes</div>
+      <div class="dg-lib-grid" id="libGrid"></div>
+      <div class="dg-lib-title">Templates</div>
+      <div class="dg-lib-tpl" id="libTpl"></div>
+    </aside>
+    <div class="dg-stage" id="stage">
+      <svg id="svg" class="dg-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Diagram canvas" role="img">
+        <g id="world">
+          <g id="shapesG"></g>
+          <g id="linksG"></g>
+          <g id="overlay"></g>
+        </g>
+      </svg>
+      <textarea id="editor" class="dg-editor" hidden spellcheck="false" dir="auto" aria-label="Edit text"></textarea>
+      <div class="dg-empty" id="empty" hidden>
+        <b>Start your diagram</b>
+        <span>Drag a shape from the left, or pick a template. Drag from a shape's blue dot to connect it to another.</span>
+        <div class="row" id="emptyTpl"></div>
+      </div>
+    </div>
+    <aside class="dg-props" id="props" aria-label="Style"></aside>
+  </div>
+</main>
+</body>
+</html>

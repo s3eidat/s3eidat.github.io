@@ -1,0 +1,119 @@
+/* Diagrams: editor layout on top of the shared kit. The canvas is always light "paper". */
+.dg { max-width: none; padding-top: 10px; padding-bottom: 24px; }
+.dg-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.dg-name { width: 220px; min-height: 34px !important; padding: 6px 10px !important; font-weight: 600; }
+.dg-group { display: flex; align-items: center; gap: 4px; padding-inline-start: 6px; border-inline-start: 1px solid var(--line); }
+.dg-group:first-of-type { border: 0; padding: 0; }
+.dg-zoom { min-width: 58px; font-variant-numeric: tabular-nums; }
+#gridBtn[aria-pressed="true"] { color: var(--accent); background: var(--accent-soft); }
+
+.dg-work {
+  display: grid; grid-template-columns: 150px minmax(0, 1fr) 250px; gap: 10px;
+  height: max(480px, calc(100vh - 150px));
+}
+.dg-lib, .dg-props {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: auto; padding: 10px;
+}
+.dg-lib-title { font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; margin: 2px 2px 8px; }
+.dg-lib-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-bottom: 14px; }
+.dg-lib-grid button {
+  display: grid; place-items: center; gap: 3px; padding: 7px 2px 5px; border-radius: 10px; background: var(--surface-2);
+  border: 1px solid var(--line); color: var(--text-2); font-size: 10.5px; line-height: 1.15; text-align: center; touch-action: none; user-select: none;
+}
+.dg-lib-grid button:hover { border-color: var(--accent); color: var(--text); }
+.dg-lib-grid svg { width: 40px; height: 28px; overflow: visible; }
+.dg-lib-grid svg path { fill: var(--surface); stroke: var(--text-2); stroke-width: 1.4; vector-effect: non-scaling-stroke; }
+.dg-lib-grid svg path.x { fill: none; }
+.dg-lib-tpl { display: grid; gap: 6px; }
+.dg-lib-tpl .btn { justify-content: flex-start; }
+.dg-ghost { position: fixed; z-index: 70; pointer-events: none; width: 60px; height: 44px; opacity: .8; transform: translate(-50%, -50%); }
+.dg-ghost path { fill: #fff; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
+
+.dg-stage {
+  position: relative; overflow: hidden; border-radius: var(--radius-lg); border: 1px solid var(--line);
+  background-color: #fbfcfd; background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1.2px);
+  touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.dg-stage.nogrid { background-image: none; }
+.dg-stage.panning, .dg-stage.panning * { cursor: grabbing !important; }
+.dg-stage.space { cursor: grab; }
+.dg-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+.dg-svg [data-id] { cursor: move; }
+.dg-svg [data-link] { cursor: pointer; }
+.dg-svg [data-port] { cursor: crosshair; }
+.dg-svg [data-handle="nw"], .dg-svg [data-handle="se"] { cursor: nwse-resize; }
+.dg-svg [data-handle="ne"], .dg-svg [data-handle="sw"] { cursor: nesw-resize; }
+.dg-svg [data-handle="n"], .dg-svg [data-handle="s"] { cursor: ns-resize; }
+.dg-svg [data-handle="e"], .dg-svg [data-handle="w"] { cursor: ew-resize; }
+.dg-svg [data-quick], .dg-svg [data-lend] { cursor: pointer; }
+.dg-editor {
+  position: absolute; z-index: 5; resize: none; border: 2px solid #0e9f9a; border-radius: 6px; background: rgba(255,255,255,.96);
+  color: #0f172a; font-family: Arial, Helvetica, "Noto Sans Arabic", sans-serif; line-height: 1.25; padding: 2px 4px; outline: none; overflow: hidden;
+  box-shadow: 0 6px 24px -8px rgba(15,23,42,.35);
+}
+.dg-empty {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(420px, calc(100% - 32px));
+  display: grid; gap: 8px; justify-items: center; text-align: center; padding: 22px; border-radius: 16px;
+  background: rgba(255,255,255,.92); border: 1px dashed #94a3b8; color: #475569; pointer-events: none;
+}
+.dg-empty b { color: #0f172a; font-size: 16px; }
+.dg-empty .row { justify-content: center; pointer-events: auto; }
+.dg-empty .btn { background: #fff; color: #0f172a; border-color: #cbd5e1; }
+
+/* properties */
+.dg-props h3 { margin: 4px 0 8px; font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .06em; }
+.dg-props .sec { padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--line); }
+.dg-props .sec:last-child { border-bottom: 0; margin-bottom: 0; }
+.dg-props .field { margin-bottom: 8px; }
+.dg-props .input, .dg-props .select { min-height: 32px; padding: 5px 9px; font-size: 13px; }
+.dg-props .select { padding-right: 28px; }
+.dg-props .tip { color: var(--text-3); font-size: 12.5px; margin: 0 0 8px; }
+.sw-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; align-items: center; }
+.sw { width: 22px; height: 22px; border-radius: 6px; border: 1px solid var(--line-strong); padding: 0; }
+.sw[aria-pressed="true"] { outline: 2px solid var(--accent); outline-offset: 1px; }
+.sw.none { background: linear-gradient(135deg, transparent 45%, var(--danger) 45%, var(--danger) 55%, transparent 55%), var(--surface); }
+.sw-row input[type=color] { width: 26px; height: 24px; padding: 1px; border-radius: 6px; }
+.p-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+.p-grid4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.dg-props .seg { display: flex; width: 100%; }
+.dg-props .seg button { flex: 1; padding: 5px 4px; font-size: 12px; }
+.dg-props .btn.small { padding: 0 8px; }
+.tb { min-width: 0; }
+
+/* menus */
+.dg-menu {
+  position: fixed; z-index: 75; min-width: 220px; max-width: min(320px, calc(100vw - 16px)); max-height: 70vh; overflow: auto; padding: 6px;
+  border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-pop); animation: s3-pop 160ms var(--ease);
+}
+.dg-menu button { display: flex; width: 100%; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; text-align: start; font-size: 13.5px; color: var(--text); }
+.dg-menu button:hover, .dg-menu button:focus-visible { background: var(--surface-2); }
+.dg-menu button small { margin-inline-start: auto; color: var(--text-3); font-size: 11.5px; }
+.dg-menu .sep { height: 1px; background: var(--line); margin: 4px 2px; }
+.dg-menu .hd { padding: 6px 10px 2px; font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; }
+.dg-menu label { display: flex; gap: 8px; align-items: center; padding: 6px 10px; font-size: 13px; color: var(--text-2); }
+.keys { display: grid; grid-template-columns: auto 1fr; gap: 7px 14px; align-items: center; font-size: 13.5px; color: var(--text-2); }
+.dg-sheet { width: min(520px, 100%); }
+.dg-sheet .foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+
+@media (max-width: 900px) {
+  .dg-work { grid-template-columns: 120px minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto; height: auto; }
+  .dg-lib { grid-row: 1; height: max(440px, calc(100vh - 210px)); }
+  .dg-stage { height: max(440px, calc(100vh - 210px)); }
+  .dg-props { grid-column: 1 / -1; max-height: none; }
+  .dg-lib-grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  .dg-work { grid-template-columns: minmax(0, 1fr); }
+  .dg-lib { height: auto; padding: 8px; display: flex; gap: 8px; overflow-x: auto; overflow-y: hidden; }
+  .dg-lib-title { display: none; }
+  .dg-lib-grid { display: flex; gap: 6px; margin: 0; }
+  .dg-lib-grid button { width: 58px; flex: none; font-size: 9.5px; }
+  .dg-lib-tpl { display: flex; gap: 6px; }
+  .dg-lib-tpl .btn { white-space: nowrap; height: 56px; }
+  .dg-stage { height: 62vh; min-height: 360px; }
+  .dg-name { width: 100%; }
+  .dg-group:first-of-type { width: 100%; }
+  .dg-group { border: 0; padding: 0; }
+  .lbl { display: none; }
+  .p-grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
