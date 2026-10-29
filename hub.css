@@ -70,3 +70,12 @@
 .prose h1 { font-size: 32px; letter-spacing: -.03em; margin: 36px 0 8px; }
 .prose h2 { font-size: 18px; margin: 28px 0 8px; }
 .prose p, .prose li { color: var(--text-2); }
+
+/* the 12-second ad (29 Oct 2026) */
+.hub-ad { display: grid; grid-template-columns: minmax(0, 300px) 1fr; gap: 34px; align-items: center; margin: 44px auto 8px; max-width: 860px;
+  padding: 26px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); }
+.hub-ad-video { width: 100%; height: auto; aspect-ratio: 9 / 16; border-radius: 16px; background: #000; display: block; }
+.hub-ad-copy { display: grid; gap: 12px; justify-items: start; }
+.hub-ad-copy h2 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); font-weight: 750; letter-spacing: -.03em; line-height: 1.1; }
+.hub-ad-copy p { margin: 0; color: var(--text-2); }
+@media (max-width: 680px) { .hub-ad { grid-template-columns: 1fr; padding: 18px; gap: 18px; } .hub-ad-video { max-width: 320px; margin: 0 auto; } .hub-ad-copy { justify-items: center; text-align: center; } }
