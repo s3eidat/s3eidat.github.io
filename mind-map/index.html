@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Mind Map — Free Mind Mapping Tool, Keyboard-First, No Sign-Up | S3eidat Tools</title>
+<meta name="description" content="Make mind maps fast with the keyboard: Tab for a subtopic, Enter for a sibling. Auto layout, colours, icons, notes, PNG/SVG/PDF and Markdown export. Unlimited maps, nothing uploaded.">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+<link rel="canonical" href="https://s3eidat.github.io/mind-map/">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d0f12">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="S3eidat Tools">
+<meta property="og:title" content="Mind Map — a free, keyboard-first mind mapping tool">
+<meta property="og:description" content="Tab for a subtopic, Enter for a sibling. Auto layout, colours, icons, notes, export to PNG, SVG, PDF and Markdown. Unlimited maps, no sign-up.">
+<meta property="og:url" content="https://s3eidat.github.io/mind-map/">
+<meta property="og:image" content="https://s3eidat.github.io/mind-map/screenshot.png">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mind Map — a free, keyboard-first mind mapping tool">
+<meta name="twitter:description" content="Unlimited mind maps in your browser. Free, private, no sign-up.">
+<meta name="twitter:image" content="https://s3eidat.github.io/mind-map/screenshot.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Mind Map", "url": "https://s3eidat.github.io/mind-map/", "description": "A free, keyboard-first mind mapping tool that runs 100% in your browser: auto layout, drag to reorganise, colours, icons, notes, export to PNG, SVG, PDF and Markdown, import outlines and FreeMind files. No sign-up, nothing uploaded.", "applicationCategory": "DesignApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "image": "https://s3eidat.github.io/mind-map/screenshot.png", "author": {"@type": "Person", "name": "s3eidat", "url": "https://github.com/s3eidat"}}</script>
+<script src="core.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body data-tool="mind-map">
+<main class="s3-main mm">
+  <div class="mm-bar">
+    <input class="input mm-name" id="mapName" maxlength="120" dir="auto" aria-label="Map name" autocomplete="off">
+    <div class="mm-group">
+      <button class="btn small" id="newBtn" type="button"><svg class="i"><use href="#i-plus"/></svg><span class="lbl">New</span></button>
+      <button class="btn small" id="openBtn" type="button"><svg class="i"><use href="#i-file"/></svg><span class="lbl">Open</span></button>
+      <button class="btn small" id="saveBtn" type="button" title="Save as a file (Ctrl+S)"><svg class="i"><use href="#i-download"/></svg><span class="lbl">Save file</span></button>
+      <button class="btn primary small" id="exportBtn" type="button"><svg class="i"><use href="#i-image"/></svg>Export</button>
+    </div>
+    <div class="mm-group">
+      <button class="btn ghost icon small" id="undoBtn" type="button" title="Undo (Ctrl+Z)" aria-label="Undo"><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+      <button class="btn ghost icon small" id="redoBtn" type="button" title="Redo (Ctrl+Y)" aria-label="Redo"><svg class="i" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button>
+      <button class="btn ghost icon small" id="zoomOut" type="button" title="Zoom out (-)" aria-label="Zoom out">−</button>
+      <button class="btn ghost small mm-zoom" id="zoomFit" type="button" title="Fit the map (F)">100%</button>
+      <button class="btn ghost icon small" id="zoomIn" type="button" title="Zoom in (+)" aria-label="Zoom in">+</button>
+      <button class="btn ghost small" id="themeBtn" type="button" title="Map style">Style</button>
+      <button class="btn ghost small" id="findBtn" type="button" title="Find a topic (Ctrl+F)">Find</button>
+      <button class="btn ghost icon small" id="helpBtn" type="button" title="Shortcuts (F1)" aria-label="Help">?</button>
+    </div>
+  </div>
+  <div class="mm-tools" id="tools">
+    <button class="btn small" id="childBtn" type="button" title="Add a subtopic (Tab)">+ Subtopic</button>
+    <button class="btn small" id="sibBtn" type="button" title="Add a topic next to it (Enter)">+ Topic</button>
+    <button class="btn ghost small" id="editBtn" type="button" title="Edit text (F2)">Edit</button>
+    <button class="btn ghost small" id="colBtn" type="button" title="Collapse or expand (Space)">Collapse</button>
+    <button class="btn ghost small" id="colorBtn" type="button" title="Branch colour">Colour</button>
+    <button class="btn ghost small" id="iconBtn" type="button" title="Icon">Icon</button>
+    <button class="btn ghost small" id="noteBtn" type="button" title="Note">Note</button>
+    <button class="btn ghost small danger" id="delBtn" type="button" title="Delete (Delete)">Delete</button>
+  </div>
+  <div class="mm-stage" id="stage">
+    <svg id="svg" class="mm-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mind map"><g id="world"><g id="links"></g><g id="nodes"></g><g id="over"></g></g></svg>
+    <textarea id="editor" class="mm-editor" hidden dir="auto" spellcheck="true" aria-label="Topic text"></textarea>
+  </div>
+  <p class="faint mm-hint" id="hint">Tab adds a subtopic, Enter adds a topic, type to edit, drag topics to move them. Double-click (double-tap) to edit.</p>
+</main>
+</body>
+</html>

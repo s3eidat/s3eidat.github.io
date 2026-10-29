@@ -1,0 +1,34 @@
+/* Mind Map: editor layout on top of the shared kit. */
+.mm { max-width: none; padding-top: 10px; padding-bottom: 20px; }
+.mm-bar, .mm-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
+.mm-name { width: 220px; min-height: 34px !important; padding: 6px 10px !important; font-weight: 600; }
+.mm-group { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding-inline-start: 6px; border-inline-start: 1px solid var(--line); }
+.mm-zoom { min-width: 56px; font-variant-numeric: tabular-nums; }
+.mm-stage { position: relative; height: max(440px, calc(100vh - 220px)); border-radius: var(--radius-lg); border: 1px solid var(--line); overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+.mm-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+.mm-svg [data-id] { cursor: pointer; }
+.mm-stage.panning, .mm-stage.panning * { cursor: grabbing !important; }
+.mm-editor { position: absolute; z-index: 5; resize: none; border: 2px solid #0e9f9a; border-radius: 8px; background: #fff; color: #0f172a; font-family: Arial, Helvetica, "Noto Sans Arabic", sans-serif;
+  line-height: 1.3; padding: 4px 8px; outline: none; overflow: hidden; text-align: center; box-shadow: 0 8px 24px -8px rgba(15,23,42,.4); }
+.mm-hint { margin: 8px 2px 0; }
+.mm-pop { position: fixed; z-index: 75; max-width: min(340px, calc(100vw - 16px)); max-height: 70vh; overflow: auto; padding: 8px; border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-pop); display: grid; gap: 6px; animation: s3-pop 150ms var(--ease); }
+.mm-pop .opt { display: flex; align-items: center; gap: 8px; width: 100%; padding: 7px 10px; border-radius: 8px; text-align: start; font-size: 13.5px; color: var(--text); }
+.mm-pop .opt:hover, .mm-pop .opt:focus-visible { background: var(--surface-2); }
+.mm-pop .opt small { margin-inline-start: auto; color: var(--text-3); font-size: 11.5px; }
+.mm-pop .sep { height: 1px; background: var(--line); margin: 2px; }
+.mm-pop .hd { padding: 4px 8px 0; font-size: 11px; font-weight: 700; color: var(--text-3); text-transform: uppercase; letter-spacing: .05em; }
+.mm-pop .grid { display: grid; grid-template-columns: repeat(6, 36px); gap: 4px; }
+.mm-pop .grid button { width: 36px; height: 36px; border-radius: 8px; font-size: 18px; border: 1px solid var(--line); }
+.mm-pop .grid button:hover { border-color: var(--accent); }
+.mm-pop .grid .sw { border: 2px solid transparent; }
+.mm-sheet { width: min(520px, 100%); }
+.mm-sheet .foot { display: flex; gap: 8px; justify-content: flex-end; margin-top: 14px; }
+.keys { display: grid; grid-template-columns: auto 1fr; gap: 7px 14px; align-items: center; font-size: 13.5px; color: var(--text-2); }
+@media (max-width: 640px) {
+  .lbl { display: none; }
+  .mm-name { width: 100%; }
+  .mm-group { border: 0; padding: 0; }
+  .mm-stage { height: 64vh; min-height: 380px; }
+  .mm-tools .btn { padding: 0 8px; }
+  .mm-hint { display: none; }
+}
