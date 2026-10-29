@@ -1,0 +1,3 @@
+# pdf-editor TODO (for the `full` stage)
+Core built and tested (Playwright, desktop + 390px): open/new, thumbnails, zoom/fit, text (Latin via std fonts, other scripts rasterised), pen, highlight, rect, ellipse, line, arrow, whiteout, image, signature (draw/type, saved locally), select/move/resize/delete, undo/redo, page rotate/delete/duplicate/blank/reorder (buttons + drag)/merge, export via pdf-lib. `S3_SELFTEST` exists.
+Still to do: AcroForm fill, stamps (check/cross/date), search text, extract/split pages, export pages as PNG, metadata, mobile toolbar compaction (tall at 390px), Arabic UI strings, shortcut help, empty-state polish, password-protected PDFs, continuous scroll, pinch-zoom, redact (rasterise).
