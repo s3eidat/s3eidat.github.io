@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Link Page — Free Link in Bio Page Maker, No Sign-Up | S3eidat Tools</title>
+<meta name="description" content="Make a link in bio page with your photo, buttons and social icons, preview it live on a phone, then download one HTML file you host anywhere for free. QR code included.">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+<link rel="canonical" href="https://s3eidat.github.io/link-page/">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0d0f12">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="S3eidat Tools">
+<meta property="og:title" content="Link Page — a free link in bio page maker">
+<meta property="og:description" content="Photo, buttons, social icons and themes with a live phone preview. Download one HTML file, host it free anywhere, get a QR code. No sign-up.">
+<meta property="og:url" content="https://s3eidat.github.io/link-page/">
+<meta property="og:image" content="https://s3eidat.github.io/link-page/screenshot.png">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Link Page — a free link in bio page maker">
+<meta name="twitter:description" content="Design your link in bio page, download one HTML file and host it free. No sign-up, no branding.">
+<meta name="twitter:image" content="https://s3eidat.github.io/link-page/screenshot.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Link Page", "url": "https://s3eidat.github.io/link-page/", "description": "A free link in bio page maker that runs in your browser: profile photo, link buttons, headers, social icons, themes and a live phone preview. Exports one self-contained HTML file with no scripts, plus a QR code. No sign-up, nothing uploaded.", "applicationCategory": "DesignApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "image": "https://s3eidat.github.io/link-page/screenshot.png", "author": {"@type": "Person", "name": "s3eidat", "url": "https://github.com/s3eidat"}}</script>
+<script src="core.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body data-tool="link-page">
+<main class="s3-main lp">
+  <div class="lp-bar">
+    <button class="btn ghost lp-pagebtn" id="pageBtn" type="button" title="Your pages and templates"><span id="pageName" dir="auto"></span> ▾</button>
+    <span class="grow"></span>
+    <button class="btn ghost icon small" id="undoBtn" type="button" title="Undo (Ctrl+Z)" aria-label="Undo" disabled><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+    <button class="btn ghost icon small" id="redoBtn" type="button" title="Redo (Ctrl+Y)" aria-label="Redo" disabled><svg class="i" viewBox="0 0 24 24"><path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/></svg></button>
+    <button class="btn ghost icon small" id="helpBtn" type="button" title="Shortcuts (?)" aria-label="Help">?</button>
+    <button class="btn small" id="saveBtn" type="button" title="Save the project as a file (Ctrl+S)"><svg class="i"><use href="#i-download"/></svg><span class="lbl">Save file</span></button>
+  </div>
+  <div class="seg lp-tabs" id="tabs" role="tablist">
+    <button type="button" role="tab" data-tab="content" aria-pressed="true">Content</button>
+    <button type="button" role="tab" data-tab="design" aria-pressed="false">Design</button>
+    <button type="button" role="tab" data-tab="preview" aria-pressed="false" class="lp-only-narrow">Preview</button>
+    <button type="button" role="tab" data-tab="publish" aria-pressed="false">Publish</button>
+  </div>
+  <div class="lp-wrap">
+    <section class="lp-edit">
+      <div class="lp-pane" id="pane-content"></div>
+      <div class="lp-pane" id="pane-design" hidden></div>
+      <div class="lp-pane" id="pane-publish" hidden></div>
+    </section>
+    <aside class="lp-side" id="side" aria-label="Live preview">
+      <div class="lp-phone"><iframe id="preview" title="Live preview of your page" sandbox="allow-same-origin"></iframe></div>
+      <p class="faint lp-cap">Live preview · exactly what you download</p>
+    </aside>
+  </div>
+</main>
+</body>
+</html>
