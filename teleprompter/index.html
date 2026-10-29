@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Teleprompter — free online teleprompter with mirror mode | S3eidat Tools</title>
+<meta name="description" content="Free online teleprompter: smooth scrolling script, speed and font control, mirror mode, countdown, keyboard and pedal control, camera recording. No sign-up.">
+<link rel="canonical" href="https://s3eidat.github.io/teleprompter/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+</head>
+<body data-tool="teleprompter">
+<main class="s3-main tp" id="tp">
+  <div class="tp-head">
+    <div class="grow">
+      <label class="sr" for="tp-title">Script title</label>
+      <input id="tp-title" class="tp-title" type="text" maxlength="120" placeholder="Untitled script" dir="auto" autocomplete="off">
+      <p class="faint" id="tp-stats"></p>
+    </div>
+    <div class="row" id="tp-actions"></div>
+  </div>
+  <div class="tp-layout">
+    <section class="tp-editor card" id="tp-editor" aria-label="Script"></section>
+    <aside class="tp-side" id="tp-side" aria-label="Prompter settings"></aside>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>

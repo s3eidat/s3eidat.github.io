@@ -1,0 +1,42 @@
+/* Teleprompter — editor layout and the full-screen prompter on top of /kit/kit.css */
+.tp-head { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 22px 0 16px; }
+.tp-head .grow { min-width: 220px; }
+.tp-title { width: 100%; font: 700 clamp(22px, 3.6vw, 30px)/1.2 var(--font); letter-spacing: -.02em; background: transparent; border: 0; border-bottom: 1px dashed transparent; padding: 2px 0; color: var(--text); }
+.tp-title:hover, .tp-title:focus { border-bottom-color: var(--line-strong); }
+.tp-title::placeholder { color: var(--text-3); }
+.tp-head .faint { margin: 4px 0 0; }
+.tp-ic { display: inline-flex; }
+.tp-layout { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 14px; align-items: start; }
+@media (max-width: 860px) { .tp-layout { grid-template-columns: minmax(0, 1fr); } }
+.tp-editor { padding: 12px; display: grid; gap: 8px; }
+.tp-text { min-height: 58vh; font-size: 17px; line-height: 1.6; resize: vertical; }
+.tp-edfoot { gap: 8px; }
+.tp-side .card h2 { margin: 0; }
+.tp-field { gap: 4px; }
+.tp-val { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
+.tp-checks { gap: 8px; }
+
+/* prompter */
+body.tp-open { overflow: hidden; }
+.tp-ov { position: fixed; inset: 0; z-index: 100; overflow: hidden; user-select: none; -webkit-user-select: none; }
+.tp-mirror { position: absolute; inset: 0; overflow: hidden; touch-action: none; cursor: grab; }
+.tp-roll { will-change: transform; }
+.tp-script { position: relative; margin: 0 auto; font-family: var(--font); font-weight: 600; letter-spacing: .005em; }
+.tp-script p { margin: 0 0 .5em; overflow-wrap: anywhere; }
+.tp-script p.tp-gap { height: .6em; margin: 0; }
+.tp-marker { position: absolute; left: 0; right: 0; background: rgba(127, 127, 127, .14); border-top: 1px solid rgba(255, 70, 70, .35); border-bottom: 1px solid rgba(255, 70, 70, .35); pointer-events: none; }
+.tp-arrow { position: absolute; left: 4px; top: 50%; transform: translateY(-50%); color: rgba(255, 70, 70, .95); font-size: 22px; line-height: 1; }
+.tp-progress { position: absolute; left: 0; right: 0; top: 0; height: 3px; background: rgba(127,127,127,.25); }
+.tp-progress span { display: block; height: 100%; width: 0; background: #3dd6d0; }
+.tp-count { position: absolute; inset: 0; display: grid; place-items: center; font: 800 min(40vw, 40vh)/1 var(--font); background: rgba(0,0,0,.35); color: #fff; pointer-events: none; }
+.tp-ctl { position: absolute; left: 50%; bottom: max(14px, env(safe-area-inset-bottom)); transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px;
+  max-width: calc(100vw - 20px); padding: 8px; border-radius: 16px; background: rgba(24, 26, 30, .88); color: #eceef2; box-shadow: 0 10px 40px rgba(0,0,0,.5); transition: opacity 300ms, transform 300ms; }
+.tp-ctl .btn:not(.primary) { background: rgba(255,255,255,.08); color: #eceef2; border-color: rgba(255,255,255,.1); }
+.tp-ctl .btn[aria-pressed="true"] { background: rgba(61, 214, 208, .25); }
+.tp-grp { display: inline-flex; align-items: center; gap: 4px; }
+.tp-spd { min-width: 22px; text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tp-time { font-size: 12.5px; color: #a5adb9; padding: 0 4px; white-space: nowrap; }
+.tp-ov.tp-hide .tp-ctl { opacity: 0; transform: translate(-50%, 20px); pointer-events: none; }
+.tp-ov.tp-hide { cursor: none; }
+@media (max-width: 560px) { .tp-ctl { gap: 4px; padding: 6px; } .tp-time { width: 100%; text-align: center; } }
+.tp-marker.is-flip .tp-arrow { left: auto; right: 4px; transform: translateY(-50%) scaleX(-1); }
