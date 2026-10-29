@@ -110,7 +110,9 @@
     if (!P.tasks.length) return;
     var crit = P.tasks.filter(function (t) { var r = S.tasks[t.id]; return !r.summary && r.critical; }).length;
     var add = function (label, val, cls) { info.appendChild(h("span", { "class": cls || "" }, [label + " ", h("b", { text: val })])); };
-    add("Start", fmtDate(S.start)); add("Finish", fmtDate(S.finish)); add("Working days", String(S.workdays)); add("Tasks", String(P.tasks.length));
+    // the finish is the latest date of any task, a closing milestone included
+    var fin = S.finish; P.tasks.forEach(function (t) { var r = S.tasks[t.id]; if (r.finish > fin) fin = r.finish; });
+    add("Start", fmtDate(S.start)); add("Finish", fmtDate(fin)); add("Working days", String(S.workdays)); add("Tasks", String(P.tasks.length));
     add("Critical", crit + " task" + (crit === 1 ? "" : "s"));
     var done = P.tasks.filter(function (t, i) { return !G.isSummary(P, i); }), w = 0, c = 0;
     done.forEach(function (t) { var d = Math.max(1, t.dur); w += d; c += d * t.pct; });
@@ -118,7 +120,7 @@
     if (P.baseline && P.baseline.at) {
       var bf = null; Object.keys(P.baseline).forEach(function (k) { var b = P.baseline[k]; if (b && b.f && (!bf || b.f > bf)) bf = b.f; });
       if (bf) {
-        var v = S.cal.idx(G.addDays(S.finish, 1)) - S.cal.idx(G.addDays(bf, 1));
+        var v = S.cal.idx(G.addDays(fin, 1)) - S.cal.idx(G.addDays(bf, 1));
         add("vs baseline", v === 0 ? "on time" : (v > 0 ? "+" : "") + v + " working day" + (Math.abs(v) === 1 ? "" : "s"), v > 0 ? "late" : v < 0 ? "early" : "");
       }
     }

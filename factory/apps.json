@@ -54,5 +54,12 @@
   "tagline": "2D floor plans with room areas and PDF to scale",
   "category": "Design",
   "alt": "RoomSketcher"
+ },
+ {
+  "slug": "gantt",
+  "name": "Gantt",
+  "tagline": "Gantt charts with dependencies and critical path",
+  "category": "Productivity",
+  "alt": "Microsoft Project"
  }
 ]

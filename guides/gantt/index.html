@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Free Gantt Chart Maker: a Microsoft Project Alternative</title>
+<meta name="description" content="Plan a project in your browser with tasks, dependencies, critical path and a baseline. Opens Microsoft Project XML, exports PNG, PDF and CSV. Free, no sign-up.">
+<link rel="canonical" href="https://s3eidat.github.io/guides/gantt/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/kit/kit.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Is Gantt really free, including critical path and baselines?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Dependencies, critical path, baselines and every export are free, with no account and no limit on tasks or projects."}},
+    {"@type": "Question", "name": "Can it open Microsoft Project files?", "acceptedAnswer": {"@type": "Answer", "text": "It opens Microsoft Project XML files (File > Save As > XML in Microsoft Project) and CSV exports. It reads tasks, outline levels, start dates, durations, percent complete, links with lag and notes. It cannot open .mpp files and does not import resources, costs or custom calendars."}},
+    {"@type": "Question", "name": "How are durations counted?", "acceptedAnswer": {"@type": "Answer", "text": "In working days. You choose the weekend in project settings (Saturday and Sunday, Friday and Saturday, Sunday only, Friday only or none) and can list holidays; those days are skipped when tasks are scheduled."}},
+    {"@type": "Question", "name": "What is the critical path?", "acceptedAnswer": {"@type": "Answer", "text": "The chain of tasks with no spare time: if any of them slips, the project finish date slips. Press Critical path to show them in red. Each task's window also shows its float, the number of working days it can slip without delaying the finish."}},
+    {"@type": "Question", "name": "Can my team edit the plan together?", "acceptedAnswer": {"@type": "Answer", "text": "No. There is no account or server, so there is no shared editing or sync. Share the plan as a PNG, PDF or CSV, or send the project file (Save file) so someone else can open it."}}
+  ]
+}
+</script>
+</head>
+<body data-more="off">
+<main class="s3-main prose">
+  <h1>A free Gantt chart maker with critical path</h1>
+  <p>If you need a free alternative to Microsoft Project for planning a project, open <b>Gantt</b>. You list the tasks, link them, and it schedules them in working days, shows the critical path and keeps a baseline to compare against. It runs in your browser with no account and no install, and your plan stays on your device.</p>
+  <p><a class="btn primary big" href="/gantt/">Open Gantt</a></p>
+
+  <h2>Step by step</h2>
+  <ol>
+    <li>Open <a href="/gantt/">Gantt</a>. Start with <b>Add the first task</b>, or pick the <b>Website launch</b> or <b>Event plan</b> example. Press the settings button to set the project start, your weekend days and any holidays.</li>
+    <li>Type a task name and press Enter to add the next one. Press Tab to make a task a subtask of the one above (the parent becomes a summary task that spans its subtasks) and Shift+Tab to undo that.</li>
+    <li>Fill in <b>Days</b> (working days; 0 makes a milestone, "2w" means two weeks) and <b>%</b> complete.</li>
+    <li>Link tasks in the <b>Predecessors</b> column with row numbers: 2 means "starts after row 2 finishes", 3SS+1 means "starts one day after row 3 starts", 4FF-2 means "finishes two days before row 4 finishes". You can also drag from the dot after a bar onto another task, or select rows and press <b>Link</b>.</li>
+    <li>Linked tasks move automatically when earlier ones change. Drag a bar to set the earliest date it may start, or drag its right end to change its length.</li>
+    <li>Press <b>Critical path</b> to see which tasks decide the finish date. Press <b>Baseline</b> to save the current plan; grey bars then show the original dates and the info line shows how many working days you are ahead or behind.</li>
+    <li>Use <b>Export</b> for a PNG, PDF or SVG of the whole chart, or CSV for Excel or Sheets. <b>Save file</b> keeps an editable copy.</li>
+  </ol>
+
+  <h2>Who it helps</h2>
+  <ul>
+    <li><b>Students with a project course.</b> Engineering and management courses often ask for a Gantt chart with a critical path; this gives you both without a paid licence.</li>
+    <li><b>Small teams and freelancers.</b> A clear plan with milestones that you can export for a client or a status meeting.</li>
+    <li><b>Contractors and event organisers in the region.</b> Set the weekend to Friday and Saturday and add public holidays, and every date follows your real working calendar.</li>
+    <li><b>Anyone sent a Microsoft Project file.</b> Ask for the XML version and open it here to read and adjust the plan.</li>
+  </ul>
+
+  <h2>Why it's private</h2>
+  <p>Gantt is a static page. Your projects are saved in your own browser's storage on this device and are never uploaded. The page's security policy blocks it from sending data to other websites, files you open are read on your device, and it works offline after the first visit. Clearing your browser data deletes saved projects, so keep a copy with <b>Save file</b>.</p>
+
+  <h2>Tips and limits</h2>
+  <ul>
+    <li><b>Summary tasks</b> take their dates and progress from their subtasks; link subtasks rather than summary tasks.</li>
+    <li><b>Loops are refused:</b> a task can't (directly or indirectly) wait for itself.</li>
+    <li><b>Zoom</b> between days, weeks and months, and press <b>Today</b> to jump to today's date.</li>
+    <li><b>On a phone</b> you see the task names and the chart; double-tap a bar or use <b>Edit</b> to change a task.</li>
+    <li><b>PDF export</b> is an image of the chart inside a PDF. Use SVG when you need a vector file.</li>
+    <li><b>Not included:</b> resource levelling, costs, several calendars per task, shared editing, .mpp files.</li>
+    <li>Press <b>?</b> in the app for all keyboard shortcuts.</li>
+  </ul>
+
+  <h2>FAQ</h2>
+  <h3>Is Gantt really free, including critical path and baselines?</h3>
+  <p>Yes. Dependencies, critical path, baselines and every export are free, with no account and no limit on tasks or projects.</p>
+  <h3>Can it open Microsoft Project files?</h3>
+  <p>It opens Microsoft Project XML files (File &gt; Save As &gt; XML in Microsoft Project) and CSV exports. It reads tasks, outline levels, start dates, durations, percent complete, links with lag and notes. It cannot open .mpp files and does not import resources, costs or custom calendars.</p>
+  <h3>How are durations counted?</h3>
+  <p>In working days. You choose the weekend in project settings (Saturday and Sunday, Friday and Saturday, Sunday only, Friday only or none) and can list holidays; those days are skipped when tasks are scheduled.</p>
+  <h3>What is the critical path?</h3>
+  <p>The chain of tasks with no spare time: if any of them slips, the project finish date slips. Press <b>Critical path</b> to show them in red. Each task's window also shows its float, the number of working days it can slip without delaying the finish.</p>
+  <h3>Can my team edit the plan together?</h3>
+  <p>No. There is no account or server, so there is no shared editing or sync. Share the plan as a PNG, PDF or CSV, or send the project file (<b>Save file</b>) so someone else can open it.</p>
+
+  <h2>Related tools</h2>
+  <ul>
+    <li><a href="/time-tracker/">Time Tracker</a>: track the hours actually spent on each task.</li>
+    <li><a href="/kanban-board/">Kanban Board</a>: day-to-day task status alongside the plan.</li>
+    <li><a href="/diagrams/">Diagrams</a>: draw the process or org chart behind the project.</li>
+    <li><a href="/date-diff/">Date Diff</a>: count the days between two dates.</li>
+    <li><a href="/guides/">All guides</a></li>
+  </ul>
+</main>
+</body>
+</html>
