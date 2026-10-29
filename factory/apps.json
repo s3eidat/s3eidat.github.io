@@ -61,5 +61,12 @@
   "tagline": "Gantt charts with dependencies and critical path",
   "category": "Productivity",
   "alt": "Microsoft Project"
+ },
+ {
+  "slug": "subtitle-editor",
+  "name": "Subtitle Editor",
+  "tagline": "Edit SRT/VTT on a timeline and burn captions in",
+  "category": "Audio & Video",
+  "alt": "Kapwing"
  }
 ]
