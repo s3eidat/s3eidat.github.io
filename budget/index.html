@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Budget — Free Envelope Budgeting App, Private and Offline | S3eidat Tools</title>
+<meta name="description" content="A free envelope budget in your browser: give every dinar or dollar a job, track spending, import bank CSV files. No sign-up, no bank login, nothing uploaded.">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+<link rel="canonical" href="https://s3eidat.github.io/budget/">
+<meta name="theme-color" content="#0d0f12">
+<script src="core.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body data-tool="budget">
+<main class="s3-main bud">
+
+  <section id="welcome" class="bud-welcome" hidden>
+    <div class="s3-hero">
+      <h1>Budget</h1>
+      <p>Give every dinar, dollar or euro a job before you spend it. A free envelope budget that lives on this device: no sign-up, no bank login, nothing uploaded.</p>
+    </div>
+    <div class="grid-2">
+      <form class="card stack" id="newForm">
+        <h2>Start a budget</h2>
+        <label class="field">Name<input class="input" id="nbName" maxlength="80" value="My budget" dir="auto"></label>
+        <label class="field">Currency<select class="select" id="nbCur"></select></label>
+        <div class="field">Starter categories
+          <div class="seg" id="nbLang">
+            <button type="button" data-v="en" aria-pressed="true">English</button>
+            <button type="button" data-v="ar" aria-pressed="false">العربية</button>
+            <button type="button" data-v="none" aria-pressed="false">Empty</button>
+          </div>
+        </div>
+        <div class="row">
+          <button class="btn primary" type="submit">Create budget</button>
+          <button class="btn" type="button" id="trySample">Try a sample budget</button>
+        </div>
+        <div class="row">
+          <button class="btn ghost small" type="button" id="openBackup"><svg class="i"><use href="#i-upload"/></svg>Open a backup file</button>
+          <button class="btn ghost small" type="button" id="backToApp" hidden>Back to my budget</button>
+        </div>
+      </form>
+      <div class="card">
+        <h2>How it works</h2>
+        <ol class="bud-how">
+          <li><b>Add your accounts</b> with what is in them today: bank, cash, cards.</li>
+          <li><b>Assign that money</b> to categories (rent, groceries, savings) until nothing is left to assign.</li>
+          <li><b>Record what you spend</b>, or import your bank's CSV file. Each category shows what is still available.</li>
+          <li><b>Overspent?</b> Move money from another category. The budget always adds up.</li>
+        </ol>
+        <p class="faint">Your budget is saved in this browser only. Download a backup file now and then (Settings) to keep it safe or move it to another device.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="app" hidden>
+    <div class="bud-top">
+      <button class="btn ghost bud-name" id="nameBtn" type="button" title="Budget settings"><span id="budgetName" dir="auto"></span><svg class="i"><use href="#i-settings"/></svg></button>
+      <div class="seg bud-tabs" id="tabs" role="tablist">
+        <button type="button" data-view="plan" aria-pressed="true">Plan</button>
+        <button type="button" data-view="tx" aria-pressed="false">Transactions</button>
+        <button type="button" data-view="accounts" aria-pressed="false">Accounts</button>
+      </div>
+      <span class="grow"></span>
+      <button class="btn ghost icon small" id="undoBtn" type="button" title="Undo (Ctrl+Z)" aria-label="Undo" disabled><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+      <button class="btn primary small" id="addTxBtn" type="button"><svg class="i"><use href="#i-plus"/></svg>Transaction</button>
+    </div>
+
+    <div class="view" id="view-plan">
+      <div class="bud-monthbar">
+        <button class="btn icon small" id="prevMonth" type="button" aria-label="Previous month">‹</button>
+        <h2 id="monthLabel"></h2>
+        <button class="btn icon small" id="nextMonth" type="button" aria-label="Next month">›</button>
+        <button class="btn ghost small" id="thisMonth" type="button">This month</button>
+      </div>
+      <div class="bud-rta" id="rta">
+        <div class="bud-rta-num"><b id="rtaAmt"></b><span id="rtaLbl">Ready to assign</span></div>
+        <div class="row" id="rtaActions"></div>
+      </div>
+      <div class="card bud-plan" id="plan"></div>
+      <div class="row mt">
+        <button class="btn small" id="addGroup" type="button"><svg class="i"><use href="#i-plus"/></svg>Add category group</button>
+      </div>
+    </div>
+
+    <div class="view" id="view-tx" hidden>
+      <div class="row bud-txbar">
+        <select class="select" id="txAcct" aria-label="Account"></select>
+        <input class="input grow" id="txSearch" type="search" placeholder="Search payee, memo, category or amount" aria-label="Search transactions">
+      </div>
+      <div class="row" id="txFilters"></div>
+      <div id="acctSummary"></div>
+      <div class="card bud-txlist" id="txList"></div>
+    </div>
+
+    <div class="view" id="view-accounts" hidden>
+      <div class="stats" id="worth"></div>
+      <div class="bud-accts" id="acctList"></div>
+      <form class="card stack mt" id="acctForm">
+        <h2>Add an account</h2>
+        <div class="grid-2">
+          <label class="field">Name<input class="input" id="afName" maxlength="80" placeholder="e.g. Bank, Cash, Visa" dir="auto" required></label>
+          <label class="field">Type<select class="select" id="afType"></select></label>
+          <label class="field">Balance today<input class="input" id="afBal" inputmode="decimal" placeholder="0" autocomplete="off"></label>
+          <label class="field">As of<input class="input" id="afDate" type="date"></label>
+        </div>
+        <p class="faint" id="afHint">For a credit card or loan, enter what you owe as a negative number (for example -250).</p>
+        <div class="row"><button class="btn primary" type="submit">Add account</button></div>
+      </form>
+    </div>
+  </section>
+</main>
+</body>
+</html>
