@@ -60,7 +60,7 @@
   // Flagship apps: free versions of the big paid apps people use every day.
   var FLAGSHIP = [
     ["design-studio", "Canva"], ["pages", "Notion"], ["sheets", "Excel"], ["slides", "PowerPoint"],
-    ["docs", "Word"], ["photo-editor", "Photoshop"], ["video-editor", "CapCut"]
+    ["docs", "Word"], ["photo-editor", "Photoshop"], ["video-editor", "CapCut"], ["study-planner", "MyStudyLife"]
   ].filter(function (f) { return bySlug[f[0]]; });
   var flag = S3.$("#flagship-row");
   FLAGSHIP.forEach(function (f) {

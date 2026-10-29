@@ -1,1 +1,9 @@
-[]
+[
+ {
+  "slug": "study-planner",
+  "name": "Study Planner",
+  "tagline": "Timetable, exams and an automatic revision plan",
+  "category": "Productivity",
+  "alt": "MyStudyLife"
+ }
+]
