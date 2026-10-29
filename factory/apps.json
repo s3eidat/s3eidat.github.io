@@ -89,5 +89,12 @@
   "tagline": "Contacts, deal pipeline and tasks, all private",
   "category": "Productivity",
   "alt": "HubSpot CRM"
+ },
+ {
+  "slug": "email-builder",
+  "name": "Email Builder",
+  "tagline": "Build HTML emails from blocks, export free",
+  "category": "Design",
+  "alt": "Mailchimp"
  }
 ]
