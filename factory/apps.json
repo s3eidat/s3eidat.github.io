@@ -103,5 +103,12 @@
   "tagline": "Keyboard-first mind maps with PNG, PDF export",
   "category": "Productivity",
   "alt": "MindMeister"
+ },
+ {
+  "slug": "pdf-notes",
+  "name": "PDF Notes",
+  "tagline": "Handwrite on PDFs and notebooks, export free",
+  "category": "PDF & Docs",
+  "alt": "GoodNotes"
  }
 ]

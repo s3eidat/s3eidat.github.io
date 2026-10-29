@@ -60,7 +60,7 @@
   // Flagship apps: free versions of the big paid apps people use every day.
   var FLAGSHIP = [
     ["design-studio", "Canva"], ["pages", "Notion"], ["sheets", "Excel"], ["slides", "PowerPoint"],
-    ["docs", "Word"], ["photo-editor", "Photoshop"], ["video-editor", "CapCut"], ["study-planner", "MyStudyLife"], ["budget", "YNAB"], ["storyboard", "Boords"], ["teleprompter", "PromptSmart"], ["diagrams", "Lucidchart"], ["logo-maker", "Looka"], ["time-tracker", "Toggl Track"], ["floor-plan", "RoomSketcher"], ["gantt", "Microsoft Project"], ["subtitle-editor", "Kapwing"], ["beat-maker", "FL Studio"], ["base", "Airtable"], ["mind-map", "MindMeister"], ["crm", "HubSpot CRM"], ["email-builder", "Mailchimp"]
+    ["docs", "Word"], ["photo-editor", "Photoshop"], ["video-editor", "CapCut"], ["study-planner", "MyStudyLife"], ["budget", "YNAB"], ["storyboard", "Boords"], ["teleprompter", "PromptSmart"], ["diagrams", "Lucidchart"], ["logo-maker", "Looka"], ["time-tracker", "Toggl Track"], ["floor-plan", "RoomSketcher"], ["gantt", "Microsoft Project"], ["subtitle-editor", "Kapwing"], ["beat-maker", "FL Studio"], ["base", "Airtable"], ["mind-map", "MindMeister"], ["crm", "HubSpot CRM"], ["email-builder", "Mailchimp"], ["pdf-notes", "GoodNotes"]
   ].filter(function (f) { return bySlug[f[0]]; });
   var flag = S3.$("#flagship-row");
   FLAGSHIP.forEach(function (f) {
