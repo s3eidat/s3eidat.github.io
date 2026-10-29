@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Free Envelope Budget App, No Sign-Up: a YNAB Alternative</title>
+<meta name="description" content="A free envelope budget in your browser: give every dinar or dollar a job, track spending, import your bank's CSV. No account or bank login.">
+<link rel="canonical" href="https://s3eidat.github.io/guides/budget/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/kit/kit.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Is Budget really free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. There is no paid plan, no trial and no limit on accounts, categories or transactions. It is a static web page that runs in your browser."}},
+    {"@type": "Question", "name": "Can it connect to my bank automatically?", "acceptedAnswer": {"@type": "Answer", "text": "No. Automatic bank sync needs a server that logs in to your bank, and this tool has none. Instead, download a CSV export from your bank's website or app and use Import bank CSV. Transactions you already have are skipped, so you can import the same file twice without duplicates."}},
+    {"@type": "Question", "name": "Does it work with Jordanian dinars and other currencies?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Each budget has one currency. Dinars with three decimals (JOD, KWD, BHD, OMR, TND, LYD) are handled with all three decimals, and there are more than thirty other currencies. For a second currency, create a second budget."}},
+    {"@type": "Question", "name": "What happens when I overspend a category?", "acceptedAnswer": {"@type": "Answer", "text": "The category turns red. Move money into it from another category or from ready to assign. If you leave it, the category starts next month at zero and the overspent amount is taken out of next month's ready to assign, so the budget still adds up."}},
+    {"@type": "Question", "name": "How do I use it on my phone and my laptop?", "acceptedAnswer": {"@type": "Answer", "text": "There is no sync. Your budget is saved in the browser you use. Download a backup file from the budget settings and open it on the other device."}}
+  ]
+}
+</script>
+</head>
+<body data-more="off">
+<main class="s3-main prose">
+  <h1>A free envelope budget app with no sign-up</h1>
+  <p>If you want a free alternative to YNAB that doesn't ask for an account or your bank login, open <b>Budget</b>. It works the envelope way: you give every dinar, dollar or euro you have a job before you spend it, and each category shows what is still available. It runs entirely in your browser, and your numbers stay on your device.</p>
+  <p><a class="btn primary big" href="/budget/">Open Budget</a></p>
+
+  <h2>Step by step</h2>
+  <ol>
+    <li>Open <a href="/budget/">Budget</a>. Give your budget a name, pick your currency and choose starter categories in English or Arabic (or start empty), then press <b>Create budget</b>. To look around first, press <b>Try a sample budget</b>.</li>
+    <li>On the <b>Accounts</b> tab, add each account with the balance it has today: your bank account, the cash in your wallet, a credit card (what you owe, as a negative number). The money in them becomes <b>ready to assign</b>.</li>
+    <li>On the <b>Plan</b> tab, type an amount in the <b>Assigned</b> column of each category. Press Enter to save and jump to the next one. Keep going until ready to assign reaches zero.</li>
+    <li>When you spend, press <b>Transaction</b> (or the N key). Pick Spending, Income or Transfer, type the amount, the payee and the category. The next time you type the same payee, its category is filled in for you.</li>
+    <li>Prefer not to type everything? On the <b>Transactions</b> tab, press <b>Import bank CSV</b>, choose your bank's export, match the date, payee and amount columns, check the preview and import.</li>
+    <li>If a category goes red, click its available amount to move money in from another category. Click a category name to set a target, such as a set amount every month or a total by a date.</li>
+    <li>Once a month, press <b>Reconcile</b> on an account and type the balance your bank shows. Open <b>Reports</b> to see where the money went.</li>
+  </ol>
+
+  <h2>Who it helps</h2>
+  <ul>
+    <li><b>Anyone living paycheque to paycheque.</b> Assigning the salary on the day it arrives (rent, bills, groceries, transport) shows in one screen what is really free to spend, before the month surprises you.</li>
+    <li><b>People whose bank isn't supported by budgeting apps.</b> Most banks in Jordan and the Arab world, and many elsewhere, can export a CSV statement. The importer reads day/month/year dates, decimal commas, separate debit and credit columns and older Arabic-encoded files.</li>
+    <li><b>Students and families on a tight month.</b> Targets such as "save 600 for the summer by June" tell you how much to put aside each month, and the button <b>Assign what targets need</b> does it in one click.</li>
+    <li><b>Anyone who doesn't want to share bank data.</b> No login, no aggregator, no server: the budget is a file in your own browser.</li>
+  </ul>
+
+  <h2>Why it's private</h2>
+  <p>Budget is a static page. Your accounts, categories and transactions are saved in your own browser's storage on this device and are never uploaded. The page's security policy blocks it from sending data to other websites, and CSV files you import are read on your device. It works offline after the first visit. Clearing your browser data deletes the budget, so download a backup file now and then; the app reminds you if you haven't.</p>
+
+  <h2>Tips and limits</h2>
+  <ul>
+    <li><b>Amount fields do maths.</b> Type 120+35.5 or 900/3, and Arabic digits such as ١٢٠ work too.</li>
+    <li><b>Recurring bills:</b> when adding a transaction, set <b>Repeat</b> to every week, every 2 weeks, every month, every 3 months or every year. Upcoming ones are listed above your transactions and are entered automatically the next time you open Budget on or after their date.</li>
+    <li><b>Credit cards:</b> record card purchases in the card account with their category, and the payment to the card as a transfer from your bank. The budget stays balanced without a special payment category.</li>
+    <li><b>No automatic bank sync and no sharing in real time.</b> Use CSV import, and the backup file to move a budget between devices.</li>
+    <li><b>One currency per budget,</b> with no exchange rates. Changing the currency in settings only changes the symbol and decimals; it does not convert amounts.</li>
+    <li><b>Keyboard shortcuts:</b> 1 to 4 switch tabs, [ and ] change the month, / searches, Ctrl+Z undoes, and ? shows the list.</li>
+    <li>Your transactions can be exported as a CSV file for a spreadsheet such as <a href="/sheets/">Sheets</a>.</li>
+  </ul>
+
+  <h2>FAQ</h2>
+  <h3>Is Budget really free?</h3>
+  <p>Yes. There is no paid plan, no trial and no limit on accounts, categories or transactions. It is a static web page that runs in your browser.</p>
+  <h3>Can it connect to my bank automatically?</h3>
+  <p>No. Automatic bank sync needs a server that logs in to your bank, and this tool has none. Instead, download a CSV export from your bank's website or app and use <b>Import bank CSV</b>. Transactions you already have are skipped, so you can import the same file twice without duplicates.</p>
+  <h3>Does it work with Jordanian dinars and other currencies?</h3>
+  <p>Yes. Each budget has one currency. Dinars with three decimals (JOD, KWD, BHD, OMR, TND, LYD) are handled with all three decimals, and there are more than thirty other currencies. For a second currency, create a second budget.</p>
+  <h3>What happens when I overspend a category?</h3>
+  <p>The category turns red. Move money into it from another category or from ready to assign. If you leave it, the category starts next month at zero and the overspent amount is taken out of next month's ready to assign, so the budget still adds up.</p>
+  <h3>How do I use it on my phone and my laptop?</h3>
+  <p>There is no sync. Your budget is saved in the browser you use. Download a backup file from the budget settings and open it on the other device.</p>
+
+  <h2>Related tools</h2>
+  <ul>
+    <li><a href="/loan-calc/">Loan Calc</a>: the monthly payment and full schedule for a loan.</li>
+    <li><a href="/compound-interest/">Compound Interest</a>: see how savings grow over time.</li>
+    <li><a href="/split-bill/">Split Bill</a>: share a bill and the tip between friends.</li>
+    <li><a href="/zakat-calc/">Zakat Calc</a>: work out zakat on savings and gold.</li>
+    <li><a href="/guides/">All guides</a></li>
+  </ul>
+</main>
+</body>
+</html>

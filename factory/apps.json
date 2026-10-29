@@ -5,5 +5,12 @@
   "tagline": "Timetable, exams and an automatic revision plan",
   "category": "Productivity",
   "alt": "MyStudyLife"
+ },
+ {
+  "slug": "budget",
+  "name": "Budget",
+  "tagline": "Envelope budgeting: plan, track, import bank CSV",
+  "category": "Productivity",
+  "alt": "YNAB"
  }
 ]
