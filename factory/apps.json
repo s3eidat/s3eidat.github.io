@@ -26,5 +26,12 @@
   "tagline": "Smooth-scrolling prompter with mirror and camera",
   "category": "Audio & Video",
   "alt": "PromptSmart"
+ },
+ {
+  "slug": "diagrams",
+  "name": "Diagrams",
+  "tagline": "Flowcharts, org charts and ER diagrams",
+  "category": "Design",
+  "alt": "Lucidchart"
  }
 ]
