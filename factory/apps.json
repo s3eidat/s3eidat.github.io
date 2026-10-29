@@ -33,5 +33,12 @@
   "tagline": "Flowcharts, org charts and ER diagrams",
   "category": "Design",
   "alt": "Lucidchart"
+ },
+ {
+  "slug": "logo-maker",
+  "name": "Logo Maker",
+  "tagline": "Logo ideas from your name, free SVG and PNG",
+  "category": "Design",
+  "alt": "Looka"
  }
 ]
