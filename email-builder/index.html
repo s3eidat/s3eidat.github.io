@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Email Builder — free drag-and-drop HTML email template maker | S3eidat Tools</title>
+<meta name="description" content="Free email template builder: build newsletters from blocks, preview on mobile and export email-safe HTML for Gmail, Outlook or any email tool. No sign-up, no export limits.">
+<link rel="canonical" href="https://s3eidat.github.io/email-builder/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+</head>
+<body data-tool="email-builder">
+<main class="s3-main eb" id="eb">
+  <div class="eb-head">
+    <div class="grow">
+      <label class="sr" for="eb-name">Email name</label>
+      <input id="eb-name" class="eb-name" type="text" maxlength="100" placeholder="Untitled email" dir="auto" autocomplete="off">
+      <p class="faint" id="eb-stats">Build from blocks, export email-safe HTML. Nothing is uploaded.</p>
+    </div>
+    <div class="row" id="eb-actions"></div>
+  </div>
+  <div class="eb-work">
+    <aside class="eb-left" id="eb-left" aria-label="Blocks and settings"></aside>
+    <section class="eb-center card" aria-label="Preview">
+      <div class="row between eb-pbar" id="eb-pbar"></div>
+      <div class="eb-stage" id="eb-stage"><div class="eb-host" id="eb-host"></div></div>
+    </section>
+    <aside class="eb-right card" id="eb-right" aria-label="Edit block"></aside>
+  </div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
