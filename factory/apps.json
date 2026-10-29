@@ -82,5 +82,12 @@
   "tagline": "Your own database: grid, kanban and calendar",
   "category": "Productivity",
   "alt": "Airtable"
+ },
+ {
+  "slug": "crm",
+  "name": "CRM",
+  "tagline": "Contacts, deal pipeline and tasks, all private",
+  "category": "Productivity",
+  "alt": "HubSpot CRM"
  }
 ]
