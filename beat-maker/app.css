@@ -60,3 +60,12 @@
 .bm-slot.is-play { border-color: var(--coffee); box-shadow: 0 0 0 2px var(--coffee); }
 .bm-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
 .bm > * { min-width: 0; }
+.bm-menu { position: relative; }
+.bm-menu summary { list-style: none; cursor: pointer; }
+.bm-menu summary::-webkit-details-marker { display: none; }
+.bm-menu-list { position: absolute; right: 0; top: calc(100% + 6px); z-index: 40; min-width: 210px; padding: 6px; border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-pop); display: grid; }
+.bm-menu-list button { text-align: start; padding: 8px 10px; border-radius: 8px; font-size: 13.5px; color: var(--text); }
+.bm-menu-list button:hover, .bm-menu-list button:focus-visible { background: var(--surface-2); }
+.bm-menu-list hr { border: 0; border-top: 1px solid var(--line); margin: 4px 2px; }
+.bm-keylist { display: grid; gap: 7px; }
+.bm-keylist kbd { min-width: 150px; text-align: center; }

@@ -418,12 +418,105 @@
     box.appendChild(h("p", { "class": "faint", text: bars + (bars === 1 ? " part" : " parts") + " · " + Math.floor(secs / 60) + ":" + String(Math.round(secs % 60)).padStart(2, "0") + " at " + P.bpm + " BPM" }));
   }
 
+
+  // ---------- files, examples, help ----------
+  function replace(p2, msg) {
+    var before = JSON.stringify(P);
+    if (playing) stop();
+    P = p2; past.push(before); future = []; liveGains(); save(); $("#bm-name").value = P.name; renderAll();
+    var t = S3.toast(msg + " ");
+    t.appendChild(h("button", { "class": "btn small", type: "button", onclick: function () { undo(); $("#bm-name").value = P.name; t.remove(); } }, ["Undo"]));
+  }
+  function newBeat() { replace(blank(), "New beat"); }
+  function saveBeat() { S3.download(JSON.stringify(Object.assign({ app: "s3eidat-beat-maker", saved: new Date().toISOString() }, P)), fileBase() + ".beat.json", "application/json"); S3.done(); }
+  function openBeat() {
+    var inp = h("input", { type: "file", accept: ".json,application/json", hidden: true });
+    inp.addEventListener("change", function () {
+      var f = inp.files[0]; inp.remove(); if (!f) return;
+      S3.readFile(f, "text").then(function (txt) { var d; try { d = clean(JSON.parse(txt)); } catch (e) { d = null; } if (!d) return S3.toast("That isn't a Beat Maker file", "error"); replace(d, "Opened " + (d.name || "beat")); });
+    });
+    document.body.appendChild(inp); inp.click();
+  }
+  function steps(list) { var a = new Array(STEPS).fill(0); list.forEach(function (x) { if (x < 0) a[-x - 100] = 2; else a[x] = 1; }); return a; }
+  function example(kind) {
+    var p2 = blank(), A = p2.patterns[0], B = p2.patterns[1], acc = function (s) { return -100 - s; };
+    var everyOther = [0, 2, 4, 6, 8, 10, 12, 14], all = Array.from({ length: 16 }, function (_, i) { return i; });
+    if (kind === "boombap") {
+      p2.name = "Boom bap example"; p2.bpm = 90; p2.swing = 22; p2.kit = "boom";
+      A.drums = [steps([acc(0), 7, 10]), steps([acc(4), acc(12)]), steps([]), steps(everyOther), steps([14]), steps([]), steps([]), steps([3, 11])];
+      A.bass = [{ s: 0, n: 36, l: 3 }, { s: 7, n: 36, l: 1 }, { s: 10, n: 39, l: 2 }, { s: 14, n: 34, l: 2 }];
+      A.lead = [{ s: 0, n: 63, l: 4 }, { s: 8, n: 60, l: 4 }];
+      B.drums = A.drums.map(function (r) { return r.slice(); }); B.drums[0] = steps([acc(0), 7, 10, 13]); B.drums[5] = steps([12, 13]); B.drums[6] = steps([14, 15]);
+      B.bass = A.bass.slice(); B.lead = [{ s: 0, n: 65, l: 4 }, { s: 8, n: 63, l: 6 }];
+      p2.synths.bass.oct = 1; p2.synths.lead.oct = 4; p2.synths.lead.wave = "triangle"; p2.song = [0, 0, 0, 1];
+    } else if (kind === "house") {
+      p2.name = "House example"; p2.bpm = 124; p2.kit = "punchy";
+      A.drums = [steps([acc(0), acc(4), acc(8), acc(12)]), steps([]), steps([4, 12]), steps([1, 3, 5, 7, 9, 11, 13, 15]), steps([2, 6, 10, 14]), steps([]), steps([]), steps([])];
+      A.bass = [2, 6, 10, 14].map(function (s2) { return { s: s2, n: 33, l: 1 }; });
+      A.lead = [{ s: 0, n: 69, l: 2 }, { s: 0, n: 72, l: 2 }, { s: 0, n: 76, l: 2 }, { s: 6, n: 67, l: 2 }, { s: 6, n: 71, l: 2 }, { s: 6, n: 74, l: 2 }];
+      p2.synths.bass.oct = 1; p2.synths.bass.wave = "square"; p2.synths.lead.oct = 4; p2.synths.lead.wave = "sawtooth"; p2.synths.lead.cutoff = 1600; p2.song = [0];
+    } else {
+      p2.name = "Lo-fi example"; p2.bpm = 78; p2.swing = 30; p2.kit = "lofi";
+      A.drums = [steps([acc(0), 9]), steps([acc(4), 12]), steps([]), steps(all.filter(function (s2) { return s2 % 2 === 0; })), steps([]), steps([]), steps([]), steps([7, 15])];
+      A.bass = [{ s: 0, n: 29, l: 6 }, { s: 8, n: 33, l: 6 }];
+      A.lead = [{ s: 2, n: 72, l: 2 }, { s: 2, n: 76, l: 2 }, { s: 10, n: 72, l: 2 }, { s: 10, n: 77, l: 2 }];
+      p2.synths.bass.oct = 1; p2.synths.bass.wave = "triangle"; p2.synths.bass.cutoff = 500; p2.synths.lead.oct = 4; p2.synths.lead.wave = "sine"; p2.synths.lead.release = .6; p2.song = [0];
+    }
+    replace(clean(p2), "Loaded " + p2.name.toLowerCase() + ". Press Space to play.");
+  }
+  function help() {
+    var keys = [["Space", "Play / stop"], ["1 – 8", "Pick pattern A–H"], ["Shift + click", "Accent (louder) drum hit"], ["Enter on a step", "Toggle it (Shift+Enter: accent)"], ["Ctrl+Z / Ctrl+Shift+Z", "Undo / redo"], ["?", "Show this help"]];
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Keyboard shortcuts" });
+    var sheet = h("div", { "class": "s3-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: "Keyboard shortcuts" }), btn("", close, "ghost icon", "x", "Close")]),
+      h("div", { "class": "bm-keylist" }, keys.map(function (k) { return h("div", { "class": "row" }, [h("kbd", { text: k[0] }), h("span", { "class": "muted", text: k[1] })]); }))]);
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m); sheet.querySelector("button").focus();
+  }
+
+  // ---------- self-test (renders offline; the real project is restored) ----------
+  window.S3_SELFTEST = async function () {
+    var real = P, ok = true;
+    function expect(c) { if (!c) ok = false; }
+    try {
+      expect(clean(null) === null && clean({ patterns: 1 }) === null);
+      var c = clean({ patterns: [{ drums: [[9, 1, 2]], bass: [{ s: 99, n: 500, l: 0 }] }], bpm: 9999, song: [], tracks: [{ vol: 7 }] });
+      expect(c.bpm === 220 && c.song.length === 1 && c.tracks[0].vol === 1 && c.patterns[0].drums[0][0] === 0 && c.patterns[0].drums[0][2] === 2 && c.patterns[0].bass[0].s === 15 && c.patterns[0].bass[0].n === 108 && c.patterns[0].bass[0].l === 1);
+      // one kick and one bass note, rendered offline: sound where the hits are, quiet before them
+      P = blank(); P.bpm = 120; P.patterns[0].drums[0][0] = 2; P.patterns[0].bass = [{ s: 8, n: 36, l: 2 }];
+      var buf = await render("pattern", 1), d = buf.getChannelData(0), sr = buf.sampleRate;
+      function peak(a, b) { var m = 0; for (var i = Math.floor(a * sr); i < Math.min(d.length, b * sr); i++) m = Math.max(m, Math.abs(d[i])); return m; }
+      expect(buf.numberOfChannels === 2 && Math.abs(buf.duration - (16 * .125 + 2)) < .01);
+      expect(peak(0, .015) < .01 && peak(.02, .2) > .1 && peak(1.02, 1.2) > .05);
+      var w = new Uint8Array(await wav(buf).arrayBuffer());
+      expect(String.fromCharCode.apply(null, w.slice(0, 4)) === "RIFF" && String.fromCharCode.apply(null, w.slice(8, 12)) === "WAVE" && w.length === 44 + buf.length * 4);
+      // swing pushes odd steps later
+      P.swing = 50; expect(swingAt(1) > 0 && swingAt(2) === 0 && Math.abs(swingAt(1) - .125 * .25) < 1e-9);
+    } catch (e) { ok = false; }
+    P = real;
+    return ok;
+  };
+
   // ---------- page ----------
   function renderAll() { renderTransport(); renderDrums(); renderSynths(); renderSong(); }
   function actions() {
     var a = $("#bm-actions");
     a.appendChild(btn("", undo, "ghost icon", "", "Undo (Ctrl+Z)")); a.lastChild.textContent = "↶";
     a.appendChild(btn("", redo, "ghost icon", "", "Redo (Ctrl+Shift+Z)")); a.lastChild.textContent = "↷";
+    a.appendChild(btn("?", help, "ghost icon", "", "Keyboard shortcuts (?)"));
+    var menu = h("details", { "class": "bm-menu" }, [h("summary", { "class": "btn" }, [icon("file"), "File"])]);
+    var list = h("div", { "class": "bm-menu-list", role: "menu" });
+    [["New beat", newBeat], ["Open beat file…", openBeat], ["Save beat file", saveBeat], null, ["Example: Boom bap", function () { example("boombap"); }], ["Example: House", function () { example("house"); }], ["Example: Lo-fi", function () { example("lofi"); }]].forEach(function (it) {
+      if (!it) return list.appendChild(h("hr"));
+      list.appendChild(h("button", { type: "button", role: "menuitem", onclick: function () { menu.open = false; it[1](); } }, [it[0]]));
+    });
+    menu.appendChild(list);
+    menu.addEventListener("toggle", function () { if (!menu.open) return; list.style.left = ""; list.style.right = ""; if (list.getBoundingClientRect().left < 8) { list.style.left = "0"; list.style.right = "auto"; } });
+    document.addEventListener("click", function (e) { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+    a.appendChild(menu);
     a.appendChild(btn("Export WAV", exportDialog, "primary", "download"));
   }
   $("#bm-name").value = P.name;
@@ -439,6 +532,7 @@
     if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === " " && !(tag === "BUTTON" && e.target.classList.contains("bm-step"))) { e.preventDefault(); play(); }
     else if (/^[1-8]$/.test(e.key)) { P.cur = +e.key - 1; save(); renderAll(); }
+    else if (e.key === "?") help();
   });
   document.addEventListener("visibilitychange", function () { /* keep playing in background tabs; timers may slow down there */ });
   actions();
