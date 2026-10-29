@@ -3,7 +3,7 @@
   "use strict";
   var T = window.TimeCore, h = S3.h, $ = S3.$, $$ = S3.$$;
   var D = null, view = "log", undoStack = [], tick = null, weekKey = null, logDays = 14;
-  var timerTags = [], timerBill = false;
+  var timerTags = [], timerBill = false, lastRun = null;
 
   // ---------- storage / undo ----------
   function save() {
@@ -106,6 +106,9 @@
   // ---------- timer bar ----------
   function syncTimerBar() {
     var r = T.running(D);
+    // the timer stopped (here, in another tab, or by undo): clear the bar
+    if (!r && lastRun) { $("#tDesc").value = ""; $("#tProj").value = ""; timerTags = []; timerBill = false; }
+    lastRun = r ? r.id : null;
     projectSelect($("#tProj"), r ? r.project : $("#tProj").value || "");
     if (r) { $("#tDesc").value = r.desc; timerTags = r.tags.slice(); timerBill = r.billable; $("#tProj").value = r.project || ""; }
     $("#tBill").setAttribute("aria-pressed", String(timerBill));
