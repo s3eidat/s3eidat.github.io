@@ -19,5 +19,12 @@
   "tagline": "Sketch frames, play an animatic, export PDF",
   "category": "Design",
   "alt": "Boords"
+ },
+ {
+  "slug": "teleprompter",
+  "name": "Teleprompter",
+  "tagline": "Smooth-scrolling prompter with mirror and camera",
+  "category": "Audio & Video",
+  "alt": "PromptSmart"
  }
 ]
