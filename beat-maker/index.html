@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Beat Maker — free online drum machine and beat maker | S3eidat Tools</title>
+<meta name="description" content="Free beat maker in your browser: drum step sequencer, bass and lead synths with a piano roll, patterns, song mode and WAV export. No sign-up, no install.">
+<link rel="canonical" href="https://s3eidat.github.io/beat-maker/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+</head>
+<body data-tool="beat-maker">
+<main class="s3-main bm" id="bm">
+  <div class="bm-head">
+    <div class="grow">
+      <label class="sr" for="bm-name">Beat name</label>
+      <input id="bm-name" class="bm-name" type="text" maxlength="80" placeholder="Untitled beat" dir="auto" autocomplete="off">
+      <p class="faint" id="bm-stats">Every sound is made live by your browser. Nothing is uploaded.</p>
+    </div>
+    <div class="row" id="bm-actions"></div>
+  </div>
+  <div class="card bm-transport" id="bm-transport"></div>
+  <div class="card bm-drums" id="bm-drums"></div>
+  <div class="card bm-synths" id="bm-synths"></div>
+  <div class="card bm-song" id="bm-song"></div>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
