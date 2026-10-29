@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://s3eidat.github.io/sitemap.xml
+Sitemap: https://s3eidat.github.io/guides/sitemap.xml

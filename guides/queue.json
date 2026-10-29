@@ -1,0 +1,1255 @@
+[
+ {
+  "slug": "design-studio",
+  "name": "Design Studio",
+  "category": "Design",
+  "tagline": "Design social posts, flyers and CVs free",
+  "spec": "Free, local-first alternative to paid online design editors (Canva-style). See replica/design-studio/ for the recon map and feature matrix.",
+  "free_alternative_to": "Canva"
+ },
+ {
+  "slug": "pages",
+  "name": "Pages",
+  "category": "Productivity",
+  "tagline": "Notes and docs with blocks, all private",
+  "spec": "Free, local-first alternative to block-based note apps (Notion-style). See replica/pages/ for the recon map and feature matrix.",
+  "free_alternative_to": "Notion"
+ },
+ {
+  "slug": "sheets",
+  "name": "Sheets",
+  "category": "Productivity",
+  "tagline": "A free spreadsheet that opens Excel files",
+  "spec": "Free, local-first spreadsheet (Excel/Google Sheets-style) with formulas, charts and .xlsx import/export. See replica/sheets/.",
+  "free_alternative_to": "Excel"
+ },
+ {
+  "slug": "slides",
+  "name": "Slides",
+  "category": "Productivity",
+  "tagline": "Make presentations free and present anywhere",
+  "spec": "Free, local-first presentation editor (PowerPoint/Google Slides-style) with themes, present mode and .pptx/PDF export. See replica/slides/.",
+  "free_alternative_to": "PowerPoint"
+ },
+ {
+  "slug": "docs",
+  "name": "Docs",
+  "category": "PDF & Docs",
+  "tagline": "Write documents and export Word or PDF",
+  "spec": "Free, local-first word processor (Word/Google Docs-style) with page layout and .docx/PDF export. See replica/docs/.",
+  "free_alternative_to": "Word"
+ },
+ {
+  "slug": "photo-editor",
+  "name": "Photo Editor",
+  "category": "Images",
+  "tagline": "A layered photo editor in your browser",
+  "spec": "Free, local-first layered photo editor (Photoshop-style core). See replica/photo-editor/.",
+  "free_alternative_to": "Photoshop"
+ },
+ {
+  "slug": "video-editor",
+  "name": "Video Editor",
+  "category": "Audio & Video",
+  "tagline": "Cut, caption and export videos free",
+  "spec": "Free, local-first video editor (CapCut-style core) using WebCodecs. See replica/video-editor/.",
+  "free_alternative_to": "CapCut"
+ },
+ {
+  "slug": "pdf-merge",
+  "name": "PDF Merge",
+  "category": "PDF & Docs",
+  "tagline": "Combine PDF files into one",
+  "spec": "Drop several PDFs, reorder by drag, show page counts and sizes, optional page ranges per file (e.g. 1-3,5), merge to one PDF and download. Handles encrypted PDFs with a clear error."
+ },
+ {
+  "slug": "pdf-split",
+  "name": "PDF Split",
+  "category": "PDF & Docs",
+  "tagline": "Split a PDF or extract pages",
+  "spec": "Drop a PDF, page thumbnails (pdf.js), select pages by click or range text, modes: extract selected to one PDF, split every N pages, split into single pages (zip). Download."
+ },
+ {
+  "slug": "pdf-organizer",
+  "name": "PDF Organizer",
+  "category": "PDF & Docs",
+  "tagline": "Reorder, rotate and delete PDF pages",
+  "spec": "Thumbnails grid (pdf.js) with drag to reorder, rotate per page or all, delete pages, insert blank page, undo, save new PDF (pdf-lib)."
+ },
+ {
+  "slug": "images-to-pdf",
+  "name": "Images to PDF",
+  "category": "PDF & Docs",
+  "tagline": "Turn photos and scans into one PDF",
+  "spec": "Drop JPG/PNG/WebP (convert webp via canvas), reorder by drag, page size (A4, Letter, fit image), orientation auto/portrait/landscape, margin, quality/compression, create PDF."
+ },
+ {
+  "slug": "pdf-to-images",
+  "name": "PDF to Images",
+  "category": "PDF & Docs",
+  "tagline": "Export PDF pages as PNG or JPG",
+  "spec": "Drop a PDF, choose DPI/scale and format, render each page (pdf.js) with progress, download single pages or all as zip."
+ },
+ {
+  "slug": "invoice-maker",
+  "name": "Invoice Maker",
+  "category": "PDF & Docs",
+  "tagline": "Clean invoices you can print or save as PDF",
+  "spec": "Your business + client details, logo upload, invoice no/date/due, line items (qty, price, tax %, discount), currency selector, notes/terms, totals; live A4 preview, print/save PDF via window.print with print CSS; saved locally, duplicate invoice, auto-increment number, JSON export/import."
+ },
+ {
+  "slug": "resume-builder",
+  "name": "Resume Builder",
+  "category": "PDF & Docs",
+  "tagline": "A clean one-page CV you can print to PDF",
+  "spec": "Sections (contact, summary, experience, education, skills, projects, languages), reorder sections, 3 templates, accent color, live A4 preview, print to PDF, autosave locally, JSON export/import. RTL toggle for Arabic CVs."
+ },
+ {
+  "slug": "signature-maker",
+  "name": "Signature Maker",
+  "category": "PDF & Docs",
+  "tagline": "Draw or type a signature, get a clean PNG",
+  "spec": "Smooth pen drawing (pointer events, pressure/velocity width), pen color/width, undo, clear, or typed signature with a few cursive-like fonts available on device, trim whitespace, transparent PNG and SVG download."
+ },
+ {
+  "slug": "receipt-maker",
+  "name": "Receipt Maker",
+  "category": "PDF & Docs",
+  "tagline": "Quick simple receipts for small sellers",
+  "spec": "Thermal-style (80mm) or A5 receipt: shop name, items, qty, price, discount, payment method, receipt number auto-increment, notes, print, save PNG; bilingual labels AR/EN; saved shop profile locally."
+ },
+ {
+  "slug": "cv-letter",
+  "name": "Cover Letter",
+  "category": "PDF & Docs",
+  "tagline": "Fill-in-the-blanks cover letter builder",
+  "spec": "Guided form (role, company, your strengths, achievements) that assembles a professional cover letter from several hand-written templates (no AI), editable result, tone selector, print/PDF, copy, saved locally."
+ },
+ {
+  "slug": "pdf-sign",
+  "name": "PDF Sign",
+  "category": "PDF & Docs",
+  "tagline": "Sign PDFs without uploading them",
+  "spec": "Open a PDF (pdf.js page previews), create a signature by drawing (smooth pen), typing (handwriting-style fonts on device) or uploading an image (auto-remove white background by threshold), place it on any page by click, drag and resize, add date, initials and free text boxes, multiple placements, then embed into the PDF with pdf-lib at correct coordinates (handle page rotation and different page sizes) and download. The signature is remembered locally only if the user ticks a box."
+ },
+ {
+  "slug": "pdf-fill",
+  "name": "PDF Form Filler",
+  "category": "PDF & Docs",
+  "tagline": "Fill in PDF forms in your browser",
+  "spec": "Open a fillable PDF: list every AcroForm field (text, multiline, checkbox, radio group, dropdown, option list) in a side panel grouped by page with live page preview; fill, clear, optional flatten (make non-editable), download. If the PDF has no form fields, say so clearly and point to PDF Sign for adding text."
+ },
+ {
+  "slug": "pdf-compress",
+  "name": "PDF Compress",
+  "category": "PDF & Docs",
+  "tagline": "Make scanned PDFs much smaller",
+  "spec": "Re-render each page with pdf.js to JPEG at a chosen DPI (72-300) and quality, rebuild with pdf-lib at the original page sizes, show before/after size with a page preview; presets (Email small, Balanced, High quality); grayscale option; progress + cancel. Be honest in the UI: best for scans and photo PDFs, text becomes an image (not selectable); if the result is bigger than the original, say so and offer the original."
+ },
+ {
+  "slug": "pdf-page-numbers",
+  "name": "PDF Page Numbers",
+  "category": "PDF & Docs",
+  "tagline": "Add page numbers, headers and footers",
+  "spec": "Page numbers with format templates ('{n}', 'Page {n} of {total}', '- {n} -'), 6 positions, start number, skip first N pages, page range, font size, colour, margin; optional header/footer text with {date} and {filename}; live preview on the first page (pdf.js); download."
+ },
+ {
+  "slug": "pdf-watermark",
+  "name": "PDF Watermark",
+  "category": "PDF & Docs",
+  "tagline": "Stamp text or a logo on every PDF page",
+  "spec": "Text (CONFIDENTIAL, DRAFT, COPY presets) or image watermark, size, colour, opacity, rotation, centre or tiled, page range; live preview on the first page (pdf.js); download."
+ },
+ {
+  "slug": "pdf-to-text",
+  "name": "PDF to Text",
+  "category": "PDF & Docs",
+  "tagline": "Pull the text out of any PDF",
+  "spec": "Extract text with pdf.js per page, rebuild lines by y-position and spacing, keep paragraph breaks, page separators toggle, search in results, copy all, download .txt or .md; per-page word counts; clear message when a page has no text layer (a scanned image)."
+ },
+ {
+  "slug": "email-signature",
+  "name": "Email Signature",
+  "category": "PDF & Docs",
+  "tagline": "Professional email signatures in a minute",
+  "spec": "Fields (name, title, company, phone, email, website, address, social links, accent colour), 4 templates, live preview built from escaped values; copy as rich content for Gmail/Outlook/Apple Mail (ClipboardItem text/html) and copy HTML source; per-app paste instructions; optional hosted-logo URL used ONLY inside the copied HTML (this page never loads it) plus a local preview from a picked file."
+ },
+ {
+  "slug": "calendar-maker",
+  "name": "Calendar Maker",
+  "category": "PDF & Docs",
+  "tagline": "Printable monthly and yearly calendars",
+  "spec": "Year or month view, week starts Sat/Sun/Mon, optional Hijri dates (Intl islamic-umalqura), custom events with colours, English/Arabic month names, A4/Letter portrait/landscape printing, PNG export of a month."
+ },
+ {
+  "slug": "attendance-sheet",
+  "name": "Attendance Sheet",
+  "category": "PDF & Docs",
+  "tagline": "Printable attendance and sign-in sheets",
+  "spec": "Generate printable attendance sheets: title, class/group, list of names (paste), date columns for a month or N sessions (skip chosen weekdays), columns for signature or checkboxes, landscape A4/Letter, optional Arabic labels/RTL; also an on-screen mode to tick attendance and export CSV."
+ },
+ {
+  "slug": "business-card",
+  "name": "Business Card",
+  "category": "PDF & Docs",
+  "tagline": "Design and print business cards",
+  "spec": "Card templates (standard 85x55 mm and 3.5x2 in), front/back, name, title, phone, email, website, logo from a local file, colours, optional QR (vCard) via qrcode.js, Arabic/English sides, live preview, print sheet of 10 per A4 with crop marks, PNG export at 300 DPI."
+ },
+ {
+  "slug": "label-maker",
+  "name": "Label Maker",
+  "category": "PDF & Docs",
+  "tagline": "Print address and product labels",
+  "spec": "Label sheet presets (Avery-style 3x7, 3x8, 2x7, 4x10, custom rows/cols/margins in mm), paste a list (one label per block or CSV columns) or repeat one label, font size, alignment, optional border, start position on a partly used sheet, print A4/Letter with exact mm positioning, preview."
+ },
+ {
+  "slug": "image-squeeze",
+  "name": "Image Squeeze",
+  "category": "Images",
+  "tagline": "Compress JPG, PNG and WebP images in bulk",
+  "spec": "Drop many images, quality slider, format (keep/JPEG/WebP/AVIF if supported), max dimension, before/after size and % saved per file, compare slider preview, download each or all as zip (S3.zip). All via canvas."
+ },
+ {
+  "slug": "image-convert",
+  "name": "Image Convert",
+  "category": "Images",
+  "tagline": "Convert images between PNG, JPG, WebP",
+  "spec": "Drop images (png, jpg, webp, gif first frame, bmp, svg), choose output format and quality, background color for transparency->jpg, batch convert, download zip."
+ },
+ {
+  "slug": "image-resize",
+  "name": "Image Resize",
+  "category": "Images",
+  "tagline": "Resize and crop images to exact sizes",
+  "spec": "Resize by px or %, keep aspect lock, presets (Instagram 1080x1080, story 1080x1920, YouTube thumb 1280x720, X header, passport), crop tool with draggable box and ratio presets, batch resize, high-quality downscale (step-down)."
+ },
+ {
+  "slug": "meme-maker",
+  "name": "Meme Maker",
+  "category": "Images",
+  "tagline": "Classic top/bottom text memes in seconds",
+  "spec": "Upload image or blank colored canvas, draggable text boxes (Impact-like bold sans with stroke), font size, color, uppercase toggle, add more text boxes, download PNG. No watermark."
+ },
+ {
+  "slug": "watermark",
+  "name": "Watermark",
+  "category": "Images",
+  "tagline": "Add text or logo watermarks to photos",
+  "spec": "Batch images, text or logo watermark, position grid (9) or tiled, opacity, size, rotation, margin, live preview, download zip."
+ },
+ {
+  "slug": "svg-to-png",
+  "name": "SVG to PNG",
+  "category": "Images",
+  "tagline": "Render SVG files to PNG at any size",
+  "spec": "Drop or paste SVG code, preview, set width/height or scale (1x-8x), background transparent/color, download PNG; batch zip. Sanitize: render via <img> from blob URL only (scripts don't run)."
+ },
+ {
+  "slug": "placeholder-image",
+  "name": "Placeholder Image",
+  "category": "Images",
+  "tagline": "Generate placeholder images of any size",
+  "spec": "Width/height, bg/fg colors, text (defaults to 'WxH'), font size, format PNG/JPG/WebP/SVG, presets of common sizes, download or copy as data URI."
+ },
+ {
+  "slug": "photo-filters",
+  "name": "Photo Filters",
+  "category": "Images",
+  "tagline": "Quick photo edits: light, color, filters",
+  "spec": "Brightness, contrast, saturation, warmth, hue, blur, sharpen, vignette, grayscale/sepia; preset filters; rotate/flip; hold-to-compare original; export full resolution JPG/PNG."
+ },
+ {
+  "slug": "collage-maker",
+  "name": "Collage Maker",
+  "category": "Images",
+  "tagline": "Combine photos into a neat grid collage",
+  "spec": "Pick layout (2-9 cells, several templates), drop photos into cells (pan/zoom inside cell), gap size, corner radius, background color, output size presets, download PNG/JPG."
+ },
+ {
+  "slug": "screenshot-frame",
+  "name": "Screenshot Frame",
+  "category": "Images",
+  "tagline": "Make screenshots look great for sharing",
+  "spec": "Paste (Ctrl+V) or drop a screenshot, gradient/solid background presets, padding, corner radius, shadow, optional browser-window frame (macOS dots), aspect presets (16:9, 1:1, 4:5), export PNG 2x, copy image to clipboard."
+ },
+ {
+  "slug": "image-to-base64",
+  "name": "Image to Base64",
+  "category": "Images",
+  "tagline": "Turn images into data URIs and back",
+  "spec": "Drop image -> data URI, raw base64, CSS background snippet, HTML img snippet with copy; size warning; reverse: paste data URI -> preview + download."
+ },
+ {
+  "slug": "heic-to-jpg",
+  "name": "HEIC to JPG",
+  "category": "Images",
+  "tagline": "Convert iPhone HEIC photos to JPG",
+  "spec": "Batch convert HEIC/HEIF (iPhone photos) to JPG, PNG or WebP with a quality slider, using the vendored libheif WebAssembly build (lib/libheif-bundle.js, global `libheif`). Convert the primary image of each file and note when a file holds more; thumbnails, per-file status, zip download. Photos never leave the device."
+ },
+ {
+  "slug": "passport-photo",
+  "name": "Passport Photo",
+  "category": "Images",
+  "tagline": "Passport and ID photos, print-ready",
+  "spec": "Load a photo, choose a spec (US 2x2 in, UK/EU/Schengen 35x45 mm, Jordan 4x6 cm, Saudi 4x6 cm, Canada 50x70 mm, India 2x2 in, China 33x48 mm, custom) with head-height and eye-line guides drawn as an overlay; the user pans/zooms/rotates to fit; brightness/contrast; export a single photo at 300 DPI and a print sheet (4x6 in / 10x15 cm / A4) tiling as many copies as fit with cut marks. Note: check your country's current official rules."
+ },
+ {
+  "slug": "gif-maker",
+  "name": "GIF Maker",
+  "category": "Images",
+  "tagline": "Make animated GIFs from images or video",
+  "spec": "Frames from several images (reorder, per-frame delay) or a short video segment (start/end, fps); resize, loop count, reverse and boomerang; own GIF89a encoder (LZW) with palette quantisation (median cut or octree) and optional Floyd-Steinberg dithering; progress; preview; size estimate; download."
+ },
+ {
+  "slug": "image-compare",
+  "name": "Image Compare",
+  "category": "Images",
+  "tagline": "Spot the difference between two images",
+  "spec": "Two images; modes: draggable before/after slider, side by side, onion skin with opacity, pixel-diff heatmap with threshold and changed-pixel count/percentage; handles different sizes; synced zoom/pan; export the diff image."
+ },
+ {
+  "slug": "image-to-text",
+  "name": "Image to Text",
+  "category": "Images",
+  "tagline": "Extract text from images and scanned PDFs (OCR)",
+  "spec": "OCR with the vendored tesseract.js 5 (Apache-2.0) entirely in the browser: English, Arabic or both; images by drop/paste/camera photo, and scanned PDFs (render pages with pdf.js, then OCR each page). Configure Tesseract with LOCAL paths only: workerPath 'lib/tesseract.worker.min.js', corePath 'lib/' (it picks tesseract-core-simd-lstm.wasm.js or tesseract-core-lstm.wasm.js), langPath 'lib', gzip true, cacheMethod 'none' (or 'readOnly'), so nothing is ever fetched from a CDN. Progress per page, cancel, result text in an RTL-aware textarea, confidence, copy/download .txt, per-page results for PDFs. Uses the wasm CSP variant."
+ },
+ {
+  "slug": "ascii-art",
+  "name": "ASCII Art",
+  "category": "Images",
+  "tagline": "Turn images and text into ASCII art",
+  "spec": "Image to ASCII (character ramps, width in characters, invert, contrast, coloured HTML-free output rendered as text or exported PNG) and text to big ASCII banner letters with a few built-in FIGlet-style fonts authored inline; copy as text, download .txt or PNG."
+ },
+ {
+  "slug": "profile-pic",
+  "name": "Profile Picture",
+  "category": "Images",
+  "tagline": "Round profile pictures with borders",
+  "spec": "Load a photo, pan/zoom/rotate inside a circle (or rounded square), background colour or gradient behind transparent areas, ring border with colour/gradient and width, optional text badge (e.g. 'Open to work' style arc text), export PNG at 400/800/1080 px; nothing uploaded."
+ },
+ {
+  "slug": "quote-card",
+  "name": "Quote Card",
+  "category": "Images",
+  "tagline": "Turn text into shareable image posts",
+  "spec": "Write a quote/announcement, choose size (1:1, 4:5, 9:16 story, 16:9), background (gradients, solid, your photo with darken), font choice from system fonts, alignment, author line, Arabic RTL support with proper shaping (canvas fillText with direction rtl), watermark/handle optional, export PNG."
+ },
+ {
+  "slug": "bg-remover",
+  "name": "Background Remover",
+  "category": "Images",
+  "tagline": "Remove image backgrounds free, on your device",
+  "spec": "Free alternative to paid background removers. Runs the U2-Net small model (models/u2netp/u2netp.onnx, Apache-2.0) with onnxruntime-web WASM (global `ort` from lib/ort.wasm.min.js; set ort.env.wasm.wasmPaths = 'lib/' and numThreads = 1 because GitHub Pages is not cross-origin isolated). Pipeline: resize to 320x320, normalise with ImageNet mean/std, run, take the first output mask, min-max normalise, upscale the mask to the original size with smoothing, optional threshold/feather/edge-shift sliders. Manual refine brush (erase / restore) on the mask, background options: transparent, colour, blur original, your image. Batch with zip. Export PNG/WebP at full resolution. Honest note: fine hair may need the refine brush."
+ },
+ {
+  "slug": "image-upscale",
+  "name": "Image Upscaler",
+  "category": "Images",
+  "tagline": "Enlarge images 2x with AI, free",
+  "spec": "Free alternative to paid AI upscalers. Swin2SR classical x2 (models/swin2SR-x2, Apache-2.0) via transformers.js image-to-image pipeline with zero network config (allowRemoteModels false, localModelPath 'models/', wasmPaths 'lib/'). Tile large images (e.g. 128-256 px tiles with overlap and seam blending) to bound memory and show progress; cap input size with a clear message; before/after compare slider; download PNG; run twice for 4x with a warning about time. WebGPU when available."
+ },
+ {
+  "slug": "screen-recorder",
+  "name": "Screen Recorder",
+  "category": "Audio & Video",
+  "tagline": "Record your screen with audio, no install",
+  "spec": "getDisplayMedia + optional mic mix (WebAudio), choose quality/fps, countdown, timer, pause/resume, preview recording, download WebM (and MP4 if MediaRecorder supports it), no watermark, no limit."
+ },
+ {
+  "slug": "voice-recorder",
+  "name": "Voice Recorder",
+  "category": "Audio & Video",
+  "tagline": "Record voice memos with a live waveform",
+  "spec": "MediaRecorder from mic, live waveform/level meter, pause/resume, recordings list stored in IndexedDB with rename/play/delete/download, noise suppression toggle, export WAV option via decode."
+ },
+ {
+  "slug": "audio-trimmer",
+  "name": "Audio Trimmer",
+  "category": "Audio & Video",
+  "tagline": "Cut and trim audio files in the browser",
+  "spec": "Drop audio (mp3, wav, m4a, ogg), decode via WebAudio, waveform canvas with draggable start/end handles, play selection, fade in/out, volume, export WAV (own encoder), ringtone length presets."
+ },
+ {
+  "slug": "metronome",
+  "name": "Metronome",
+  "category": "Audio & Video",
+  "tagline": "Accurate metronome with tap tempo",
+  "spec": "WebAudio lookahead scheduling for sample-accurate clicks, BPM 20-300 with slider and tap tempo, time signatures, accent first beat, subdivisions, visual beat pulse, keyboard shortcuts."
+ },
+ {
+  "slug": "guitar-tuner",
+  "name": "Guitar Tuner",
+  "category": "Audio & Video",
+  "tagline": "Tune your guitar with your microphone",
+  "spec": "Mic input, autocorrelation (YIN-like) pitch detection, note name + cents needle, standard and alternate tunings (Drop D, DADGAD, bass, ukulele), reference tone playback per string, A4 calibration 430-450 Hz."
+ },
+ {
+  "slug": "noise-machine",
+  "name": "Noise Machine",
+  "category": "Audio & Video",
+  "tagline": "White, pink and brown noise for focus and sleep",
+  "spec": "Generated in WebAudio (no audio files): white/pink/brown noise, rain-like and fan-like filtered noise, binaural-free, mixer with per-sound volume, sleep timer with fade-out, presets saved locally."
+ },
+ {
+  "slug": "device-check",
+  "name": "Device Check",
+  "category": "Audio & Video",
+  "tagline": "Test your webcam, mic and speakers",
+  "spec": "Camera preview with resolution/fps info and device picker, mic level meter and record-playback test, speaker left/right test tones, screen info (resolution, DPR, refresh estimate), keyboard tester; everything local."
+ },
+ {
+  "slug": "video-frames",
+  "name": "Video Frames",
+  "category": "Audio & Video",
+  "tagline": "Grab frames and thumbnails from a video",
+  "spec": "Drop a video, scrub with frame-step buttons, capture current frame as PNG/JPG at native resolution, auto-capture N evenly spaced frames to a contact sheet image, download zip."
+ },
+ {
+  "slug": "mp3-converter",
+  "name": "MP3 Converter",
+  "category": "Audio & Video",
+  "tagline": "Turn video or audio into MP3",
+  "spec": "Drop video (mp4, webm, mov) or audio (wav, m4a, ogg, flac…) files, decode the audio track with WebAudio decodeAudioData, optional trim start/end and fade, mono/stereo, bitrate 96-320 kbps, encode MP3 with the vendored lamejs (LGPL, unmodified, credited in README) in chunks so the page stays responsive (or in a Worker), progress, batch list, download each. Also export WAV. Clear note when a file's audio codec isn't supported by the browser."
+ },
+ {
+  "slug": "transcribe",
+  "name": "Transcribe",
+  "category": "Audio & Video",
+  "tagline": "Audio and video to text and subtitles, privately",
+  "spec": "Free alternative to paid transcription. OpenAI Whisper base (models/whisper-base, Apache-2.0 ONNX export, quantized) via transformers.js 3 (global `transformers` from lib/transformers.min.js). Configure for zero network: env.allowRemoteModels = false; env.allowLocalModels = true; env.localModelPath = 'models/'; env.backends.onnx.wasm.wasmPaths = 'lib/'; numThreads 1; use dtype q8 files (encoder_model_quantized / decoder_model_merged_quantized). Use WebGPU when navigator.gpu is available, else WASM. Input: audio/video files (decode + resample to 16 kHz mono with OfflineAudioContext) or record from the mic (button only). Language auto/Arabic/English/French/…; task transcribe or translate-to-English; chunked long audio (30 s windows with stride) with timestamps; progress + cancel; editable transcript; export TXT, SRT, VTT (subtitles), copy. Show first-load download size (~100 MB, cached after) honestly."
+ },
+ {
+  "slug": "loan-calc",
+  "name": "Loan Calc",
+  "category": "Calculators",
+  "tagline": "Monthly payment and full amortization table",
+  "spec": "Amount, annual rate, term (years/months), extra monthly payment; monthly payment, total interest, payoff date, amortization table (yearly/monthly toggle), chart of principal vs interest (canvas), export CSV."
+ },
+ {
+  "slug": "compound-interest",
+  "name": "Compound Interest",
+  "category": "Calculators",
+  "tagline": "See your savings grow over time",
+  "spec": "Initial, monthly contribution, rate, years, compounding frequency, inflation adjust option; final balance, contributions vs interest, yearly table, stacked growth chart (canvas)."
+ },
+ {
+  "slug": "split-bill",
+  "name": "Split Bill",
+  "category": "Calculators",
+  "tagline": "Split the bill and tip between friends",
+  "spec": "Total, tip % presets, tax, number of people OR itemized mode (add people and items, assign items to people, shared items), rounding, per-person result, copy summary text for WhatsApp."
+ },
+ {
+  "slug": "percentage-calc",
+  "name": "Percentage Calc",
+  "category": "Calculators",
+  "tagline": "Every percentage question, answered",
+  "spec": "Cards: X% of Y, X is what % of Y, % change from X to Y, increase/decrease Y by X%, reverse percentage (original before +X%), margin vs markup. All live."
+ },
+ {
+  "slug": "bmi-calc",
+  "name": "BMI Calc",
+  "category": "Calculators",
+  "tagline": "BMI, healthy weight range and body stats",
+  "spec": "Metric/imperial, BMI with category gauge, healthy weight range for height, BMR (Mifflin-St Jeor) and daily calories by activity, waist-to-height ratio; clear note it is not medical advice."
+ },
+ {
+  "slug": "age-calc",
+  "name": "Age Calc",
+  "category": "Calculators",
+  "tagline": "Exact age, next birthday and fun stats",
+  "spec": "Birth date -> age in years/months/days, total days/weeks/hours, next birthday countdown and weekday, Hijri date of birth (Intl islamic-umalqura calendar), zodiac; compare two people."
+ },
+ {
+  "slug": "date-diff",
+  "name": "Date Diff",
+  "category": "Calculators",
+  "tagline": "Days between dates, add or subtract days",
+  "spec": "Difference between two dates (days, weeks, months, years, business days excluding weekends with weekend choice Fri-Sat/Sat-Sun), add/subtract N days/weeks/months, Gregorian<->Hijri display."
+ },
+ {
+  "slug": "unit-convert",
+  "name": "Unit Convert",
+  "category": "Calculators",
+  "tagline": "Length, weight, temperature, data and more",
+  "spec": "Categories: length, mass, temperature, volume, area, speed, time, data (SI and binary), pressure, energy, power, angle, fuel economy, cooking. Two-way live conversion, swap, all-units table, search."
+ },
+ {
+  "slug": "discount-calc",
+  "name": "Discount Calc",
+  "category": "Calculators",
+  "tagline": "Sale price, savings and tax in one place",
+  "spec": "Price, discount % (or fixed), stacked second discount, tax/VAT %, final price and savings; reverse mode (find % from two prices); compare two deals by unit price."
+ },
+ {
+  "slug": "salary-calc",
+  "name": "Salary Calc",
+  "category": "Calculators",
+  "tagline": "Hourly, daily, monthly, yearly pay converter",
+  "spec": "Enter pay in any period, hours/week and days/week, convert to all periods; overtime calculator; raise % calculator; currency symbol selector."
+ },
+ {
+  "slug": "gpa-calc",
+  "name": "GPA Calc",
+  "category": "Calculators",
+  "tagline": "Semester and cumulative GPA for students",
+  "spec": "Courses with credit hours and grades; scales 4.0 (A..F with +/-), 4.3, 5.0 and percentage-based (Jordanian universities style 35-100 configurable); semester + cumulative with previous credits/GPA; what-grade-do-I-need target calculator; saved locally."
+ },
+ {
+  "slug": "zakat-calc",
+  "name": "Zakat Calc",
+  "category": "Calculators",
+  "tagline": "Calculate zakat on savings, gold and assets",
+  "spec": "Inputs: cash, bank, gold (grams + price), silver, investments, receivables, debts; user enters current gold/silver price per gram (no network); nisab by gold (85g) or silver (595g) choice; zakat 2.5%; explanation; bilingual AR/EN labels; disclaimer to consult a scholar."
+ },
+ {
+  "slug": "roman-numerals",
+  "name": "Roman Numerals",
+  "category": "Calculators",
+  "tagline": "Convert Roman numerals both ways",
+  "spec": "Number <-> Roman (1-3999, plus vinculum note), validation of malformed numerals with reason, step-by-step breakdown, date to Roman (for tattoos/engravings)."
+ },
+ {
+  "slug": "graph-plotter",
+  "name": "Graph Plotter",
+  "category": "Calculators",
+  "tagline": "Plot functions and explore graphs",
+  "spec": "Multiple functions y=f(x) with colours; own safe expression parser (no eval): + - * / ^, implicit multiplication, trig/inverse/hyperbolic, sqrt abs ln log exp floor ceil round min max, pi, e; pan by drag, zoom by wheel/pinch, axes and grid labels, trace on hover, numeric roots and intersections, sliders for parameters a, b, c; export PNG."
+ },
+ {
+  "slug": "sci-calc",
+  "name": "Scientific Calculator",
+  "category": "Calculators",
+  "tagline": "A full scientific calculator",
+  "spec": "Button pad + keyboard, own parser (no eval) with correct precedence, deg/rad/grad, trig/inverse/hyperbolic, logs, powers/roots, factorial, nCr/nPr, %, ANS and memory (M+, M-, MR, MC), constants, scientific notation, history (click to reuse), copy result."
+ },
+ {
+  "slug": "fraction-calc",
+  "name": "Fraction Calc",
+  "category": "Calculators",
+  "tagline": "Fractions, mixed numbers and decimals",
+  "spec": "Add/subtract/multiply/divide fractions and mixed numbers exactly (BigInt), simplify, show working steps, decimal to fraction including repeating decimals like 0.(3), fraction to decimal/percent, compare fractions."
+ },
+ {
+  "slug": "stats-calc",
+  "name": "Stats Calc",
+  "category": "Calculators",
+  "tagline": "Mean, median, standard deviation and more",
+  "spec": "Paste numbers (any separators) or a spreadsheet column; count, sum, mean, median, mode(s), min/max/range, sample and population variance/SD, quartiles (state the method), IQR, outliers (1.5 IQR), z-scores, frequency table, histogram and box plot on canvas, copy summary."
+ },
+ {
+  "slug": "equation-solver",
+  "name": "Equation Solver",
+  "category": "Calculators",
+  "tagline": "Solve linear, quadratic and systems",
+  "spec": "Linear, quadratic with discriminant and complex roots, cubic, 2x2 and 3x3 linear systems by Gaussian elimination with steps, detect no/infinite solutions; exact fractions when possible."
+ },
+ {
+  "slug": "prime-tools",
+  "name": "Prime Tools",
+  "category": "Calculators",
+  "tagline": "Primes, factors, GCD and LCM",
+  "spec": "Deterministic Miller-Rabin for BigInt up to 2^64 (labelled probabilistic beyond), factorisation (trial division + Pollard rho), divisors and count, GCD/LCM of many numbers with Euclid steps, primes in a range (segmented sieve, capped), next/previous prime."
+ },
+ {
+  "slug": "hours-calc",
+  "name": "Hours Calc",
+  "category": "Calculators",
+  "tagline": "Time card and hours worked calculator",
+  "spec": "Week grid with start/end and break minutes per day (several shifts per day, overnight shifts), totals per day/week in h:mm and decimal, overtime after daily/weekly thresholds with multiplier, hourly rate and pay, week start choice, saved locally, CSV export, print."
+ },
+ {
+  "slug": "due-date",
+  "name": "Due Date",
+  "category": "Calculators",
+  "tagline": "Pregnancy due date and week by week",
+  "spec": "Methods: last menstrual period (with cycle length), conception date, IVF transfer (day 3/5); due date, current week+days, trimester, timeline of general milestones; Hijri display option; clear not-medical-advice note."
+ },
+ {
+  "slug": "fuel-cost",
+  "name": "Fuel Cost",
+  "category": "Calculators",
+  "tagline": "What will this trip cost in fuel?",
+  "spec": "Distance (km/mi), consumption (L/100km, km/L, mpg US/UK), price per litre/gallon, currency, round trip, split among passengers, cost per km; compare two cars."
+ },
+ {
+  "slug": "hijri-converter",
+  "name": "Hijri Converter",
+  "category": "Calculators",
+  "tagline": "Hijri to Gregorian dates and back",
+  "spec": "Convert Gregorian to Hijri and Hijri to Gregorian using Intl islamic-umalqura (search the Gregorian day whose Umm al-Qura parts match), today's date in both, month calendars side by side, Arabic and English month names, day of week, age in Hijri years, note that official sighting-based dates can differ by a day."
+ },
+ {
+  "slug": "cash-counter",
+  "name": "Cash Counter",
+  "category": "Calculators",
+  "tagline": "Count cash by notes and coins",
+  "spec": "Currency presets with real denominations (JOD 50/20/10/5/1 notes + 1/2 dinar, 1/4 dinar, 10/5 piasters; USD; EUR; SAR; AED; GBP; custom), quantity per denomination, totals per row and overall with correct decimals (JOD 3), expected amount vs counted difference, notes, print/copy summary, saved locally."
+ },
+ {
+  "slug": "lorem-gen",
+  "name": "Lorem Gen",
+  "category": "Text",
+  "tagline": "Placeholder text in English and Arabic",
+  "spec": "Generate paragraphs/sentences/words, classic Lorem ipsum or English-like or Arabic placeholder text (built-in word lists), count control, start with 'Lorem ipsum' toggle, HTML <p> wrap option, copy."
+ },
+ {
+  "slug": "word-count",
+  "name": "Word Count",
+  "category": "Text",
+  "tagline": "Words, characters, reading time and more",
+  "spec": "Live counts: words, characters (with/without spaces), sentences, paragraphs, reading and speaking time, top keywords with density (stopwords EN+AR excluded), works with Arabic. Autosaves text locally."
+ },
+ {
+  "slug": "case-convert",
+  "name": "Case Convert",
+  "category": "Text",
+  "tagline": "UPPER, lower, Title, camelCase, snake_case…",
+  "spec": "Buttons: UPPER, lower, Title Case (smart small words), Sentence case, camelCase, PascalCase, snake_case, kebab-case, CONSTANT_CASE, aLtErNaTe, iNVERSE; output with copy; works per line."
+ },
+ {
+  "slug": "arabic-tools",
+  "name": "Arabic Tools",
+  "category": "Text",
+  "tagline": "Remove tashkeel, fix digits, Arabizi to Arabic",
+  "spec": "Arabic text toolkit (UI bilingual AR/EN, RTL text areas): remove tashkeel/harakat, remove tatweel, normalize alef/ya/ta marbuta options, Arabic-Indic <-> Western digits, Arabizi (3=ع 7=ح 2=ء etc.) to Arabic letters, letter/word count."
+ },
+ {
+  "slug": "text-cleaner",
+  "name": "Text Cleaner",
+  "category": "Text",
+  "tagline": "Remove duplicates, extra spaces, sort lines",
+  "spec": "Toggle operations applied in order: trim lines, collapse spaces, remove empty lines, remove duplicate lines (case-insensitive option), sort A-Z/Z-A/natural/by length, reverse, shuffle, add line numbers, strip HTML tags, remove emojis. Live output and counts."
+ },
+ {
+  "slug": "slugify",
+  "name": "Slugify",
+  "category": "Text",
+  "tagline": "Clean URL slugs from any title, incl. Arabic",
+  "spec": "Title -> slug with separator choice, lowercase, max length, remove stop words option, transliterate accents (NFD) and Arabic to Latin (table), or keep Arabic unicode slug; bulk mode one per line."
+ },
+ {
+  "slug": "markdown-studio",
+  "name": "Markdown Studio",
+  "category": "Text",
+  "tagline": "Live Markdown editor with preview and export",
+  "spec": "Split editor/preview, own safe Markdown renderer (headings, lists, code fences, tables, links, images, blockquotes, task lists) that ESCAPES all HTML (no raw HTML pass-through), toolbar, autosave, export .md/.html, print to PDF, sync scroll."
+ },
+ {
+  "slug": "read-aloud",
+  "name": "Read Aloud",
+  "category": "Text",
+  "tagline": "Text to speech with any voice on your device",
+  "spec": "speechSynthesis: voice picker (filtered by language), rate/pitch/volume, play/pause/stop, highlights the current word/sentence while reading (boundary events), supports Arabic voices when the device has them, note that voices come from the device."
+ },
+ {
+  "slug": "fancy-text",
+  "name": "Fancy Text",
+  "category": "Text",
+  "tagline": "𝐁𝐨𝐥𝐝, 𝘪𝘵𝘢𝘭𝘪𝘤, 𝓈𝒸𝓇𝒾𝓅𝓉 and more for bios",
+  "spec": "Type once, see 25+ Unicode styles (bold, italic, script, fraktur, double-struck, monospace, circled, squared, small caps, upside down, strikethrough, underline) each with one-click copy. Note on accessibility."
+ },
+ {
+  "slug": "morse-code",
+  "name": "Morse Code",
+  "category": "Text",
+  "tagline": "Translate Morse code and hear it",
+  "spec": "Text <-> Morse live, play audio (WebAudio) with WPM and tone controls, flash light mode, tap-key input mode that decodes your taps, reference chart."
+ },
+ {
+  "slug": "readability",
+  "name": "Readability",
+  "category": "Text",
+  "tagline": "Check how easy your writing is to read",
+  "spec": "Flesch Reading Ease, Flesch-Kincaid grade, Gunning Fog, SMOG, Coleman-Liau, ARI; highlights long sentences, passive-voice hints, adverbs; summary verdict in plain words."
+ },
+ {
+  "slug": "char-map",
+  "name": "Char Map",
+  "category": "Text",
+  "tagline": "Symbols, arrows, math and special characters",
+  "spec": "Grid of special characters by category (arrows, math, currency, punctuation, box drawing, Greek, Arabic marks), search by name, click to copy, shows code point/HTML entity/CSS escape/JS escape."
+ },
+ {
+  "slug": "number-words",
+  "name": "Number to Words",
+  "category": "Text",
+  "tagline": "Write numbers as words in English and Arabic",
+  "spec": "Number -> English words (cardinal, ordinal, cheque style with currency e.g. 'One thousand dollars and 50 cents') and Arabic words (tafqeet, with currency like دينار/فلس, correct gender/number rules for common cases); up to trillions; copy."
+ },
+ {
+  "slug": "citation-gen",
+  "name": "Citation Gen",
+  "category": "Text",
+  "tagline": "APA, MLA, Chicago and Harvard citations",
+  "spec": "Source types: book, chapter, journal article, website, newspaper, video, report; form with multiple authors (correct et al. / & rules per style); APA 7, MLA 9, Chicago author-date, Harvard, IEEE; live formatted citation with italics; bibliography (add, edit, delete, alphabetical, numbered for IEEE); copy as rich text (italics kept) or plain; saved locally; export .txt."
+ },
+ {
+  "slug": "social-counter",
+  "name": "Social Counter",
+  "category": "Text",
+  "tagline": "Character limits for X, Instagram, SMS…",
+  "spec": "One text box with live meters: X (280 weighted, links count 23), Instagram caption 2200 + 30 hashtags, LinkedIn 3000, Facebook, TikTok, YouTube title 100 / description 5000, Google title ~60 / description ~160, SMS with GSM-7 vs UCS-2 detection (Arabic forces UCS-2) and segments (160/153 vs 70/67); emoji counted as graphemes."
+ },
+ {
+  "slug": "arabic-keyboard",
+  "name": "Arabic Keyboard",
+  "category": "Text",
+  "tagline": "Type Arabic without an Arabic keyboard",
+  "spec": "On-screen Arabic keyboard (standard layout) with shift layer and harakat; click to type into a big RTL text area; physical-key mapping mode (keys on an English keyboard produce the Arabic letter in the same position); Arabizi phonetic mode (type 'mar7aba' to get مرحبا live); copy, clear, font size, word count; bilingual UI."
+ },
+ {
+  "slug": "layout-fixer",
+  "name": "Layout Fixer",
+  "category": "Text",
+  "tagline": "Fix text typed in the wrong keyboard layout",
+  "spec": "Converts text typed with the wrong keyboard layout: English-layout gibberish to Arabic ('hgsghl ugd;l' becomes 'السلام عليكم') and Arabic letters back to English ('اثممخ' becomes 'hello'), using the standard Arabic (101) and US QWERTY mappings including shift layer and lam-alef ('b' gives 'لا'). Auto-detect direction, live, copy; bilingual UI."
+ },
+ {
+  "slug": "speed-reader",
+  "name": "Speed Reader",
+  "category": "Text",
+  "tagline": "Read faster, one word at a time",
+  "spec": "RSVP reader: paste text, words flash one at a time with an optimal recognition point highlight, WPM 100-1000, chunk size 1-3 words, pause on punctuation, progress bar, rewind/forward by sentence, keyboard controls, works with Arabic RTL text."
+ },
+ {
+  "slug": "local-notes",
+  "name": "Local Notes",
+  "category": "Productivity",
+  "tagline": "Private notes that live only in your browser",
+  "spec": "Multiple notes list with search, title from first line, autosave to localStorage, pin, delete with undo, export all as .zip of .txt (S3.zip) or JSON, import JSON, word count, keyboard shortcuts."
+ },
+ {
+  "slug": "typing-test",
+  "name": "Typing Test",
+  "category": "Productivity",
+  "tagline": "Measure your typing speed and accuracy",
+  "spec": "15/30/60s or word-count modes, built-in word list (EN, and an Arabic list), live WPM/accuracy, per-char coloring, results with raw/net WPM and error keys, personal best saved locally, restart with Tab."
+ },
+ {
+  "slug": "focus-timer",
+  "name": "Focus Timer",
+  "category": "Productivity",
+  "tagline": "Pomodoro timer with tasks and gentle sounds",
+  "spec": "Pomodoro/short/long break with configurable durations, auto-start options, accurate timer (Date-based, survives tab throttling), WebAudio chime, title countdown, notification permission optional, task list with pomodoro counts, daily stats saved locally."
+ },
+ {
+  "slug": "world-clock",
+  "name": "World Clock",
+  "category": "Productivity",
+  "tagline": "Time zones and a meeting planner",
+  "spec": "Add cities/timezones (Intl.supportedValuesOf('timeZone') with search), live clocks, day/night indicator, drag a time slider to see the same moment everywhere, meeting planner grid highlighting working hours overlap, saved locally."
+ },
+ {
+  "slug": "stopwatch",
+  "name": "Stopwatch",
+  "category": "Productivity",
+  "tagline": "Stopwatch, laps and countdown timer",
+  "spec": "Stopwatch with laps (best/worst lap highlight, export CSV), countdown timer with presets and alarm sound, fullscreen big digits mode, keyboard: Space start/stop, L lap, R reset."
+ },
+ {
+  "slug": "habit-tracker",
+  "name": "Habit Tracker",
+  "category": "Productivity",
+  "tagline": "Build streaks, privately in your browser",
+  "spec": "Add habits with color/emoji, daily check grid for the week and a year heatmap per habit, streaks and completion %, reorder, archive, export/import JSON, localStorage only."
+ },
+ {
+  "slug": "kanban-board",
+  "name": "Kanban Board",
+  "category": "Productivity",
+  "tagline": "A simple private Kanban board",
+  "spec": "Columns (rename/add/remove), cards with title, notes, color label, due date; drag and drop cards between columns (pointer events, works on touch), multiple boards, search, export/import JSON, localStorage."
+ },
+ {
+  "slug": "todo-list",
+  "name": "Todo List",
+  "category": "Productivity",
+  "tagline": "Fast, keyboard-friendly to-do list",
+  "spec": "Add with Enter, natural due words (today, tomorrow, fri), priorities, lists/tags, filters (today, upcoming, done), drag reorder, clear completed with undo, localStorage, export."
+ },
+ {
+  "slug": "flashcards",
+  "name": "Flashcards",
+  "category": "Productivity",
+  "tagline": "Study smarter with spaced repetition",
+  "spec": "Decks, cards front/back (supports Arabic/RTL), import from CSV/TSV paste, study mode with flip animation, SM-2 spaced repetition scheduling (Again/Hard/Good/Easy), due counts, progress stats, localStorage, export."
+ },
+ {
+  "slug": "whiteboard",
+  "name": "Whiteboard",
+  "category": "Productivity",
+  "tagline": "A simple drawing board that saves itself",
+  "spec": "Pen (pressure where available), highlighter, eraser, line/arrow/rectangle/ellipse, text, colours and widths, select and move, undo/redo, pan/zoom, light/dark board, grid toggle, export PNG and SVG, autosave locally with several boards, clear with confirmation."
+ },
+ {
+  "slug": "wheel-picker",
+  "name": "Wheel Picker",
+  "category": "Everyday",
+  "tagline": "Spin the wheel to pick a random name",
+  "spec": "Enter names (one per line), canvas wheel with colors, realistic spin easing with crypto random result, winner modal with confetti, remove winner option, sound tick, saved lists, fullscreen."
+ },
+ {
+  "slug": "dice-roller",
+  "name": "Dice Roller",
+  "category": "Everyday",
+  "tagline": "Roll dice, flip coins, draw random numbers",
+  "spec": "Dice notation (2d6+3, d20, 4d6 drop lowest), animated dice, history, coin flip with streak stats, random number in range (crypto, no repeats option), all fair via crypto.getRandomValues with rejection sampling."
+ },
+ {
+  "slug": "team-maker",
+  "name": "Team Maker",
+  "category": "Everyday",
+  "tagline": "Split a list of people into random teams",
+  "spec": "Paste names, number of teams or people per team, optional balance by tagging skill levels, fair shuffle (Fisher-Yates + crypto), team names, re-roll, copy as text, print view."
+ },
+ {
+  "slug": "prayer-times",
+  "name": "Prayer Times",
+  "category": "Everyday",
+  "tagline": "Accurate prayer times for your location",
+  "spec": "Location from device geolocation (stays on device) or manual lat/lon + city presets list (Amman, Mecca, Cairo, Dubai, London, etc.), calculation methods (Jordan/Muslim World League/Umm al-Qura/Egyptian/ISNA...), madhab for Asr, today's times with next-prayer countdown, monthly table printable, Hijri date. Bilingual AR/EN."
+ },
+ {
+  "slug": "qibla-finder",
+  "name": "Qibla Finder",
+  "category": "Everyday",
+  "tagline": "Find the Qibla direction from where you are",
+  "spec": "Compute great-circle bearing to the Kaaba (21.4225, 39.8262) from geolocation or manual coordinates; compass using DeviceOrientation (with iOS permission button, webkitCompassHeading) rotating an arrow; fallback static bearing with degrees from north and a map-free explanation; distance to Mecca. Bilingual."
+ },
+ {
+  "slug": "emoji-search",
+  "name": "Emoji Search",
+  "category": "Everyday",
+  "tagline": "Find and copy any emoji fast",
+  "spec": "Embedded emoji dataset (a curated list of ~800 common emoji with names/keywords, EN + some AR keywords), search, categories, skin tone selector where applicable, recently used saved locally, click to copy."
+ },
+ {
+  "slug": "countdown-maker",
+  "name": "Countdown Maker",
+  "category": "Everyday",
+  "tagline": "Beautiful countdowns you can share as a link",
+  "spec": "Event name + date/time + theme; big live countdown (days/hours/min/sec); settings encoded in the URL hash so the link can be shared (no server); fullscreen mode; confetti at zero; multiple saved countdowns."
+ },
+ {
+  "slug": "scoreboard",
+  "name": "Scoreboard",
+  "category": "Everyday",
+  "tagline": "Keep score for any game, big and simple",
+  "spec": "Add players/teams with colors, big +/- buttons and custom increments, round history with undo, game timer, winner highlight, works great on a phone or TV, saved locally."
+ },
+ {
+  "slug": "keyboard-tester",
+  "name": "Keyboard Tester",
+  "category": "Everyday",
+  "tagline": "Test every key on your keyboard",
+  "spec": "Visual full keyboard (ANSI/ISO layout toggle) that lights up keys pressed (event.code), shows key/code/keyCode, tested-keys progress, key rollover/ghosting test (how many keys at once), reset."
+ },
+ {
+  "slug": "math-worksheet",
+  "name": "Math Worksheet",
+  "category": "Everyday",
+  "tagline": "Printable maths practice with answer keys",
+  "spec": "Operations (add, subtract, multiply, divide, mixed), ranges/digits, carrying/borrowing on/off, no negative answers, whole-number division, number of problems, columns, horizontal or vertical layout, name/date line, Western or Arabic-Indic digits, seed for reprinting the same sheet, answer key on page 2, print A4/Letter."
+ },
+ {
+  "slug": "sleep-calc",
+  "name": "Sleep Calc",
+  "category": "Everyday",
+  "tagline": "Best times to sleep and wake up",
+  "spec": "Wake-up time to bedtimes for 4-6 sleep cycles (90 min) plus time to fall asleep, or 'sleep now' to wake times; nap guide; short honest explanation; 12/24 h."
+ },
+ {
+  "slug": "secret-santa",
+  "name": "Secret Santa",
+  "category": "Everyday",
+  "tagline": "Draw names fairly, no emails needed",
+  "spec": "Participants, exclusion pairs (couples), crypto-random derangement respecting exclusions (bounded retries, explain if impossible), budget/date/message; pass-the-phone reveal mode (tap your name, see your match, hide) and printable folded slips; nothing stored unless the user saves the group."
+ },
+ {
+  "slug": "bingo-maker",
+  "name": "Bingo Maker",
+  "category": "Everyday",
+  "tagline": "Printable bingo cards and a caller",
+  "spec": "75-ball (5x5 with free space) and 90-ball tickets, or word bingo from your own list; N unique cards (crypto shuffle) printed 1/2/4 per page; caller mode with history board, big display, undo; seed for reproducible sets."
+ },
+ {
+  "slug": "sudoku",
+  "name": "Sudoku",
+  "category": "Everyday",
+  "tagline": "Play, generate and solve Sudoku",
+  "spec": "Playable grid with keyboard and touch, pencil marks, undo/redo, same-number highlight, error check toggle, hints, timer; generator with unique-solution guarantee and difficulty levels; solver for entered puzzles (constraint propagation + backtracking) that reports none/multiple solutions; progress saved locally."
+ },
+ {
+  "slug": "tasbih-counter",
+  "name": "Tasbih Counter",
+  "category": "Everyday",
+  "tagline": "A simple digital tasbih counter",
+  "spec": "Big tap area (also Space/Enter), count with target (33/99/100/custom) and gentle vibration (navigator.vibrate where available) at the target, preset dhikr list in Arabic with transliteration and meaning, multiple saved counters, daily totals history, reset with confirm, works offline, screen wake lock optional (Wake Lock API on button click). Bilingual."
+ },
+ {
+  "slug": "color-convert",
+  "name": "Color Convert",
+  "category": "Design",
+  "tagline": "HEX, RGB, HSL, OKLCH and CMYK conversion",
+  "spec": "Input any CSS color (hex, rgb, hsl, named, oklch) -> all formats with copy, big swatch, picker, alpha support, nearest CSS named color, contrast vs white/black."
+ },
+ {
+  "slug": "css-gradient",
+  "name": "CSS Gradient",
+  "category": "Design",
+  "tagline": "Build beautiful CSS gradients visually",
+  "spec": "Linear/radial/conic, draggable color stops on a bar, angle dial, presets gallery, random, live preview, copy CSS, export PNG of the gradient at chosen size."
+ },
+ {
+  "slug": "box-shadow",
+  "name": "Box Shadow",
+  "category": "Design",
+  "tagline": "Layered box-shadow generator with live preview",
+  "spec": "Multiple shadow layers (x,y,blur,spread,color,alpha,inset), preview card on light/dark background, presets (soft, neumorphic, elevated), copy CSS."
+ },
+ {
+  "slug": "favicon-forge",
+  "name": "Favicon Forge",
+  "category": "Design",
+  "tagline": "Make a full favicon set from one image",
+  "spec": "From an image OR text/emoji with background color+radius: generate favicon.ico (multi-size ICO encoder with PNG entries 16/32/48), apple-touch-icon 180, android 192/512, site.webmanifest, HTML snippet; download all as zip."
+ },
+ {
+  "slug": "palette-from-image",
+  "name": "Palette From Image",
+  "category": "Design",
+  "tagline": "Extract a color palette from any photo",
+  "spec": "Drop image, k-means/median-cut palette of 5-12 colors, click on image to pick exact pixel (magnifier), copy hex, export CSS variables / JSON / PNG swatch strip."
+ },
+ {
+  "slug": "palette-gen",
+  "name": "Palette Gen",
+  "category": "Design",
+  "tagline": "Generate harmonious color palettes",
+  "spec": "Press Space to generate 5 colors (OKLCH-based harmonies: analogous, complementary, triadic, mono), lock colors, edit each, contrast labels, saved palettes locally, export CSS/Tailwind/JSON/PNG, shareable URL hash."
+ },
+ {
+  "slug": "contrast-check",
+  "name": "Contrast Check",
+  "category": "Design",
+  "tagline": "WCAG color contrast checker",
+  "spec": "Text + background colors, ratio, AA/AAA pass for normal/large text and UI, live sample text, 'suggest nearest passing color' button that adjusts lightness, swap colors."
+ },
+ {
+  "slug": "shade-gen",
+  "name": "Shade Gen",
+  "category": "Design",
+  "tagline": "Tailwind-style 50–950 color scales",
+  "spec": "One base color -> 11-step scale (50..950) in OKLCH with perceptual spacing, adjustable hue shift, preview chips, export Tailwind config, CSS variables, SCSS, JSON."
+ },
+ {
+  "slug": "icon-maker",
+  "name": "Icon Maker",
+  "category": "Design",
+  "tagline": "App icons from an emoji or letter",
+  "spec": "Emoji or text (1-3 chars), font weight, gradient/solid background, shape (square, rounded, circle, squircle), shadow; export PNG at 1024/512/192 and SVG; iOS/Android/web sizes zip."
+ },
+ {
+  "slug": "glass-gen",
+  "name": "Glass Gen",
+  "category": "Design",
+  "tagline": "Glassmorphism CSS generator",
+  "spec": "Blur, transparency, saturation, border, radius, tint color controls over a colorful animated backdrop; copy CSS; presets."
+ },
+ {
+  "slug": "blob-maker",
+  "name": "Blob Maker",
+  "category": "Design",
+  "tagline": "Random organic SVG blob shapes",
+  "spec": "Complexity and randomness sliders, color/gradient fill, regenerate, seed in URL, export SVG/PNG, copy SVG code, also a 'wave divider' mode for section separators."
+ },
+ {
+  "slug": "colorblind-sim",
+  "name": "Colorblind Sim",
+  "category": "Design",
+  "tagline": "See images as colour-blind people do",
+  "spec": "Load an image or screenshot; simulate protanopia, deuteranopia, tritanopia (Brettel/Viénot/Machado matrices in linear RGB), their anomalous forms with severity slider, and achromatopsia; side-by-side or split view; export each simulation; short explanation of each type and design tips."
+ },
+ {
+  "slug": "screen-eyedropper",
+  "name": "Screen Eyedropper",
+  "category": "Design",
+  "tagline": "Pick any colour from your screen",
+  "spec": "Uses the EyeDropper API (Chromium) to pick any pixel on screen on button click, shows HEX/RGB/HSL/OKLCH with copy, keeps a history palette saved locally, export palette CSS/JSON; on unsupported browsers, falls back to picking from a pasted screenshot with a magnifier."
+ },
+ {
+  "slug": "exif-cleaner",
+  "name": "EXIF Cleaner",
+  "category": "Security & Privacy",
+  "tagline": "See and remove hidden photo metadata (GPS!)",
+  "spec": "Drop JPEGs: parse EXIF (own minimal parser: camera, date, GPS lat/lon with a 'your photo reveals location' warning, software), then strip metadata by rewriting JPEG segments (remove APP1/APP13 etc. without re-encoding) and download clean copy; batch + zip. PNG: strip text chunks."
+ },
+ {
+  "slug": "pass-forge",
+  "name": "Pass Forge",
+  "category": "Security & Privacy",
+  "tagline": "Strong passwords and passphrases, made locally",
+  "spec": "Password generator (length 8-128, sets, exclude look-alikes, require each set) and passphrase generator (built-in ~2000+ word list embedded, separator, capitalize, add number), entropy bits shown, crypto.getRandomValues with rejection sampling (no modulo bias), bulk generate. Nothing stored."
+ },
+ {
+  "slug": "password-check",
+  "name": "Password Check",
+  "category": "Security & Privacy",
+  "tagline": "How strong is your password, really?",
+  "spec": "Type a password (masked, show toggle): entropy estimate considering patterns (dictionary of common passwords embedded top ~1000, keyboard walks, repeats, dates, l33t), estimated crack time for online/offline attacks, concrete tips. Big notice: checked locally, never sent or stored."
+ },
+ {
+  "slug": "text-encrypt",
+  "name": "Text Encrypt",
+  "category": "Security & Privacy",
+  "tagline": "Encrypt a message with a password (AES-256)",
+  "spec": "AES-256-GCM via SubtleCrypto, key from PBKDF2-SHA256 (600k iterations, random salt), random IV, output a single base64 string with version prefix; decrypt tab; wrong password error; copy; explain that losing the password means losing the text."
+ },
+ {
+  "slug": "file-encrypt",
+  "name": "File Encrypt",
+  "category": "Security & Privacy",
+  "tagline": "Encrypt files with a password, offline",
+  "spec": "Encrypt any file with AES-256-GCM (PBKDF2 600k), chunked for large files (e.g. 4 MB chunks each with own IV, header with magic/version/salt/chunk size) to avoid memory blowup, output .s3enc; decrypt restores original name; progress bar; integrity failure error."
+ },
+ {
+  "slug": "stego-image",
+  "name": "Stego Image",
+  "category": "Security & Privacy",
+  "tagline": "Hide a secret message inside an image",
+  "spec": "LSB steganography in PNG: embed text (optionally encrypted with a password via AES-GCM) into an image, capacity meter, download PNG (must be PNG); reveal tab reads it back. Explain JPEG recompression destroys it."
+ },
+ {
+  "slug": "pdf-metadata",
+  "name": "PDF Metadata",
+  "category": "Security & Privacy",
+  "tagline": "See and remove hidden PDF info",
+  "spec": "Show title, author, subject, keywords, creator, producer, creation/modification dates, page count; edit any field; one-click 'Strip everything' (blank all info fields and remove the XMP metadata stream if present); explain what metadata can reveal; download."
+ },
+ {
+  "slug": "image-redact",
+  "name": "Image Redact",
+  "category": "Security & Privacy",
+  "tagline": "Hide private info in screenshots for real",
+  "spec": "Draw rectangles (and freehand) over areas; styles: solid black (default, recommended), solid colour, pixelate, blur; move/resize/delete boxes; export a re-encoded PNG/JPG at full resolution so hidden pixels are truly gone; warn that blur/pixelate over text can sometimes be reversed; paste from clipboard."
+ },
+ {
+  "slug": "qr-studio",
+  "name": "QR Studio",
+  "category": "QR & Codes",
+  "tagline": "Custom QR codes for links, Wi-Fi, contacts",
+  "spec": "Types: URL, text, Wi-Fi, vCard contact, email, SMS, phone, location. Colors, error correction level, margin, rounded dots style, optional center logo (forces level H), live preview, download PNG (sizes) and SVG. Warn if contrast is too low to scan."
+ },
+ {
+  "slug": "qr-scanner",
+  "name": "QR Scanner",
+  "category": "QR & Codes",
+  "tagline": "Scan QR codes with your camera or an image",
+  "spec": "Camera scanning (getUserMedia, back camera on phones, torch toggle if supported), or scan from an uploaded/pasted image. Uses BarcodeDetector when available else jsQR. Shows decoded content with type detection; URLs shown with the full domain and an explicit 'Open' button (never auto-open), copy, history saved locally."
+ },
+ {
+  "slug": "barcode-gen",
+  "name": "Barcode Gen",
+  "category": "QR & Codes",
+  "tagline": "Code 128, EAN-13, UPC-A barcodes as SVG",
+  "spec": "Own encoders for Code128 (auto subset B/C), EAN-13 and UPC-A with check digit calculation/validation, Code39; human-readable text toggle, bar width/height, colors; download SVG/PNG; batch from list as zip."
+ },
+ {
+  "slug": "wifi-card",
+  "name": "Wi-Fi Card",
+  "category": "QR & Codes",
+  "tagline": "Printable Wi-Fi QR card for guests",
+  "spec": "SSID, password, security (WPA/WEP/none), hidden flag -> QR + nicely designed printable card (A6/A4 layouts, multiple per page), 'scan to join' text in EN/AR, print button, download PNG. Note that nothing is sent anywhere."
+ },
+ {
+  "slug": "json-studio",
+  "name": "JSON Studio",
+  "category": "Developer",
+  "tagline": "Format, validate, minify and explore JSON",
+  "spec": "Paste/drop JSON. Pretty-print (2/4/tab), minify, sort keys, validate with exact line:col of the error, collapsible tree view with path copy on click, stats (keys, depth, size). Big files OK (debounced)."
+ },
+ {
+  "slug": "base64-kit",
+  "name": "Base64 Kit",
+  "category": "Developer",
+  "tagline": "Encode and decode Base64 text and files",
+  "spec": "Text <-> Base64 (UTF-8 safe), URL-safe variant toggle, file -> Base64/data URI, Base64 -> downloadable file with detected type (magic bytes for png/jpg/gif/pdf/zip)."
+ },
+ {
+  "slug": "hash-lab",
+  "name": "Hash Lab",
+  "category": "Developer",
+  "tagline": "MD5, SHA-1, SHA-256, SHA-512 for text and files",
+  "spec": "Live hashes of text and of dropped files (SubtleCrypto for SHA-1/256/384/512, own MD5 implementation). Compare box: paste expected hash, shows match/mismatch. HMAC-SHA256 with a key field. Hex/Base64 output."
+ },
+ {
+  "slug": "jwt-inspector",
+  "name": "JWT Inspector",
+  "category": "Developer",
+  "tagline": "Decode JSON Web Tokens locally, check expiry",
+  "spec": "Paste a JWT: colored header/payload/signature parts, decoded JSON, human dates for iat/nbf/exp with 'expired 3h ago' status, warning banner that decoding is local and never sent. Optional HS256 signature verify with a secret (SubtleCrypto)."
+ },
+ {
+  "slug": "uuid-forge",
+  "name": "UUID Forge",
+  "category": "Developer",
+  "tagline": "Generate UUID v4, v7, ULID and NanoID in bulk",
+  "spec": "Choose type (UUID v4 via crypto.randomUUID, UUID v7 time-ordered, ULID, NanoID with custom length/alphabet), count 1-1000, uppercase/no-dashes options, copy all, download .txt. Also a validator that detects version of a pasted UUID."
+ },
+ {
+  "slug": "regex-playground",
+  "name": "Regex Playground",
+  "category": "Developer",
+  "tagline": "Test regular expressions with live highlighting",
+  "spec": "Pattern + flags toggles (g i m s u y), test text with live match highlighting, match list with groups and named groups, replace preview with $1 support, cheat sheet panel, guard against catastrophic patterns (run in a Worker with timeout via blob worker, or limit iterations)."
+ },
+ {
+  "slug": "diff-view",
+  "name": "Diff View",
+  "category": "Developer",
+  "tagline": "Compare two texts side by side",
+  "spec": "Two inputs, line diff (Myers/LCS) with side-by-side and unified views, word-level highlight inside changed lines, ignore whitespace/case options, stats (+added -removed), swap button, copy unified diff."
+ },
+ {
+  "slug": "cron-explain",
+  "name": "Cron Explain",
+  "category": "Developer",
+  "tagline": "Turn cron expressions into plain English",
+  "spec": "Parse 5-field cron (and @daily etc.), plain-English description, next 10 run times in local timezone, builder UI with presets (every 5 min, weekdays 9am...), error messages per field."
+ },
+ {
+  "slug": "timestamp-convert",
+  "name": "Timestamp Convert",
+  "category": "Developer",
+  "tagline": "Unix time to dates and back, any timezone",
+  "spec": "Live current unix time (s/ms), convert unix (auto-detect s/ms/us) -> ISO, local, UTC, relative, and a list of chosen timezones (Intl). Date picker -> unix. Copy buttons."
+ },
+ {
+  "slug": "url-toolkit",
+  "name": "URL Toolkit",
+  "category": "Developer",
+  "tagline": "Encode, decode and break down URLs",
+  "spec": "Encode/decode (component vs full), parse URL into protocol/host/path/query table with editable query params that rebuild the URL live, strip tracking params (utm_*, fbclid, gclid) one click."
+ },
+ {
+  "slug": "csv-json",
+  "name": "CSV ⇄ JSON",
+  "category": "Developer",
+  "tagline": "Convert CSV to JSON and back with preview",
+  "spec": "RFC4180 CSV parser (quotes, newlines in quotes), delimiter auto-detect (, ; tab |), header toggle, table preview, CSV->JSON (array of objects/arrays), JSON->CSV (flatten nested keys with dots), download files."
+ },
+ {
+  "slug": "json-to-types",
+  "name": "JSON to Types",
+  "category": "Developer",
+  "tagline": "Generate TypeScript, Go, Python types from JSON",
+  "spec": "Paste JSON sample -> TypeScript interfaces, Go structs with json tags, Python dataclasses, Zod schema. Merges array item shapes, optional fields, root name input, copy each."
+ },
+ {
+  "slug": "chmod-calc",
+  "name": "Chmod Calc",
+  "category": "Developer",
+  "tagline": "Unix permission calculator",
+  "spec": "Checkbox grid owner/group/other x r/w/x plus setuid/setgid/sticky, shows octal (755), symbolic (rwxr-xr-x), and chmod command; type octal or symbolic to update grid. Common presets."
+ },
+ {
+  "slug": "http-status",
+  "name": "HTTP Status",
+  "category": "Developer",
+  "tagline": "Every HTTP status code, explained simply",
+  "spec": "Searchable list of all standard HTTP status codes with plain explanation, when to use, common causes; filter by class 1xx-5xx; deep-link via #404."
+ },
+ {
+  "slug": "markdown-table",
+  "name": "Markdown Table",
+  "category": "Developer",
+  "tagline": "Create and edit Markdown tables visually",
+  "spec": "Spreadsheet-like editable grid, add/remove rows/cols, alignment per column, paste from Excel/CSV to import, paste markdown table to import, output aligned markdown with copy."
+ },
+ {
+  "slug": "meta-tags",
+  "name": "Meta Tags",
+  "category": "Developer",
+  "tagline": "SEO and social preview tag generator",
+  "spec": "Form for title, description, url, image url, site name, twitter handle -> HTML meta + Open Graph + Twitter tags; live previews of Google result, Facebook card and X card; character count warnings."
+ },
+ {
+  "slug": "base-convert",
+  "name": "Base Convert",
+  "category": "Developer",
+  "tagline": "Binary, octal, decimal, hex and any base",
+  "spec": "Live conversion between bases 2-36 with BigInt (arbitrary size), signed two's complement view for 8/16/32/64 bits, bit grid toggle, ASCII/UTF-8 text <-> binary/hex."
+ },
+ {
+  "slug": "subnet-calc",
+  "name": "Subnet Calc",
+  "category": "Developer",
+  "tagline": "IPv4 and IPv6 subnet calculator",
+  "spec": "IPv4 CIDR or IP+mask: network, broadcast, first/last host, usable hosts, mask, wildcard, binary view, private/reserved detection; split a network into N subnets or by host counts (VLSM); check whether an IP is inside a range; IPv6: expand/compress, prefix range, number of /64s (BigInt)."
+ },
+ {
+  "slug": "sql-format",
+  "name": "SQL Format",
+  "category": "Developer",
+  "tagline": "Format and minify SQL queries",
+  "spec": "Own tokenizer (strings, quoted identifiers, comments, numbers) and formatter for SELECT/INSERT/UPDATE/DELETE/CREATE/ALTER/WITH/JOIN/CASE/subqueries; keyword case, indent size, leading/trailing commas; minify; never executes anything; highlighted output; copy/download."
+ },
+ {
+  "slug": "html-css-format",
+  "name": "HTML CSS Format",
+  "category": "Developer",
+  "tagline": "Beautify or minify HTML and CSS",
+  "spec": "HTML beautifier/minifier with its own tokenizer that keeps <pre>, <textarea>, <script>, <style> contents intact and knows void elements; CSS beautifier/minifier (keeps strings/urls, optional comment removal); size saved; output shown as highlighted text, never rendered as live HTML."
+ },
+ {
+  "slug": "yaml-json",
+  "name": "YAML ⇄ JSON",
+  "category": "Developer",
+  "tagline": "Convert YAML to JSON and back",
+  "spec": "Two-way live conversion with js-yaml (safe default schema), indent options, multi-document YAML to a JSON array, errors with line/column, sort keys, swap, copy/download. Good for Kubernetes, Docker Compose and GitHub Actions files."
+ },
+ {
+  "slug": "xml-format",
+  "name": "XML Format",
+  "category": "Developer",
+  "tagline": "Format, validate and query XML",
+  "spec": "Validate with DOMParser (show the parser error), pretty-print, minify, collapsible tree, XPath tester using document.evaluate on the parsed inert XML document, XML to JSON. Never render XML as HTML."
+ },
+ {
+  "slug": "curl-convert",
+  "name": "cURL Convert",
+  "category": "Developer",
+  "tagline": "Turn curl commands into code",
+  "spec": "Parse a curl command (shell quoting, line continuations, -X, -H, -d/--data/--data-raw/--data-binary/--data-urlencode, -F, -u, -b, --json, --compressed, -k, -L) into JavaScript fetch, axios, Python requests, PHP cURL, Go net/http and Node. Parsed-pieces table with Authorization values masked behind a reveal toggle. Never sends the request."
+ },
+ {
+  "slug": "css-units",
+  "name": "CSS Units",
+  "category": "Developer",
+  "tagline": "px, rem, em, pt and vw converter",
+  "spec": "Base font size and viewport inputs; convert between px/rem/em/pt/vw/vh/%; table of common sizes; fluid typography clamp() generator from min/max size and viewport range with live preview; copy."
+ },
+ {
+  "slug": "gitignore-gen",
+  "name": "Gitignore Gen",
+  "category": "Developer",
+  "tagline": ".gitignore files for any stack",
+  "spec": "Hand-written embedded templates (Node, Python, Java/Gradle/Maven, Android, iOS/Xcode, Flutter, React Native, Unity, Unreal, Go, Rust, C/C++, .NET, PHP/Laravel, WordPress, Ruby/Rails, Django, Next.js, Vite, Docker, Terraform, macOS, Windows, Linux, VS Code, JetBrains, Vim); search + multi-select; merged and deduped with section headers; custom lines; download .gitignore."
+ },
+ {
+  "slug": "text-escape",
+  "name": "Text Escape",
+  "category": "Developer",
+  "tagline": "Escape and unescape strings for code",
+  "spec": "Modes: JSON string, JavaScript string, HTML entities (named and numeric), XML, URL component, SQL single quote, CSV field, regex literal, shell single quote, C/Java string, Unicode escapes; both directions where meaningful; live; copy."
+ },
+ {
+  "slug": "ua-parser",
+  "name": "User Agent Parser",
+  "category": "Developer",
+  "tagline": "Decode any browser user agent",
+  "spec": "Show your own user agent plus navigator.userAgentData when available; parse pasted UA strings (bulk, one per line) into browser+version, engine, OS+version, device type (desktop/mobile/tablet/TV/bot), common bots and HTTP clients; table and JSON output."
+ }
+]
