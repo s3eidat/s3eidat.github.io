@@ -1,5 +1,6 @@
 # Base — TODO
 
-Core done (all must-haves; undo, duplicate, summary row, column widths, shortcuts also working).
-For `full`: SEO meta + manifest link, test paste from a spreadsheet, field type change and delete, view rename/
-delete, table and base delete, backup restore round trip, dark mode, final Playwright pass.
+Core and full done. For `launched`: final test, list it (apps.json, kit.js TOOLS, hub.js FLAGSHIP, Arabic hub name,
+guide, sitemaps, launch posts), screenshot.png once the header shows the tool name.
+
+Later (could): formulas, rollups and lookups, group by in grid, forms, timeline view, print.
