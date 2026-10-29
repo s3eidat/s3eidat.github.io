@@ -339,7 +339,7 @@
   }
 
   // ---------- chart interactions ----------
-  var lastTap = { t: 0, id: null };
+  var lastTap = { t: 0, id: null }, pendingSheet = null;
   function chartPoint(e) { var r = $("#chart").getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
   function onChartDown(e) {
     var bar = e.target.closest("[data-bar]"), res = e.target.closest("[data-res]"), link = e.target.closest("[data-link]");
@@ -351,7 +351,12 @@
     var id = (res || link || bar).getAttribute(res ? "data-res" : link ? "data-link" : "data-bar");
     if (sel.length !== 1 || sel[0] !== id) { sel = [id]; markSel(); }
     var now = Date.now();
-    if (lastTap.id === id && now - lastTap.t < 380) { lastTap = { t: 0, id: null }; taskSheet(id); return; }
+    if (lastTap.id === id && now - lastTap.t < 380) {
+      // open on the click that ends this tap, so that click can't land on the new window's buttons
+      lastTap = { t: 0, id: null }; pendingSheet = id;
+      setTimeout(function () { if (pendingSheet === id) { pendingSheet = null; taskSheet(id); } }, 700);
+      return;
+    }
     lastTap = { t: now, id: id };
     if (e.pointerType === "touch" && !link) return; // touch scrolls the chart; edit in the task window instead
     e.preventDefault();
@@ -466,7 +471,9 @@
     form.appendChild(foot); m.appendChild(form);
     function close() { m.remove(); document.removeEventListener("keydown", onKey, true); }
     function onKey(e) { if (e.key === "Escape") { e.stopPropagation(); close(); } }
-    m.addEventListener("mousedown", function (e) { if (e.target === m) close(); });
+    // a double tap opens this window on pointerdown; ignore the tap's own follow-up mouse event on the backdrop
+    var opened = Date.now();
+    m.addEventListener("mousedown", function (e) { if (e.target === m && Date.now() - opened > 400) close(); });
     document.addEventListener("keydown", onKey, true);
     document.body.appendChild(m);
     var f = form.querySelector(opts.focus || "input,select,textarea"); if (f) { f.focus(); if (f.select && f.type === "text") f.select(); }
@@ -710,6 +717,7 @@
     var ch = $("#chart");
     ch.addEventListener("pointerdown", onChartDown); ch.addEventListener("pointermove", onChartMove);
     ch.addEventListener("pointerup", onChartUp); ch.addEventListener("pointercancel", onChartUp);
+    ch.addEventListener("click", function () { if (pendingSheet) { var id = pendingSheet; pendingSheet = null; taskSheet(id); } });
     $("#pName").addEventListener("change", function () { P.name = $("#pName").value.trim() || "Project"; $("#pName").value = P.name; commit(); });
     $("#newBtn").addEventListener("click", newMenu); $("#openBtn").addEventListener("click", openMenu);
     $("#saveBtn").addEventListener("click", saveFile); $("#exportBtn").addEventListener("click", exportMenu);

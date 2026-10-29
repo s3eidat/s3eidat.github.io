@@ -1,5 +1,6 @@
 # Gantt — TODO
 
-Core done (all must-haves; PDF/SVG export, CSV and MS Project XML import, baseline, task window and several
-projects also working). For `full`: SEO meta + manifest, test collapse, Fri/Sat weekend, holidays, touch on a
-phone (tap to select, double-tap to edit), dark mode, final Playwright pass.
+Core and full done. For `launched`: final test, list it (apps.json, kit.js TOOLS, hub.js FLAGSHIP, Arabic hub name,
+guide, sitemaps, launch posts), screenshot.png once the header shows the tool name.
+
+Later (could): resource view and over-allocation, cost columns, MS Project XML export, multi-page print.
