@@ -13,9 +13,7 @@ So quality and honesty matter more than speed: one great app beats three broken 
 - `factory/apps.json` — registry of launched apps (`slug, name, tagline, category, alt`).
 - `factory/<slug>/` — your working notes for that app (recon, feature list, TODO).
 - `factory/launch/<slug>.md` — ready-to-paste launch posts for the owner.
-- `replica/<slug>/` in the owner's local workspace holds earlier recon maps (recon.md, features.csv,
-  opportunities.md) for the first 7 flagships; follow the same shape. Static site, no backend, no deploy step:
-  pushing to `main` is the deploy.
+- Static site, no backend, no deploy step: pushing to `main` is the deploy (GitHub Pages, ~1 minute).
 
 ## Pick the work
 
