@@ -1,0 +1,45 @@
+/* Logo Maker — layout on top of /kit/kit.css */
+.lm-hero { padding-bottom: 14px; }
+.lm-ic { display: inline-flex; }
+.lm-form { margin-bottom: 18px; display: grid; gap: 14px; }
+.lm-form-grid { display: grid; grid-template-columns: 1.2fr 1.2fr 1fr; gap: 12px; }
+@media (max-width: 760px) { .lm-form-grid { grid-template-columns: minmax(0, 1fr); } }
+.lm-h { margin: 0; font-size: 17px; letter-spacing: -.01em; }
+.lm-bar { margin: 6px 0 12px; }
+.lm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; margin-bottom: 22px; }
+.lm-card { display: block; width: 100%; padding: 0; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: var(--surface); box-shadow: var(--shadow); transition: transform 160ms var(--ease), border-color var(--dur); }
+.lm-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.lm-card .lm-svg { aspect-ratio: 4 / 3; display: grid; place-items: stretch; }
+.lm-svg svg { display: block; width: 100%; height: 100%; }
+.lm-card svg { object-fit: contain; }
+.lm-saved { position: relative; }
+.lm-rm { position: absolute; top: 6px; right: 6px; background: var(--surface); }
+.lm-rm:hover:not(:disabled) { color: var(--danger); }
+
+.lm-editor { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 14px; align-items: start; }
+@media (max-width: 900px) { .lm-editor { grid-template-columns: minmax(0, 1fr); } }
+.lm-stage { position: sticky; top: 70px; padding: 12px; display: grid; gap: 10px; }
+@media (max-width: 900px) { .lm-stage { position: static; } }
+.lm-preview { border-radius: 12px; overflow: hidden; border: 1px solid var(--line); min-height: 220px; display: grid; place-items: center; }
+.lm-preview .lm-svg { width: 100%; max-height: 60vh; }
+.lm-preview svg { max-height: 60vh; }
+.lm-preview[data-bg="light"] { background: #ffffff; }
+.lm-preview[data-bg="dark"] { background: #111317; }
+.lm-preview[data-bg="checker"] { background-color: #fff; background-image: linear-gradient(45deg, #e6e6e6 25%, transparent 25%), linear-gradient(-45deg, #e6e6e6 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #e6e6e6 75%), linear-gradient(-45deg, transparent 75%, #e6e6e6 75%); background-size: 18px 18px; background-position: 0 0, 0 9px, 9px -9px, -9px 0; }
+.lm-under { justify-content: center; }
+.lm-panel { display: grid; gap: 12px; }
+.lm-group { padding: 14px; }
+.lm-group summary { cursor: pointer; font-weight: 650; margin-bottom: 10px; }
+.lm-group:not([open]) summary { margin-bottom: 0; }
+.lm-group > .field, .lm-group > .lm-fields { margin-bottom: 10px; }
+.lm-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.lm-seg button { padding: 6px 10px; }
+.lm-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 4px; max-height: 220px; overflow-y: auto; padding: 2px; }
+.lm-icon { aspect-ratio: 1; display: grid; place-items: center; border-radius: 9px; border: 1px solid var(--line); background: var(--surface-2); color: var(--text); }
+.lm-icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.lm-icon[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.lm-pals { display: grid; grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 6px; margin-bottom: 12px; }
+.lm-pal { display: flex; height: 26px; border-radius: 8px; overflow: hidden; border: 1px solid var(--line-strong); }
+.lm-pal span { flex: 1; }
+.lm-pal:hover { outline: 2px solid var(--accent); outline-offset: 1px; }
+.lm-color input[type="color"] { width: 100%; }
