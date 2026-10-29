@@ -40,5 +40,12 @@
   "tagline": "Logo ideas from your name, free SVG and PNG",
   "category": "Design",
   "alt": "Looka"
+ },
+ {
+  "slug": "time-tracker",
+  "name": "Time Tracker",
+  "tagline": "Timer, timesheet, billable reports and invoices",
+  "category": "Productivity",
+  "alt": "Toggl Track"
  }
 ]

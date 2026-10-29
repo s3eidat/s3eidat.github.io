@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Free Time Tracker With Billable Rates: a Toggl Alternative</title>
+<meta name="description" content="Track hours per project and client with a one-click timer, see billable amounts, fill a weekly timesheet and print invoices. Free, no sign-up.">
+<link rel="canonical" href="https://s3eidat.github.io/guides/time-tracker/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/kit/kit.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Is Time Tracker really free, including billable rates?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Hourly rates for clients and projects, billable amounts in reports, CSV exports and invoices are all free. There is no paid plan and no account."}},
+    {"@type": "Question", "name": "Does the timer keep running if I close the tab?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The timer stores its start time, so when you open the page again it shows the right running time. If you have the page open in two tabs, stopping it in one stops it in both."}},
+    {"@type": "Question", "name": "Can I move my data from Toggl Track?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Export a detailed report as CSV from Toggl Track, then in Time Tracker open Settings and press Import Toggl CSV. Projects, clients and tags are created as needed, and rows you already imported are skipped."}},
+    {"@type": "Question", "name": "How do I make an invoice from my hours?", "acceptedAnswer": {"@type": "Answer", "text": "Open Reports, choose the period and the client, and press Create invoice. Fill in your details and the invoice number, choose one line per project or per entry, add tax if you charge it, then press Print / save as PDF or Download CSV."}},
+    {"@type": "Question", "name": "Can a team use it?", "acceptedAnswer": {"@type": "Answer", "text": "It is made for one person. There are no accounts, shared workspaces or approvals, and data does not sync between devices. Each person can track their own time and send a CSV export."}}
+  ]
+}
+</script>
+</head>
+<body data-more="off">
+<main class="s3-main prose">
+  <h1>A free time tracker with billable rates and invoices</h1>
+  <p>If you want a free alternative to Toggl Track that includes the parts freelancers need (hourly rates, billable totals and an invoice), open <b>Time Tracker</b>. It has a one-click timer, projects and clients, a weekly timesheet and reports, with no account and no limits. Everything stays in your browser.</p>
+  <p><a class="btn primary big" href="/time-tracker/">Open Time Tracker</a></p>
+
+  <h2>Step by step</h2>
+  <ol>
+    <li>Open <a href="/time-tracker/">Time Tracker</a>. To look around first, press <b>Try with sample data</b> (you can erase it later in Settings).</li>
+    <li>Go to <b>Projects</b>. Add your clients with their hourly rate, then your projects with a client, a colour and, if it differs, the project's own rate.</li>
+    <li>Back on <b>Timer</b>, type what you're working on, pick the project and press <b>Start</b> (or Enter). Press <b>#</b> to add tags and <b>$</b> to mark the time as billable; projects with a rate turn it on for you. Press <b>Stop</b> when you're done.</li>
+    <li>Forgot to start the timer? Press <b>Add entry</b> (or N) and type the date, the start time and an end time or a duration such as 1:30, 90m or 1h 20m.</li>
+    <li>To pick up yesterday's task again, press the play button on that entry. Click any entry to edit, duplicate or delete it.</li>
+    <li>Open <b>Timesheet</b> to see the week by project and day. Click a cell to add time to that project on that day.</li>
+    <li>Open <b>Reports</b>, choose a period and filters (client, project, tag, billable) to see the total, billable hours and amount. Press <b>Detailed CSV</b> or <b>Summary CSV</b> for a spreadsheet, or <b>Create invoice</b> to bill the client.</li>
+  </ol>
+
+  <h2>Who it helps</h2>
+  <ul>
+    <li><b>Freelancers billing by the hour.</b> Rates per client or project and an invoice from the report, without paying monthly for billable features.</li>
+    <li><b>Students and researchers.</b> See how many hours actually go into each course or chapter each week.</li>
+    <li><b>Employees who report hours.</b> Fill the weekly timesheet and send a CSV to whoever needs it.</li>
+    <li><b>Anyone switching from Toggl Track.</b> Import your detailed CSV export and keep your history.</li>
+  </ul>
+
+  <h2>Why it's private</h2>
+  <p>Time Tracker is a static page. Your entries, projects, clients and rates are saved in your own browser's storage on this device and are never uploaded. The page's security policy blocks it from sending data to other websites, and invoices and CSV files are made on your device. It works offline after the first visit. Clearing your browser data deletes your time, so download a backup from Settings now and then.</p>
+
+  <h2>Tips and limits</h2>
+  <ul>
+    <li><b>Which rate is used:</b> the project's rate if it has one, otherwise its client's rate, otherwise the default rate in Settings.</li>
+    <li><b>Rounding:</b> in Settings you can round each entry, up or to the nearest step, to 1, 5, 6, 10, 15, 30 or 60 minutes in reports and invoices. Your entries themselves are not changed.</li>
+    <li><b>Week start and clock:</b> the week can start on Saturday, Sunday or Monday, and times can show as 24-hour or 12-hour.</li>
+    <li><b>Currency:</b> type any 3-letter code (USD, EUR, JOD, SAR…). Changing it does not convert amounts.</li>
+    <li><b>Invoice PDF</b> is made with your browser's print window: choose "Save as PDF" as the printer.</li>
+    <li>An entry that runs past midnight counts toward the day it started.</li>
+    <li><b>Not included:</b> team accounts, approvals, sync between devices, a browser extension, idle detection or reminders when the page is closed.</li>
+    <li>Shortcuts: S starts or stops the timer, N adds an entry, 1 to 4 switch tabs, ? shows them all.</li>
+  </ul>
+
+  <h2>FAQ</h2>
+  <h3>Is Time Tracker really free, including billable rates?</h3>
+  <p>Yes. Hourly rates for clients and projects, billable amounts in reports, CSV exports and invoices are all free. There is no paid plan and no account.</p>
+  <h3>Does the timer keep running if I close the tab?</h3>
+  <p>Yes. The timer stores its start time, so when you open the page again it shows the right running time. If you have the page open in two tabs, stopping it in one stops it in both.</p>
+  <h3>Can I move my data from Toggl Track?</h3>
+  <p>Yes. Export a detailed report as CSV from Toggl Track, then in Time Tracker open Settings and press <b>Import Toggl CSV</b>. Projects, clients and tags are created as needed, and rows you already imported are skipped.</p>
+  <h3>How do I make an invoice from my hours?</h3>
+  <p>Open <b>Reports</b>, choose the period and the client, and press <b>Create invoice</b>. Fill in your details and the invoice number, choose one line per project or per entry, add tax if you charge it, then press <b>Print / save as PDF</b> or <b>Download CSV</b>.</p>
+  <h3>Can a team use it?</h3>
+  <p>It is made for one person. There are no accounts, shared workspaces or approvals, and data does not sync between devices. Each person can track their own time and send a CSV export.</p>
+
+  <h2>Related tools</h2>
+  <ul>
+    <li><a href="/invoice-maker/">Invoice Maker</a>: a free-form invoice when you bill a fixed price instead of hours.</li>
+    <li><a href="/focus-timer/">Focus Timer</a>: Pomodoro-style focus sessions.</li>
+    <li><a href="/hours-calc/">Hours Calc</a>: add up hours from a paper time card.</li>
+    <li><a href="/budget/">Budget</a>: plan what you earn once the invoice is paid.</li>
+    <li><a href="/guides/">All guides</a></li>
+  </ul>
+</main>
+</body>
+</html>

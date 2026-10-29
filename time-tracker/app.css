@@ -13,7 +13,7 @@
 .tt-tagbtn span:empty { display: none; }
 .tt-clock { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; min-width: 92px; text-align: end; letter-spacing: -.01em; }
 .tt-go { min-width: 92px; height: 42px; }
-.tt-timer.on .tt-go { background: var(--danger); color: #fff; }
+.tt-timer.on .tt-go, .tt-timer.on .tt-go:hover:not(:disabled) { background: var(--danger); color: #fff; box-shadow: none; }
 .tt-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px; }
 
 /* entries */
