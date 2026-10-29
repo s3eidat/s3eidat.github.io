@@ -12,7 +12,20 @@
 <link rel="stylesheet" href="app.css">
 <script src="/kit/kit.js"></script>
 <link rel="canonical" href="https://s3eidat.github.io/budget/">
+<link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0d0f12">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="S3eidat Tools">
+<meta property="og:title" content="Budget — a free, private envelope budget">
+<meta property="og:description" content="Give every dinar or dollar a job. Plan, track spending, import bank CSV files. No sign-up, no bank login, nothing uploaded.">
+<meta property="og:url" content="https://s3eidat.github.io/budget/">
+<meta property="og:image" content="https://s3eidat.github.io/budget/screenshot.png">
+<meta property="og:image:width" content="1280"><meta property="og:image:height" content="800">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Budget — a free, private envelope budget">
+<meta name="twitter:description" content="Give every dinar or dollar a job. Free, private and runs 100% in your browser: no sign-up, no uploads.">
+<meta name="twitter:image" content="https://s3eidat.github.io/budget/screenshot.png">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Budget", "url": "https://s3eidat.github.io/budget/", "description": "A free envelope budgeting app that runs 100% in your browser: accounts, monthly plan, targets, recurring transactions, bank CSV import and reports. No sign-up, nothing uploaded.", "applicationCategory": "FinanceApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "image": "https://s3eidat.github.io/budget/screenshot.png", "author": {"@type": "Person", "name": "s3eidat", "url": "https://github.com/s3eidat"}}</script>
 <script src="core.js"></script>
 <script src="app.js" defer></script>
 </head>
@@ -65,11 +78,14 @@
         <button type="button" data-view="plan" aria-pressed="true">Plan</button>
         <button type="button" data-view="tx" aria-pressed="false">Transactions</button>
         <button type="button" data-view="accounts" aria-pressed="false">Accounts</button>
+        <button type="button" data-view="reports" aria-pressed="false">Reports</button>
       </div>
       <span class="grow"></span>
       <button class="btn ghost icon small" id="undoBtn" type="button" title="Undo (Ctrl+Z)" aria-label="Undo" disabled><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+      <button class="btn ghost icon small" id="helpBtn" type="button" title="Keyboard shortcuts (?)" aria-label="Keyboard shortcuts">?</button>
       <button class="btn primary small" id="addTxBtn" type="button"><svg class="i"><use href="#i-plus"/></svg>Transaction</button>
     </div>
+    <div class="bud-nag" id="nag" hidden></div>
 
     <div class="view" id="view-plan">
       <div class="bud-monthbar">
@@ -92,9 +108,11 @@
       <div class="row bud-txbar">
         <select class="select" id="txAcct" aria-label="Account"></select>
         <input class="input grow" id="txSearch" type="search" placeholder="Search payee, memo, category or amount" aria-label="Search transactions">
+        <button class="btn" id="importBtn" type="button"><svg class="i"><use href="#i-upload"/></svg>Import bank CSV</button>
       </div>
       <div class="row" id="txFilters"></div>
       <div id="acctSummary"></div>
+      <div class="card bud-sched" id="schedList" hidden></div>
       <div class="card bud-txlist" id="txList"></div>
     </div>
 
@@ -112,6 +130,28 @@
         <p class="faint" id="afHint">For a credit card or loan, enter what you owe as a negative number (for example -250).</p>
         <div class="row"><button class="btn primary" type="submit">Add account</button></div>
       </form>
+    </div>
+
+    <div class="view" id="view-reports" hidden>
+      <div class="row bud-txbar">
+        <select class="select" id="repRange" aria-label="Period">
+          <option value="1">This month</option>
+          <option value="3">Last 3 months</option>
+          <option value="6" selected>Last 6 months</option>
+          <option value="12">Last 12 months</option>
+          <option value="ytd">This year</option>
+          <option value="all">All time</option>
+        </select>
+        <span class="faint" id="repSpan"></span>
+      </div>
+      <div class="stats" id="repStats"></div>
+      <div class="grid-2 mt">
+        <div class="card"><h2>Spending by category</h2><div id="repCats"></div></div>
+        <div class="card stack-cards">
+          <h2>Income and spending</h2><div id="repMonths"></div>
+          <h2 class="mt">Net worth</h2><div id="repWorth"></div>
+        </div>
+      </div>
     </div>
   </section>
 </main>

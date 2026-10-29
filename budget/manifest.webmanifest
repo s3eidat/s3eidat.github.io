@@ -1,0 +1,11 @@
+{
+  "name": "Budget — S3eidat Tools",
+  "short_name": "Budget",
+  "description": "A free, private envelope budget that runs in your browser.",
+  "start_url": "/budget/",
+  "scope": "/budget/",
+  "display": "standalone",
+  "background_color": "#0d0f12",
+  "theme_color": "#0d0f12",
+  "icons": [{ "src": "/kit/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

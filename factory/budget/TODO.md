@@ -1,9 +1,7 @@
 # Budget — TODO
 
-Core done (all must-haves). For `full`:
-- [ ] Scheduled / recurring transactions UI (engine done: addSched, runDue, enterSched, skipSched)
-- [ ] CSV import with column mapper + preview (engine done: parseCSV, guessColumns, csvToTx, importRows)
-- [ ] Reports tab: spending by category, income vs spending, net worth (SVG)
-- [ ] Reconcile account UI (engine done: reconcile)
-- [ ] Keyboard shortcuts + help sheet, S3_SELFTEST, backup reminder, manifest
-- [ ] Test (Playwright): console clean, selftest, main flow, 390px
+Core and full done. For `launched`: final test, list it (apps.json, kit.js TOOLS, hub.js FLAGSHIP, guide,
+sitemaps, launch posts), regenerate screenshot.png once the header shows the tool name.
+
+Later (could): per-account foreign currency with a manual rate, OFX/QIF import, split transactions,
+hide categories, print monthly summary, Arabic UI strings.

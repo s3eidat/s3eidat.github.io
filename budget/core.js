@@ -532,7 +532,8 @@
     });
   }
   function importKey(aId, r) { return aId + "|" + r.d + "|" + r.amt + "|" + String(r.p).trim().toLowerCase(); }
-  // Adds rows to account aId, skipping ones already present (same date, amount and payee). Categories from payee memory.
+  // Adds rows to account aId, skipping ones already present (same date, amount and payee). Categories come from
+  // payee memory; money coming in from an unknown payee goes to ready to assign (it is almost always income).
   function importRows(b, aId, rows) {
     var seen = {}, added = 0, skipped = 0;
     b.tx.forEach(function (t) { if (t.a === aId) { var k = importKey(aId, t); seen[k] = (seen[k] || 0) + 1; } });
@@ -542,7 +543,7 @@
       var k = importKey(aId, r);
       batch[k] = (batch[k] || 0) + 1;
       if (batch[k] <= (seen[k] || 0)) { skipped++; return; }
-      var c = b.payees[String(r.p).trim().toLowerCase()] || null;
+      var c = b.payees[String(r.p).trim().toLowerCase()] || (r.amt > 0 ? INC : null);
       saveTx(b, { a: aId, d: r.d, p: r.p, m: r.m, amt: r.amt, c: c, clr: 1 });
       added++;
     });
@@ -587,7 +588,8 @@
       var r = idx[monthOf(t.d)];
       if (r == null || t.xfer) return;
       if (t.c === INC) { if (t.p !== "Starting balance" && t.p !== "Reconciliation adjustment") out[r].income += t.amt; }
-      else out[r].spending -= t.amt;
+      else if (!t.c && t.amt > 0) out[r].income += t.amt;   // uncategorized money in counts as income, not as negative spending
+      else out[r].spending -= t.amt;                        // refunds into a category lower its spending
     });
     out.forEach(function (row) {
       var end = row.month + "-31";
