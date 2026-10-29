@@ -86,7 +86,7 @@
     if (!/^(video|audio)\//.test(file.type) && !/\.(mp4|m4v|mov|webm|mkv|ogg|ogv|mp3|wav|m4a|aac|flac)$/i.test(file.name)) return S3.toast("Pick a video or audio file", "error");
     if (mediaURL) URL.revokeObjectURL(mediaURL);
     mediaURL = URL.createObjectURL(file);
-    video.src = mediaURL; hasMedia = true;
+    video.src = mediaURL; hasMedia = true; loadWave(file);
     if (!st.name || !st.cues.length) st.name = file.name.slice(0, 120);
     save();
     video.addEventListener("loadedmetadata", function once() { video.removeEventListener("loadedmetadata", once); renderAll(); }, { once: true });
@@ -229,6 +229,7 @@
         [h("span", { "class": "se-edge se-l", "data-edge": "start" }), h("span", { "class": "se-btext", dir: "auto", text: c.text || "…" }), h("span", { "class": "se-edge se-r", "data-edge": "end" })]);
       track.appendChild(b);
     });
+    track.insertBefore(h("canvas", { "class": "se-wave", id: "se-wave", "aria-hidden": "true" }), track.firstChild);
     track.appendChild(h("div", { "class": "se-playhead", id: "se-playhead" }));
     var scroller = h("div", { "class": "se-tlscroll", id: "se-tlscroll" }, [ruler, track]);
     p.appendChild(h("div", { "class": "row between se-tlbar" }, [h("b", { text: "Timeline" }), h("div", { "class": "row" }, [
@@ -237,6 +238,8 @@
     scroller.scrollLeft = keepScroll;
     lastActive = null; tick();
     scroller.addEventListener("pointerdown", tlDown);
+    scroller.addEventListener("scroll", function () { requestAnimationFrame(drawWave); });
+    drawWave();
   }
   function zoom(f) {
     var sc = $("#se-tlscroll"), centerT = sc ? (sc.scrollLeft + sc.clientWidth / 2) / pps : cur();
@@ -442,11 +445,147 @@
     var n = st.cues.length, last = st.cues.reduce(function (m, c) { return Math.max(m, c.end); }, 0);
     $("#se-stats").textContent = (st.name ? st.name + " · " : "") + n + (n === 1 ? " line" : " lines") + (n ? " · up to " + short(last) : "") + " · nothing is uploaded";
   }
-  function renderAll() { renderPlayer(); drawTimeline(); renderList(); stats(); markSel(); }
+  function renderAll() { renderPlayer(); drawTimeline(); renderList(); stats(); markSel(); styleCard(); }
+  // ---------- caption style ----------
+  var styleBuilt = false;
+  function styleCard() {
+    if (styleBuilt) return; styleBuilt = true;
+    var s = st.style, card = h("details", { "class": "card se-style" }, [h("summary", { text: "Caption style (preview and burned-in video)" })]);
+    function set(k, v) { s[k] = v; st.style = cleanStyle(s); s = st.style; save(); updateOverlay(); }
+    var size = h("input", { type: "range", min: "2", max: "12", step: "0.5", value: String(s.size), "aria-label": "Text size" });
+    size.addEventListener("input", function () { set("size", +size.value); });
+    var color = h("input", { type: "color", value: s.color, "aria-label": "Text colour" });
+    color.addEventListener("input", function () { set("color", color.value); });
+    function sel3(opts, v, k) { var e = h("select", { "class": "select" }, opts.map(function (o) { return h("option", { value: o[0], text: o[1] }); })); e.value = v; e.addEventListener("change", function () { set(k, e.value); }); return e; }
+    var bold = h("input", { type: "checkbox" }); bold.checked = s.bold; bold.addEventListener("change", function () { set("bold", bold.checked); });
+    card.appendChild(h("div", { "class": "se-style-grid" }, [
+      h("label", { "class": "field" }, ["Size", size]), h("label", { "class": "field" }, ["Colour", color]),
+      h("label", { "class": "field" }, ["Background", sel3([["box", "Dark box"], ["outline", "Outline"], ["none", "None"]], s.bg, "bg")]),
+      h("label", { "class": "field" }, ["Position", sel3([["bottom", "Bottom"], ["top", "Top"]], s.pos, "pos")]),
+      h("label", { "class": "check" }, [bold, "Bold"])
+    ]));
+    $("#se-player").parentNode.insertBefore(card, $("#se-timeline").nextSibling);
+  }
+
+  // ---------- waveform (decoded once per file; drawn only for the visible part of the timeline) ----------
+  var peaks = null, peaksRate = 100; // peak values per second
+  function loadWave(file) {
+    peaks = null;
+    if (file.size > 300 * 1024 * 1024) return; // too heavy to decode in memory
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    S3.readFile(file).then(function (buf) {
+      var ac = new AC();
+      return ac.decodeAudioData(buf).then(function (ab) {
+        var ch = ab.getChannelData(0), per = Math.max(1, Math.floor(ab.sampleRate / peaksRate)), n = Math.ceil(ch.length / per), out = new Float32Array(n);
+        for (var i = 0; i < n; i++) { var m = 0, e = Math.min(ch.length, (i + 1) * per); for (var j = i * per; j < e; j += 4) { var v = Math.abs(ch[j]); if (v > m) m = v; } out[i] = m; }
+        var max = 0; for (var k = 0; k < n; k++) if (out[k] > max) max = out[k];
+        if (max > 0) for (var q = 0; q < n; q++) out[q] /= max;
+        peaks = out; if (ac.close) ac.close(); drawWave();
+      });
+    }).catch(function () { peaks = null; });
+  }
+  function drawWave() {
+    var sc = $("#se-tlscroll"), cv = $("#se-wave"); if (!sc || !cv) return;
+    var w = sc.clientWidth, hh = 64, dpr = window.devicePixelRatio || 1;
+    cv.style.left = sc.scrollLeft + "px"; cv.style.width = w + "px";
+    cv.width = Math.round(w * dpr); cv.height = Math.round(hh * dpr);
+    var x = cv.getContext("2d"); x.clearRect(0, 0, cv.width, cv.height);
+    if (!peaks) return;
+    x.fillStyle = getComputedStyle(document.documentElement).getPropertyValue("--text-3") || "#888"; x.globalAlpha = .3;
+    for (var px = 0; px < w; px++) {
+      var t0 = (sc.scrollLeft + px) / pps, t1 = (sc.scrollLeft + px + 1) / pps, a = Math.floor(t0 * peaksRate), b = Math.max(a + 1, Math.floor(t1 * peaksRate)), m = 0;
+      for (var i = a; i < b && i < peaks.length; i++) if (peaks[i] > m) m = peaks[i];
+      var bh = m * hh * .9; x.fillRect(px * dpr, (hh - bh) / 2 * dpr, dpr, Math.max(dpr, bh * dpr));
+    }
+  }
+
+  // ---------- tools: type then tap, shift, find and replace, help ----------
+  function modal(title, body, focusSel) {
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": title });
+    var sheet = h("div", { "class": "s3-sheet se-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: title }), btn("", close, "ghost icon", "x", "Close")])].concat(body));
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); if (m.onclose) m.onclose(); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m);
+    var f = sheet.querySelector(focusSel || "textarea,input,select,.btn.primary"); if (f) f.focus();
+    m.close = close; return m;
+  }
+  function tapTool() {
+    if (!hasMedia) return S3.toast("Open the video first", "error");
+    var ta = h("textarea", { "class": "textarea prose", rows: "8", dir: "auto", placeholder: "Paste the script here, one subtitle per line." });
+    var m = modal("Type then tap", [h("p", { "class": "faint", text: "Paste the words, one subtitle per line. Then press Start: the video plays and you press Space (or the big button) each time the next line begins. Press Done at the end." }), ta,
+      h("div", { "class": "row end mt" }, [btn("Start tapping", start, "primary", "play")])]);
+    function start() {
+      var lines = ta.value.split(/\r?\n/).map(function (l) { return l.trim(); }).filter(Boolean);
+      if (!lines.length) return S3.toast("Paste some lines first", "error");
+      m.close();
+      var made = [], i = 0, open = null, before = JSON.stringify(st.cues);
+      var next = h("p", { "class": "se-tapnext", dir: "auto" }), count = h("p", { "class": "faint" });
+      var tapBtn = btn("Tap — next line starts", tap, "primary big se-tapbtn");
+      var mm = modal("Tapping", [count, next, tapBtn, h("div", { "class": "row end mt" }, [btn("Done", done, "")])], ".se-tapbtn");
+      mm.onclose = function () { video.pause(); document.removeEventListener("keydown", onSpace, true); };
+      function show() { next.textContent = i < lines.length ? lines[i] : "All lines placed. Press Done."; count.textContent = "Line " + Math.min(i + 1, lines.length) + " of " + lines.length; }
+      function tap() {
+        var t = Math.round(video.currentTime * 1000) / 1000;
+        if (open) { open.end = Math.max(open.start + .3, t - .04); open = null; }
+        if (i < lines.length) { open = { id: uid(), start: t, end: t + 2, text: lines[i] }; made.push(open); i++; }
+        show();
+      }
+      function done() {
+        if (open) open.end = Math.max(open.start + .3, Math.min(video.currentTime, open.start + 4));
+        if (made.length) { past.push(before); future = []; st.cues = cleanCues(st.cues.concat(made)); save(); renderAll(); S3.toast(made.length + " lines timed"); }
+        mm.close();
+      }
+      function onSpace(e) { if (e.key === " " || e.key === "Enter") { e.preventDefault(); e.stopPropagation(); tap(); } }
+      document.addEventListener("keydown", onSpace, true);
+      show(); video.play();
+    }
+  }
+  function shiftTool() {
+    var amt = h("input", { "class": "input", type: "number", step: "0.1", value: "0.5", "aria-label": "Seconds" });
+    var from = h("select", { "class": "select" }, [h("option", { value: "all", text: "All lines" }), h("option", { value: "sel", text: "Selected line and after" })]);
+    modal("Shift timings", [h("p", { "class": "faint", text: "Move lines later (positive) or earlier (negative) when the subtitles are out of sync." }),
+      h("div", { "class": "se-style-grid" }, [h("label", { "class": "field" }, ["Seconds", amt]), h("label", { "class": "field" }, ["Which lines", from])]),
+      h("div", { "class": "row end mt" }, [btn("Shift", function () {
+        var d = parseFloat(amt.value); if (!isFinite(d) || !d) return S3.toast("Type a number of seconds, like 1.5 or -0.4", "error");
+        var startAt = from.value === "sel" && sel && byId(sel) ? byId(sel).start : -1;
+        change(function () { st.cues.forEach(function (c) { if (c.start >= startAt) { var len = c.end - c.start; c.start = Math.max(0, Math.round((c.start + d) * 1000) / 1000); c.end = c.start + len; } }); });
+        S3.toast("Timings shifted");
+      }, "primary")])]);
+  }
+  function findTool() {
+    var f = h("input", { "class": "input", type: "text", dir: "auto", "aria-label": "Find" }), r = h("input", { "class": "input", type: "text", dir: "auto", "aria-label": "Replace with" });
+    var cs = h("input", { type: "checkbox" });
+    modal("Find and replace", [h("div", { "class": "se-style-grid" }, [h("label", { "class": "field" }, ["Find", f]), h("label", { "class": "field" }, ["Replace with", r])]), h("label", { "class": "check" }, [cs, "Match case"]),
+      h("div", { "class": "row end mt" }, [btn("Replace all", function () {
+        if (!f.value) return S3.toast("Type what to find", "error");
+        var re = new RegExp(f.value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), cs.checked ? "g" : "gi"), n = 0;
+        st.cues.forEach(function (c) { var m2 = c.text.match(re); if (m2) n += m2.length; });
+        if (!n) return S3.toast("Not found", "error");
+        change(function () { st.cues.forEach(function (c) { c.text = c.text.replace(re, function () { return r.value; }); }); });
+        S3.toast(n + (n === 1 ? " replacement" : " replacements"));
+      }, "primary")])]);
+  }
+  function help() {
+    var keys = [["Space / K", "Play / pause"], ["← →", "Back / forward 1 s (Shift: 5 s)"], ["N", "New line at the playhead"], ["[ ]", "Start / end of the selected line at the playhead"],
+      ["S", "Split the selected line"], ["Del", "Delete the selected line"], ["Ctrl+Enter", "In a line: next line after this one"], ["+ / −", "Zoom the timeline"], ["Ctrl+Z / Ctrl+Shift+Z", "Undo / redo"]];
+    modal("Keyboard shortcuts", [h("div", { "class": "se-keys" }, keys.map(function (k) { return h("div", { "class": "row" }, [h("kbd", { text: k[0] }), h("span", { "class": "muted", text: k[1] })]); }))], "button");
+  }
   function actions() {
     var a = $("#se-actions");
     a.appendChild(btn("", undo, "ghost icon", "", "Undo (Ctrl+Z)")); a.lastChild.textContent = "↶";
     a.appendChild(btn("", redo, "ghost icon", "", "Redo (Ctrl+Shift+Z)")); a.lastChild.textContent = "↷";
+    var menu = h("details", { "class": "se-menu" }, [h("summary", { "class": "btn" }, [icon("settings"), "Tools"])]);
+    var list = h("div", { "class": "se-menu-list", role: "menu" });
+    [["Type then tap…", tapTool], ["Shift timings…", shiftTool], ["Find and replace…", findTool], ["Keyboard shortcuts", help]].forEach(function (it) {
+      list.appendChild(h("button", { type: "button", role: "menuitem", onclick: function () { menu.open = false; it[1](); } }, [it[0]]));
+    });
+    menu.appendChild(list);
+    menu.addEventListener("toggle", function () { if (!menu.open) return; list.style.left = ""; list.style.right = ""; if (list.getBoundingClientRect().left < 8) { list.style.left = "0"; list.style.right = "auto"; } });
+    document.addEventListener("click", function (e) { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+    a.appendChild(menu);
     a.appendChild(btn("Import", pickSubs, "", "upload", "Import an SRT or VTT file"));
     a.appendChild(btn("Export", exportDialog, "primary", "download"));
   }
@@ -470,6 +609,7 @@
     else if ((k === "Delete" || k === "Backspace") && c) { e.preventDefault(); removeCue(c); }
     else if (k === "+" || k === "=") zoom(1.4);
     else if (k === "-") zoom(.7);
+    else if (k === "?") help();
   });
   // dropping a file anywhere: subtitles are imported, media is opened
   document.addEventListener("dragover", function (e) { if (e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], "Files") >= 0) e.preventDefault(); });
@@ -481,7 +621,29 @@
     else openMedia(f);
   });
 
+  window.S3_SELFTEST = async function () {
+    try {
+      var ok = true;
+      var vtt = "\uFEFFWEBVTT\r\n\r\nNOTE hi\r\n\r\n00:01.000 --> 00:02.500 align:start\r\n<v Bob><i>Hi</i> there</v>\r\n\r\n1:00:00.000 --> 1:00:01.250\r\nLate";
+      var a = parseSubs(vtt);
+      ok = ok && a.length === 2 && a[0].start === 1 && a[0].end === 2.5 && a[0].text === "<v Bob>Hi there</v>".replace(/<\/?v[^>]*>/g, "") && a[1].start === 3600 && a[1].end === 3601.25;
+      var srt = toSrt([{ start: 3.2, end: 5.05, text: "One\ntwo" }, { start: 1, end: 2, text: "Zero" }].map(function (c) { return c; }).sort(function (x, y) { return x.start - y.start; }));
+      ok = ok && srt === "1\n00:00:01,000 --> 00:00:02,000\nZero\n\n2\n00:00:03,200 --> 00:00:05,050\nOne\ntwo\n";
+      var back = parseSubs(srt); ok = ok && back.length === 2 && back[1].text === "One\ntwo" && back[1].end === 5.05;
+      ok = ok && toVtt(back).indexOf("WEBVTT\n\n00:00:01.000 --> 00:00:02.000") === 0;
+      ok = ok && parseTime("1:02.5") === 62.5 && parseTime("01:00:00,5") === 3600.5 && isNaN(parseTime("abc")) && fmtIn(62.5) === "1:02.500" && fmtIn(3700) === "01:01:40.000";
+      var cl = cleanCues([{ start: 5, end: 4, text: 1 }, { start: 1, end: 2, text: "a" }, null]);
+      ok = ok && cl.length === 2 && cl[0].start === 1 && cl[1].end > cl[1].start && cl[1].text === "";
+      var cv = document.createElement("canvas"); cv.width = 320; cv.height = 180; var x = cv.getContext("2d", { willReadFrequently: true });
+      drawCaption(x, "Hello", 320, 180, cleanStyle({ bg: "box", color: "#ffffff" }));
+      var px = x.getImageData(0, 150, 320, 25).data, dark = 0, white = 0;
+      for (var i = 0; i < px.length; i += 4) { if (px[i + 3] > 150 && px[i] < 40) dark++; if (px[i] > 230 && px[i + 1] > 230 && px[i + 3] > 200) white++; }
+      ok = ok && dark > 50 && white > 20;
+      return ok;
+    } catch (e) { return false; }
+  };
+
   actions();
   renderAll();
-  window.SE = { state: function () { return st; }, parseSubs: parseSubs, toSrt: toSrt, toVtt: toVtt, parseTime: parseTime, video: video, drawCaption: drawCaption };
+  window.SE = { state: function () { return st; }, fmtIn: fmtIn, cleanCues: cleanCues, cleanStyle: cleanStyle, parseSubs: parseSubs, toSrt: toSrt, toVtt: toVtt, parseTime: parseTime, video: video, drawCaption: drawCaption };
 })();
