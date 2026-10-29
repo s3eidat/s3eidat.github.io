@@ -12,5 +12,12 @@
   "tagline": "Envelope budgeting: plan, track, import bank CSV",
   "category": "Productivity",
   "alt": "YNAB"
+ },
+ {
+  "slug": "storyboard",
+  "name": "Storyboard",
+  "tagline": "Sketch frames, play an animatic, export PDF",
+  "category": "Design",
+  "alt": "Boords"
  }
 ]
