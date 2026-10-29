@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Base — Free Online Database With Grid, Kanban and Calendar Views | S3eidat Tools</title>
+<meta name="description" content="A free spreadsheet-database in your browser: tables with typed fields, linked records, attachments, grid, kanban, calendar and gallery views, CSV import. No record limit, no sign-up.">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+<link rel="canonical" href="https://s3eidat.github.io/base/">
+<meta name="theme-color" content="#0d0f12">
+<script src="core.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body data-tool="base">
+<main class="s3-main bs">
+  <div class="bs-bar">
+    <button class="btn ghost bs-basebtn" id="baseBtn" type="button" title="Your bases"><span id="baseName" dir="auto"></span> ▾</button>
+    <span class="grow"></span>
+    <button class="btn ghost icon small" id="undoBtn" type="button" title="Undo (Ctrl+Z)" aria-label="Undo" disabled><svg class="i" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/></svg></button>
+    <button class="btn ghost icon small" id="helpBtn" type="button" title="Shortcuts (?)" aria-label="Help">?</button>
+    <button class="btn small" id="backupBtn" type="button" title="Download a backup file (attachments included)"><svg class="i"><use href="#i-download"/></svg><span class="lbl">Backup</span></button>
+  </div>
+  <div class="bs-tabs" id="tabs" role="tablist"></div>
+  <div class="bs-viewbar">
+    <button class="btn small bs-viewbtn" id="viewBtn" type="button"><span id="viewName"></span> ▾</button>
+    <button class="btn ghost small" id="filterBtn" type="button">Filter</button>
+    <button class="btn ghost small" id="sortBtn" type="button">Sort</button>
+    <button class="btn ghost small" id="hideBtn" type="button">Fields</button>
+    <button class="btn ghost small" id="byBtn" type="button" hidden></button>
+    <input class="input bs-search" id="search" type="search" placeholder="Search" aria-label="Search records">
+    <span class="grow"></span>
+    <button class="btn ghost small" id="importBtn" type="button" title="Import a CSV file as a new table"><svg class="i"><use href="#i-upload"/></svg><span class="lbl">Import CSV</span></button>
+    <button class="btn ghost small" id="exportBtn" type="button" title="Export this view as CSV"><svg class="i"><use href="#i-download"/></svg><span class="lbl">CSV</span></button>
+    <button class="btn primary small" id="addBtn" type="button"><svg class="i"><use href="#i-plus"/></svg>Record</button>
+  </div>
+  <div class="bs-content" id="content"></div>
+  <p class="faint bs-foot" id="foot"></p>
+</main>
+</body>
+</html>
