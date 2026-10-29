@@ -1,0 +1,51 @@
+/* Floor Plan — editor layout on top of /kit/kit.css */
+.fp { max-width: 1400px; }
+.fp-head { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 18px 0 12px; }
+.fp-head .grow { min-width: 220px; }
+.fp-name { width: 100%; font: 700 clamp(22px, 3.4vw, 28px)/1.2 var(--font); letter-spacing: -.02em; background: transparent; border: 0; border-bottom: 1px dashed transparent; padding: 2px 0; color: var(--text); }
+.fp-name:hover, .fp-name:focus { border-bottom-color: var(--line-strong); }
+.fp-name::placeholder { color: var(--text-3); }
+.fp-head .faint { margin: 4px 0 0; }
+.fp-ic { display: inline-flex; }
+.fp-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.fp-tools { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
+.fp-tools button { white-space: nowrap; flex: none; }
+.fp-tb-right { gap: 4px; }
+.fp-work { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 12px; align-items: start; }
+@media (max-width: 900px) { .fp-work { grid-template-columns: minmax(0, 1fr); } }
+.fp-canvas { position: relative; height: clamp(380px, calc(100vh - 230px), 900px); border-radius: 14px; overflow: hidden; border: 1px solid var(--line-strong); background: #fbfcfd; touch-action: none; user-select: none; -webkit-user-select: none; }
+@media (max-width: 900px) { .fp-canvas { height: 62vh; } }
+#fp-svg { display: block; width: 100%; height: 100%; cursor: default; }
+.fp-canvas[data-tool="wall"] #fp-svg, .fp-canvas[data-tool="room"] #fp-svg, .fp-canvas[data-tool="measure"] #fp-svg, .fp-canvas[data-tool="place"] #fp-svg { cursor: crosshair; }
+.fp-canvas[data-tool="door"] #fp-svg, .fp-canvas[data-tool="window"] #fp-svg, .fp-canvas[data-tool="label"] #fp-svg { cursor: copy; }
+#fp-world [data-id] { cursor: move; }
+.fp-paper { fill: #fbfcfd; }
+.fp-gmin { stroke: #e9edf1; stroke-width: 1; fill: none; }
+.fp-gmaj { stroke: #d3dae2; stroke-width: 1; fill: none; }
+.fp-h { fill: #ffffff; stroke: #0e9f9a; stroke-width: 2.5; cursor: grab; }
+.fp-draft { fill: rgba(14, 159, 154, .08); stroke: #0e9f9a; stroke-width: 2; stroke-dasharray: 6 4; }
+.fp-dot { fill: #0e9f9a; }
+.fp-measure { stroke: #e5484d; stroke-width: 2; stroke-dasharray: 5 4; }
+.fp-dlabel { font: 600 13px var(--font); fill: #0b3d3b; paint-order: stroke; stroke: #fff; stroke-width: 4px; }
+.fp-ghost { fill: rgba(255, 255, 255, .7); stroke: #0e9f9a; opacity: .85; pointer-events: none; }
+.fp-hint { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 8px 12px; border-radius: 10px; background: rgba(20, 23, 27, .82); color: #eceef2; font-size: 13px; pointer-events: none; text-align: center; }
+.fp-zoom { position: absolute; top: 10px; right: 12px; font-size: 12px; color: #6b7280; pointer-events: none; font-variant-numeric: tabular-nums; }
+.fp-side { display: grid; gap: 12px; }
+.fp-props { padding: 14px; }
+.fp-props h2 { margin: 0 0 10px; font-size: 15px; }
+.fp-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 10px; }
+.fp-sel-actions { margin-top: 12px; }
+.fp-area { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.02em; }
+.fp-swatches { display: flex; flex-wrap: wrap; gap: 6px; }
+.fp-sw { width: 26px; height: 26px; border-radius: 50%; border: 2px solid transparent; box-shadow: 0 0 0 1px var(--line-strong) inset; }
+.fp-sw[aria-pressed="true"] { border-color: var(--accent); }
+.fp-lib { padding: 14px; }
+.fp-lib summary { cursor: pointer; font-weight: 650; }
+.fp-lib h3 { margin: 12px 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-3); }
+.fp-lib-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.fp-lib-item { display: grid; justify-items: center; gap: 2px; padding: 6px 4px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2); color: var(--text); font-size: 11px; line-height: 1.2; text-align: center; }
+.fp-lib-item svg { width: 40px; height: 40px; }
+.fp-lib-item:hover, .fp-lib-item[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+.fp-h3 { margin: 14px 0 8px; font-size: 14px; }
+.fp-keys { display: grid; gap: 7px; }
+.fp-keys kbd { min-width: 150px; text-align: center; }
