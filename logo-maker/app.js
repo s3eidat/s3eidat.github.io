@@ -34,7 +34,7 @@
     { font: "inter", weight: 900, kase: "upper", track: 3 }, { font: "serif", weight: 700, kase: "none", track: 0 }, { font: "serif", weight: 400, kase: "upper", track: 16 },
     { font: "mono", weight: 700, kase: "lower", track: -2 }, { font: "inter", weight: 500, kase: "title", track: 2 }, { font: "inter", weight: 700, kase: "lower", track: -3 }
   ];
-  var LAYOUTS = [["left", "Symbol left"], ["top", "Symbol above"], ["badge", "Badge"], ["mono", "Initials"], ["text", "Text only"]];
+  var LAYOUTS = [["left", "Symbol left"], ["top", "Symbol above"], ["badge", "Badge"], ["mono", "Initials"], ["text", "Text only"], ["icon", "Symbol only"]];
   var SHAPES = [["none", "No shape"], ["circle", "Circle"], ["rounded", "Rounded square"], ["hex", "Hexagon"], ["shield", "Shield"], ["diamond", "Diamond"]];
 
   // ---------- state ----------
@@ -127,7 +127,9 @@
       }
     }
     var W, H;
-    if (d.layout === "text") {
+    if (d.layout === "icon") {
+      var Si = F * 2.4; symbol(0, 0, Si); W = Si; H = Si;
+    } else if (d.layout === "text") {
       var tb = texts(0, 0, "center");
       W = tb.w; H = tb.h;
       items.forEach(function (it) { if (it.t === "text") it.x += W / 2; else if (it.t === "path") it.d = shift(it.d, W / 2, 0); });
@@ -331,8 +333,17 @@
 
   // ---------- editor ----------
   var view = "design"; // preview background
-  function edit(d) { st.cur = cleanDesign(d); st.mode = "edit"; save(); render(); window.scrollTo(0, 0); }
-  function setD(fn) { fn(st.cur); st.cur = cleanDesign(st.cur); save(); draw(); }
+  function edit(d) { st.cur = cleanDesign(d); st.mode = "edit"; past = []; future = []; save(); render(); window.scrollTo(0, 0); }
+  // undo history: one step per change, typing and slider drags are grouped
+  var past = [], future = [], lastPush = 0;
+  function setD(fn) {
+    var now = Date.now(), snap = JSON.stringify(st.cur);
+    if (now - lastPush > 700) { past.push(snap); if (past.length > 80) past.shift(); future = []; }
+    lastPush = now;
+    fn(st.cur); st.cur = cleanDesign(st.cur); save(); draw();
+  }
+  function undo() { if (!past.length) return; future.push(JSON.stringify(st.cur)); st.cur = cleanDesign(JSON.parse(past.pop())); lastPush = 0; save(); renderEditor(); }
+  function redo() { if (!future.length) return; past.push(JSON.stringify(st.cur)); st.cur = cleanDesign(JSON.parse(future.pop())); lastPush = 0; save(); renderEditor(); }
   function draw() {
     var p = $("#lm-preview"); if (!p) return;
     p.textContent = "";
@@ -344,9 +355,9 @@
     var d = st.cur, v = $("#lm-view"); v.textContent = "";
     var top = h("div", { "class": "row between lm-bar" }, [
       btn("Ideas", function () { st.mode = "ideas"; save(); render(); }, "ghost", "", "Back to ideas"),
-      h("div", { "class": "row" }, [btn("Save to My logos", function () {
+      h("div", { "class": "row" }, [btn("↶", undo, "ghost icon", "", "Undo (Ctrl+Z)"), btn("↷", redo, "ghost icon", "", "Redo (Ctrl+Shift+Z)"), btn("Save to My logos", function () {
         st.saved.unshift(cleanDesign(JSON.parse(JSON.stringify(st.cur)))); st.saved = st.saved.slice(0, 60); save(); S3.toast("Saved to My logos");
-      }, "", "heart"), btn("Download", exportDialog, "primary", "download")])
+      }, "", "heart"), btn("Brand kit", kitDialog, "", "image"), btn("Download", exportDialog, "primary", "download")])
     ]);
     top.firstChild.textContent = "← Ideas";
     v.appendChild(top);
@@ -455,6 +466,167 @@
     document.addEventListener("keydown", onKey);
     document.body.appendChild(m); sheet.querySelector(".btn.primary").focus();
   }
+
+
+  // ---------- brand kit ----------
+  function lum(hex) {
+    var c = [1, 3, 5].map(function (i) { var v = parseInt(hex.substr(i, 2), 16) / 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); });
+    return .2126 * c[0] + .7152 * c[1] + .0722 * c[2];
+  }
+  function contrast(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); }
+  // the same logo made readable on another background colour
+  function onBg(d, bg) {
+    var v = cleanDesign(JSON.parse(JSON.stringify(d))), light = lum(bg) > .4;
+    v.colors.bg = bg;
+    if (contrast(v.colors.text, bg) < 3) v.colors.text = light ? "#111111" : "#ffffff";
+    if (contrast(v.colors.main, bg) < 2) v.colors.main = light ? "#111111" : "#ffffff";
+    if (contrast(v.colors.accent, bg) < 1.6) v.colors.accent = v.colors.main;
+    return v;
+  }
+  function iconOnly(d) { var v = cleanDesign(JSON.parse(JSON.stringify(d))); v.layout = "icon"; if (v.shape === "none") { v.shape = "rounded"; v.fill = "solid"; } return v; }
+  function rgb(hex) { return [1, 3, 5].map(function (i) { return parseInt(hex.substr(i, 2), 16); }).join(", "); }
+  function fitInto(ctx, design, x, y, w, hh, transparent) {
+    var L = layout(design), s = Math.min(w / L.w, hh / L.h);
+    ctx.save(); ctx.translate(x + (w - L.w * s) / 2, y + (hh - L.h * s) / 2); drawItems(ctx, L, s, transparent); ctx.restore();
+  }
+  function brandSheet(d) {
+    var W = 1600, H = 2000, c = document.createElement("canvas"); c.width = W; c.height = H;
+    var x = c.getContext("2d"), M = 80, font = "Inter, 'Noto Sans Arabic', system-ui, sans-serif";
+    x.fillStyle = "#ffffff"; x.fillRect(0, 0, W, H);
+    x.fillStyle = "#111"; x.font = "700 44px " + font; x.textBaseline = "top"; x.direction = isRtl(d.name) ? "rtl" : "ltr";
+    x.textAlign = isRtl(d.name) ? "right" : "left"; x.fillText(d.name, isRtl(d.name) ? W - M : M, M);
+    x.direction = "ltr"; x.textAlign = "left"; x.font = "500 22px " + font; x.fillStyle = "#666"; x.fillText("Brand sheet", M, M + 58);
+    function panel(px, py, pw, ph, bg, design) {
+      x.fillStyle = bg; x.beginPath(); if (x.roundRect) x.roundRect(px, py, pw, ph, 18); else x.rect(px, py, pw, ph); x.fill();
+      if (bg === "#ffffff") { x.strokeStyle = "#e5e7eb"; x.lineWidth = 2; x.stroke(); }
+      fitInto(x, design, px + pw * .08, py + ph * .12, pw * .84, ph * .76, true);
+    }
+    var y = M + 120, full = W - 2 * M, half = (full - 30) / 2;
+    panel(M, y, full, 520, d.colors.bg, d); y += 550;
+    panel(M, y, half, 300, "#ffffff", onBg(d, "#ffffff")); panel(M + half + 30, y, half, 300, "#111317", onBg(d, "#111317")); y += 330;
+    var third = (full - 60) / 3;
+    panel(M, y, third, 300, d.colors.main, onBg(d, d.colors.main));
+    panel(M + third + 30, y, third, 300, "#ffffff", onBg(iconOnly(d), "#ffffff"));
+    panel(M + 2 * (third + 30), y, third, 300, d.colors.bg, iconOnly(d)); y += 350;
+    x.fillStyle = "#111"; x.font = "700 26px " + font; x.fillText("Colours", M, y); y += 48;
+    var cols = [["Background", d.colors.bg], ["Symbol", d.colors.main], ["Accent", d.colors.accent], ["Text", d.colors.text]], cw = (full - 3 * 24) / 4;
+    cols.forEach(function (cc, i) {
+      var cx = M + i * (cw + 24);
+      x.fillStyle = cc[1]; x.fillRect(cx, y, cw, 120); x.strokeStyle = "#e5e7eb"; x.lineWidth = 2; x.strokeRect(cx, y, cw, 120);
+      x.fillStyle = "#111"; x.font = "600 22px " + font; x.fillText(cc[0], cx, y + 136);
+      x.fillStyle = "#555"; x.font = "500 20px " + font; x.fillText(cc[1].toUpperCase() + "   RGB " + rgb(cc[1]), cx, y + 166);
+    });
+    y += 230;
+    x.fillStyle = "#111"; x.font = "700 26px " + font; x.fillText("Type", M, y); y += 46;
+    x.font = "500 22px " + font; x.fillStyle = "#333";
+    var fname = { inter: "Inter (free, SIL Open Font License)", serif: "Georgia / Times New Roman (system serif)", mono: "System monospace (Menlo, Consolas)" }[d.font];
+    var wname = { 300: "Light", 400: "Regular", 500: "Medium", 600: "Semibold", 700: "Bold", 800: "Extra bold", 900: "Black" }[d.weight];
+    x.fillText("Name: " + fname + ", " + wname + (d.track ? ", letter spacing " + d.track / 100 + " em" : ""), M, y);
+    if (d.slogan) x.fillText("Slogan: Inter Medium, capitals, letter spacing 0.16 em", M, y + 34);
+    return c;
+  }
+  function pngBlob(c) { return new Promise(function (res) { c.toBlob(res, "image/png"); }); }
+  function square(design, size, bg, pad) {
+    var c = document.createElement("canvas"); c.width = c.height = size;
+    var x = c.getContext("2d");
+    if (bg) { x.fillStyle = bg; x.fillRect(0, 0, size, size); }
+    fitInto(x, design, size * pad, size * pad, size * (1 - 2 * pad), size * (1 - 2 * pad), true);
+    return c;
+  }
+  function kitFiles(d) {
+    var ic = iconOnly(d), base = fileBase(d.name), jobs = [];
+    [16, 32, 48, 180, 192, 512].forEach(function (n) { jobs.push([base + "-icon-" + n + ".png", square(ic, n, null, n <= 48 ? 0 : .04)]); });
+    jobs.push([base + "-avatar-1080.png", square(ic, 1080, d.colors.bg, .16)]);
+    var banner = document.createElement("canvas"); banner.width = 1500; banner.height = 500;
+    var bx = banner.getContext("2d"); bx.fillStyle = d.colors.bg; bx.fillRect(0, 0, 1500, 500); fitInto(bx, d, 250, 110, 1000, 280, true);
+    jobs.push([base + "-banner-1500x500.png", banner]);
+    jobs.push([base + "-logo-2048.png", toCanvas(d, 2048, true)]);
+    jobs.push([base + "-brand-sheet.png", brandSheet(d)]);
+    var enc = new TextEncoder();
+    return Promise.all(jobs.map(function (j) { return pngBlob(j[1]).then(function (b) { return b.arrayBuffer(); }).then(function (ab) { return { name: j[0], data: new Uint8Array(ab) }; }); }))
+      .then(function (files) {
+        files.push({ name: base + "-logo.svg", data: enc.encode(toSvg(d, { transparent: true })) });
+        files.push({ name: base + "-icon.svg", data: enc.encode(toSvg(ic, { transparent: true })) });
+        return files;
+      });
+  }
+  function kitDialog() {
+    var d = st.cur;
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Brand kit" });
+    var prev = h("div", { "class": "lm-kitprev" }); prev.appendChild(brandSheet(d));
+    var sheetBtn = btn("Brand sheet (PNG)", function () { pngBlob(brandSheet(d)).then(function (b) { S3.download(b, fileBase(d.name) + "-brand-sheet.png"); S3.done(); }); }, "", "download");
+    var zipBtn = btn("Everything (ZIP)", function () {
+      zipBtn.disabled = true;
+      kitFiles(d).then(function (files) { S3.download(S3.zip(files), fileBase(d.name) + "-brand-kit.zip"); S3.done(); zipBtn.disabled = false; },
+        function () { S3.toast("Couldn't make the kit", "error"); zipBtn.disabled = false; });
+    }, "primary", "download");
+    var sheet = h("div", { "class": "s3-sheet lm-kit" }, [
+      h("div", { "class": "row between" }, [h("h2", { text: "Brand kit" }), btn("", close, "ghost icon", "x", "Close")]),
+      prev,
+      h("p", { "class": "faint", text: "The ZIP has the logo (SVG + 2048 px PNG), the symbol as SVG and PNG icons (16, 32, 48, 180 for Apple, 192, 512), a 1080 px social avatar, a 1500×500 banner and this brand sheet." }),
+      h("div", { "class": "row end" }, [sheetBtn, zipBtn])
+    ]);
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m); zipBtn.focus();
+  }
+
+  // ---------- keyboard ----------
+  function help() {
+    var keys = [["Ctrl+Z", "Undo (editor)"], ["Ctrl+Shift+Z / Ctrl+Y", "Redo (editor)"], ["M", "More ideas"], ["D", "Download (editor)"], ["?", "Show this help"], ["Esc", "Close a dialog"]];
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Keyboard shortcuts" });
+    var sheet = h("div", { "class": "s3-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: "Keyboard shortcuts" }), btn("", close, "ghost icon", "x", "Close")]),
+      h("div", { "class": "lm-keys" }, keys.map(function (k) { return h("div", { "class": "row" }, [h("kbd", { text: k[0] }), h("span", { "class": "muted", text: k[1] })]); }))]);
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m); sheet.querySelector("button").focus();
+  }
+  document.addEventListener("keydown", function (e) {
+    if ($(".s3-modal")) return;
+    var tag = e.target && e.target.tagName, typing = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+    var editing = st.mode === "edit" && st.cur;
+    if ((e.ctrlKey || e.metaKey) && !e.altKey && editing && !(typing && e.target.type === "text")) {
+      if ((e.key === "z" || e.key === "Z") && !e.shiftKey) { e.preventDefault(); undo(); }
+      else if (((e.key === "z" || e.key === "Z") && e.shiftKey) || e.key === "y" || e.key === "Y") { e.preventDefault(); redo(); }
+      return;
+    }
+    if (typing || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === "?") { e.preventDefault(); help(); }
+    else if ((e.key === "m" || e.key === "M") && !editing && st.form.name) { e.preventDefault(); st.seed++; save(); showIdeas(); }
+    else if ((e.key === "d" || e.key === "D") && editing) { e.preventDefault(); exportDialog(); }
+  });
+
+  // ---------- self-test ----------
+  window.S3_SELFTEST = async function () {
+    try {
+      var ok = true;
+      var bad = cleanDesign({ name: "<script>alert(1)</script>", layout: "x", shape: "y", icon: "nope", weight: 123, colors: { bg: "red", main: "#123456" } });
+      ok = ok && bad.layout === "left" && bad.shape === "none" && bad.icon === "star" && bad.colors.bg === "#ffffff" && bad.colors.main === "#123456" && FONTS.inter.weights.indexOf(bad.weight) >= 0;
+      var svg = toSvg(bad);
+      ok = ok && svg.indexOf("<script") < 0 && svg.indexOf("&lt;script&gt;") > 0 && new DOMParser().parseFromString(svg, "image/svg+xml").getElementsByTagName("parsererror").length === 0;
+      var a = ideas({ name: "Test Co", slogan: "", industry: "tech" }, 5, 24), b = ideas({ name: "Test Co", slogan: "", industry: "tech" }, 5, 24);
+      ok = ok && a.length === 24 && JSON.stringify(a) === JSON.stringify(b);
+      LAYOUTS.forEach(function (l) { var L = layout(cleanDesign({ name: "Ab", slogan: "cd", layout: l[0], shape: "circle" })); ok = ok && L.w > 10 && L.h > 10 && L.items.length > 0; });
+      // every icon draws something
+      var c = document.createElement("canvas"); c.width = c.height = 24; var x = c.getContext("2d", { willReadFrequently: true });
+      Object.keys(ICONS).forEach(function (k) {
+        x.clearRect(0, 0, 24, 24); x.lineWidth = 2; x.stroke(new Path2D(ICONS[k]));
+        var px = x.getImageData(0, 0, 24, 24).data, n = 0; for (var i = 3; i < px.length; i += 4) if (px[i]) n++;
+        if (n < 12) ok = false;
+      });
+      var cv = toCanvas(cleanDesign({ name: "Zed", layout: "icon", shape: "circle", fill: "solid", colors: { bg: "#ffffff", main: "#ff0000" } }), 100, false);
+      var mid = cv.getContext("2d").getImageData(Math.round(cv.width * .25), Math.round(cv.height / 2), 1, 1).data;
+      ok = ok && mid[0] > 200 && mid[1] < 60;
+      ok = ok && onBg(cleanDesign({ colors: { text: "#000000" } }), "#111317").colors.text === "#ffffff";
+      return ok;
+    } catch (e) { return false; }
+  };
 
   function render() {
     if (st.mode === "edit" && st.cur) renderEditor(); else { st.mode = "ideas"; renderIdeas(); }

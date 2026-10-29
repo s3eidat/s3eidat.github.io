@@ -43,3 +43,8 @@
 .lm-pal span { flex: 1; }
 .lm-pal:hover { outline: 2px solid var(--accent); outline-offset: 1px; }
 .lm-color input[type="color"] { width: 100%; }
+.lm-kit { width: min(720px, 100%); }
+.lm-kitprev { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin: 12px 0; max-height: 52vh; overflow-y: auto; background: #fff; }
+.lm-kitprev canvas { display: block; width: 100%; height: auto; }
+.lm-keys { display: grid; gap: 8px; }
+.lm-keys kbd { min-width: 150px; text-align: center; }
