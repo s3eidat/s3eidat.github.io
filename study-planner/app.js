@@ -51,10 +51,72 @@
     danger: "Start over", wipe: "Delete all planner data", wipeQ: "Delete all subjects, classes, exams, tasks and the plan from this browser?", wiped: "All data deleted",
     storeFail: "Couldn't save in this browser. Save a backup file so you don't lose work.",
     exampleLoaded: "Example loaded. Change anything, or delete it in Settings.",
+    wantHint: "Leave empty for auto: per topic 1 session (easy), 1.5 (medium) or 2 (hard), plus a final review.",
+    lang: "العربية", rotation: "Week rotation", rotationOn: "My timetable alternates between week A and week B",
+    thisWeekIs: "This week is", weekA: "Week A", weekB: "Week B", everyWeek: "Every week", thisWeek: "this week",
+    calendar: "Calendar file (.ics)", calendarP: "Add your classes, exams and revision sessions to Google Calendar, Apple Calendar or Outlook: save the file, then import it there.",
+    incClasses: "Classes (repeat weekly until your last exam)", incExams: "Exams", incSessions: "Revision sessions", incTasks: "Task due dates",
+    exportIcs: "Save .ics file", nothingToExport: "Nothing to put in the calendar yet", print: "Print",
+    shortcuts: "Keyboard shortcuts", scTabs: "Switch section", scNew: "New item in this section", scHelp: "Show this help", scClose: "Close a dialog",
+    revise: "Revise", exam: "Exam",
     days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
     daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
   };
-  var AR = {};
+  var AR = {
+    title: "مخطط الدراسة",
+    sub: "جدول المحاضرات والواجبات والامتحانات وخطة مراجعة تُبنى تلقائيًا. محفوظ في هذا المتصفح فقط.",
+    today: "اليوم", week: "الأسبوع", timetable: "الجدول", tasks: "المهام", exams: "الامتحانات", plan: "خطة المراجعة", subjects: "المواد", settings: "الإعدادات",
+    add: "إضافة", save: "حفظ", cancel: "إلغاء", del: "حذف", edit: "تعديل", undo: "تراجع", close: "إغلاق",
+    addSubject: "إضافة مادة", addClass: "إضافة محاضرة", addExam: "إضافة امتحان", addTask: "إضافة مهمة",
+    editSubject: "تعديل المادة", editClass: "تعديل المحاضرة", editExam: "تعديل الامتحان", editTask: "تعديل المهمة",
+    name: "الاسم", color: "اللون", teacher: "المدرّس", room: "القاعة", subject: "المادة", none: "— بدون —",
+    day: "اليوم", start: "تبدأ", end: "تنتهي", kind: "النوع", lecture: "محاضرة", lab: "مختبر", tutorial: "مناقشة", seminar: "سيمينار",
+    date: "التاريخ", time: "الوقت", examTitle: "اسم الامتحان", examTitlePh: "مثل: أول، ثاني، نهائي، كويز 2",
+    topics: "المواضيع المطلوب مراجعتها (موضوع في كل سطر)", topicsPh: "الفصل 1: النهايات\nالفصل 2: الاشتقاق\nأسئلة سنوات سابقة",
+    level: "ما مدى صعوبتها عليك؟", easy: "سهلة", medium: "متوسطة", hard: "صعبة",
+    sessionsWanted: "عدد جلسات المراجعة", auto: "تلقائي",
+    taskTitle: "المطلوب", taskTitlePh: "مثل: حل الواجب 3", due: "موعد التسليم", homework: "واجب", assignment: "تكليف", reading: "قراءة", project: "مشروع", other: "أخرى",
+    notes: "ملاحظات",
+    needName: "اكتب الاسم أولًا", needSubjectFirst: "أضف مادة أولًا، ثم محاضراتك وامتحاناتك.", endBeforeStart: "وقت النهاية قبل وقت البداية",
+    needDate: "اختر التاريخ", saved: "تم الحفظ", deleted: "تم الحذف",
+    welcomeT: "خطّط لفصلك الدراسي في دقائق",
+    welcomeP: "أضف موادك ومحاضراتك الأسبوعية ومواعيد امتحاناتك. المخطط يوزّع جلسات المراجعة على الأيام المتبقية، ويخبرك ماذا تدرس اليوم.",
+    tryExample: "جرّب بمثال", startSubjects: "أضف أول مادة",
+    nextExam: "الامتحان القادم", noExams: "لا امتحانات قادمة", inDays: "بعد {n} أيام", tomorrowL: "غدًا", todayL: "اليوم", daysAgo: "قبل {n} أيام", yesterday: "أمس",
+    classesToday: "محاضرات اليوم", noClassesToday: "لا محاضرات اليوم.",
+    revToday: "راجع اليوم", noRevToday: "لا شيء مخطط لليوم.", focus: "مؤقت التركيز",
+    dueSoon: "قريبة التسليم", nothingDue: "لا شيء مطلوب خلال 7 أيام.", overdue: "متأخرة",
+    sessionsDone: "{d} من {t} جلسات منجزة", openTasks: "مهام مفتوحة", upcomingExams: "الامتحانات القادمة", todaySessions: "جلسات اليوم",
+    noClasses: "لا محاضرات", noClassesYet: "لا محاضرات بعد", noClassesP: "أضف المحاضرات التي لديك كل أسبوع. ستظهر في صفحة اليوم في أيامها.",
+    open: "مفتوحة", done: "منجزة", all: "الكل", noTasks: "لا مهام هنا", noTasksP: "أضف الواجبات والتكاليف والقراءات مع موعد التسليم.",
+    noExamsP: "أضف امتحانًا بتاريخه ومواضيعه، وتُبنى خطة المراجعة منه تلقائيًا.",
+    pastExams: "امتحانات سابقة", examToday: "امتحان اليوم. بالتوفيق!", topicsN: "{n} مواضيع",
+    studyTime: "وقت الدراسة", studyTimeP: "الدقائق التي تستطيع المراجعة فيها كل يوم. الخطة لا تضع أكثر من ذلك في اليوم.",
+    minutes: "د", sessionLen: "مدة الجلسة", replan: "إعادة التخطيط",
+    missed: "جلسات فائتة: {n}. إعادة التخطيط تنقل هذا العمل إلى الأيام القادمة.",
+    short: "{x}: الوقت لا يكفي لـ {n} جلسة إضافية قبل الامتحان. زد وقت الدراسة أو قلّل عدد الجلسات.",
+    noPlan: "لا توجد خطة مراجعة بعد", noPlanP: "أضف امتحانًا بتاريخ قادم وبعض وقت الدراسة، وستظهر الخطة هنا.",
+    finalReview: "مراجعة نهائية", revision: "مراجعة {n}", missedL: "فائتة",
+    noSubjects: "لا مواد بعد", noSubjectsP: "ابدأ بالمواد التي تدرسها هذا الفصل.",
+    classesN: "{n} محاضرات", examsN: "{n} امتحانات", tasksN: "{n} مهام",
+    delSubjectQ: "حذف {x} مع محاضراتها وامتحاناتها ومهامها وجلساتها؟",
+    weekStart: "يبدأ الأسبوع يوم", backup: "نسخة احتياطية", backupP: "مخططك محفوظ في هذا المتصفح. احفظ ملف نسخة احتياطية لنقله إلى جهاز آخر أو للاحتفاظ به.",
+    exportBackup: "حفظ ملف النسخة", importBackup: "فتح ملف نسخة", importQ: "استبدال كل ما في المخطط بهذه النسخة؟",
+    badFile: "هذا ليس ملف نسخة من مخطط الدراسة", imported: "تم تحميل النسخة",
+    danger: "البدء من جديد", wipe: "حذف كل بيانات المخطط", wipeQ: "حذف كل المواد والمحاضرات والامتحانات والمهام والخطة من هذا المتصفح؟", wiped: "تم حذف كل البيانات",
+    storeFail: "تعذّر الحفظ في هذا المتصفح. احفظ ملف نسخة احتياطية حتى لا تفقد عملك.",
+    exampleLoaded: "تم تحميل المثال. عدّل ما تريد، أو احذفه من الإعدادات.",
+    wantHint: "اتركه فارغًا ليُحسب تلقائيًا: لكل موضوع جلسة (سهلة) أو 1.5 (متوسطة) أو 2 (صعبة)، مع مراجعة نهائية.",
+    lang: "English", rotation: "تناوب الأسابيع", rotationOn: "جدولي يتناوب بين أسبوع أ وأسبوع ب",
+    thisWeekIs: "هذا الأسبوع هو", weekA: "أسبوع أ", weekB: "أسبوع ب", everyWeek: "كل أسبوع", thisWeek: "هذا الأسبوع",
+    calendar: "ملف تقويم (.ics)", calendarP: "أضف محاضراتك وامتحاناتك وجلسات المراجعة إلى تقويم Google أو Apple أو Outlook: احفظ الملف ثم استورده هناك.",
+    incClasses: "المحاضرات (تتكرر أسبوعيًا حتى آخر امتحان)", incExams: "الامتحانات", incSessions: "جلسات المراجعة", incTasks: "مواعيد تسليم المهام",
+    exportIcs: "حفظ ملف ‎.ics", nothingToExport: "لا يوجد ما يُضاف إلى التقويم بعد", print: "طباعة",
+    shortcuts: "اختصارات لوحة المفاتيح", scTabs: "التنقل بين الأقسام", scNew: "عنصر جديد في هذا القسم", scHelp: "عرض هذه المساعدة", scClose: "إغلاق النافذة",
+    revise: "مراجعة", exam: "امتحان",
+    days: ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+    daysShort: ["أحد", "إثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت"]
+  };
 
   // ---------- data ----------
   function blank() {
@@ -94,9 +156,10 @@
     if (d.short && typeof d.short === "object") for (var k in d.short) if (+d.short[k] > 0) s.short[str(k, 40)] = Math.round(+d.short[k]);
     return s;
   }
-  var st = clean(S3.store(KEY)) || blank();
+  var st = clean(S3.store(KEY));
+  if (!st) { st = blank(); if (/^ar\b/i.test(navigator.language || "")) { st.lang = "ar"; st.settings.weekStart = 6; } }
   var view = S3.store(KEY + ":view") || "today";
-  var taskFilter = "open";
+  var taskFilter = "open", ttWeek = "";
 
   function save() {
     if (S3.store(KEY, st) === undefined) S3.toast(T("storeFail"), "error");
@@ -255,7 +318,7 @@
   // ---------- modal form ----------
   // fields: [{k, label, type: text|textarea|select|date|time|number|color, options: [[value,label]], ph, req}]
   function form(title, fields, values, onSave, onDelete) {
-    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": title });
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": title, dir: st.lang === "ar" ? "rtl" : "ltr", lang: st.lang });
     var f = h("form", { "class": "s3-sheet sp-form", novalidate: true });
     var inputs = {};
     f.appendChild(h("div", { "class": "row between" }, [h("h2", { text: title }), h("button", { type: "button", "class": "btn ghost icon", "aria-label": T("close"), "data-close": true }, [icon("x")])]));
@@ -370,6 +433,7 @@
         { k: "end", label: T("end"), type: "time" },
         { k: "room", label: T("room"), ph: (subj(c.subject) || {}).room || "" }
       ];
+      if (st.settings.rotation) fields.push({ k: "week", label: T("week"), type: "select", options: [["all", T("everyWeek")], ["A", T("weekA")], ["B", T("weekB")]] });
       form(isNew ? T("addClass") : T("editClass"), fields, c, function (v) {
         if (!TIME_RE.test(v.start) || !TIME_RE.test(v.end)) return T("time") + "?";
         if (v.end <= v.start) return T("endBeforeStart");
@@ -397,7 +461,7 @@
         { k: "room", label: T("room") },
         { k: "level", label: T("level"), type: "select", options: [[1, T("easy")], [2, T("medium")], [3, T("hard")]] },
         { k: "topics", label: T("topics"), type: "textarea", ph: T("topicsPh"), wide: true },
-        { k: "want", label: T("sessionsWanted"), type: "number", min: 0, max: 200, ph: T("auto"), hint: T("auto") + ": " + T("easy").toLowerCase() + " ×1, " + T("medium").toLowerCase() + " ×1.5, " + T("hard").toLowerCase() + " ×2 / topic + 1 " + T("finalReview").toLowerCase() }
+        { k: "want", label: T("sessionsWanted"), type: "number", min: 0, max: 200, ph: T("auto"), hint: T("wantHint"), wide: true }
       ], vals, function (v) {
         if (!DATE_RE.test(v.date)) return T("needDate");
         change(function () {
@@ -491,7 +555,7 @@
       h("div", { "class": "stat" }, [h("b", { text: String(open.length) }), h("span", { text: T("openTasks") })]),
       h("div", { "class": "stat" }, [h("b", { text: String(up.length) }), h("span", { text: T("upcomingExams") })])
     ]);
-    v.appendChild(h("p", { "class": "sp-date", text: fmtDate(t, true) + (st.settings.rotation ? " · " + T("week") + " " + weekLetter(t) : "") }));
+    v.appendChild(h("p", { "class": "sp-date", text: fmtDate(t, true) + (st.settings.rotation ? " · " + T("week" + weekLetter(t)) : "") }));
     v.appendChild(stats);
     if (up.length && up[0].date === t) v.appendChild(h("div", { "class": "sp-banner ok" }, [icon("check"), h("span", { text: examName(up[0]) + " — " + T("examToday") })]));
     var m = missed();
@@ -526,12 +590,18 @@
       btn(T("replan"), function () { change(function () { }, { replan: true, msg: T("saved") }); }, "small", "refresh")]);
   }
   function renderTimetable(v) {
-    var actions = [btn(T("addClass"), function () { editClass(null); }, "primary", "plus")];
+    var actions = [h("div", { "class": "row" }, [btn(T("print"), function () { window.print(); }, "ghost", "file"), btn(T("addClass"), function () { editClass(null); }, "primary", "plus")])];
+    if (st.settings.rotation) {
+      var cur = weekLetter(todayStr());
+      actions.unshift(h("div", { "class": "seg" }, ["A", "B"].map(function (w) {
+        return h("button", { type: "button", "aria-pressed": String(shownWeek() === w), onclick: function () { ttWeek = w; render(); } }, [T("week" + w) + (w === cur ? " · " + T("thisWeek") : "")]);
+      })));
+    }
     v.appendChild(h("div", { "class": "row between sp-bar-row" }, [h("h2", { "class": "sp-h", text: T("timetable") })].concat(actions)));
     if (!st.classes.length) { v.appendChild(empty(T("noClassesYet"), T("noClassesP"), [btn(T("addClass"), function () { editClass(null); }, "primary", "plus")])); return; }
     var t = todayStr(), ws = weekStartOf(t), grid = h("div", { "class": "sp-week" });
     weekOrder().forEach(function (d, i) {
-      var date = addDays(ws, i);
+      var date = addDays(ws, i + (st.settings.rotation && shownWeek() !== weekLetter(t) ? 7 : 0));
       var list = st.classes.filter(function (c) { return c.day === d && (!st.settings.rotation || c.week === "all" || c.week === shownWeek()); }).sort(byTime);
       grid.appendChild(h("div", { "class": "sp-day" + (date === t ? " is-today" : "") }, [
         h("div", { "class": "sp-day-h" }, [h("b", { text: T("days")[d] }), btn("", function () { editClass(null, { day: d }); }, "ghost icon small", "plus")])
@@ -539,7 +609,7 @@
     });
     v.appendChild(grid);
   }
-  function shownWeek() { return weekLetter(todayStr()); }
+  function shownWeek() { return ttWeek || weekLetter(todayStr()); }
   function renderTasks(v) {
     var seg = h("div", { "class": "seg" }, ["open", "done", "all"].map(function (f) {
       return h("button", { type: "button", "aria-pressed": String(taskFilter === f), onclick: function () { taskFilter = f; render(); } }, [T(f)]);
@@ -591,7 +661,7 @@
     len.addEventListener("change", function () { change(function () { set.session = +len.value; }, { replan: true }); });
     v.appendChild(card(T("studyTime"), [h("p", { "class": "muted sp-p", text: T("studyTimeP") }), timeGrid,
       h("label", { "class": "field sp-len" }, [T("sessionLen"), len])],
-      [btn(T("replan"), function () { change(function () { }, { replan: true, msg: T("saved") }); }, "small", "refresh")]));
+      [h("div", { "class": "row" }, [btn(T("print"), function () { window.print(); }, "small ghost", "file"), btn(T("replan"), function () { change(function () { }, { replan: true, msg: T("saved") }); }, "small", "refresh")])]));
 
     var m = missed();
     if (m.length) v.appendChild(missedBanner(m.length));
@@ -627,7 +697,34 @@
     var ws = h("select", { "class": "select", "aria-label": T("weekStart") }, [6, 0, 1].map(function (d) { return h("option", { value: String(d), text: T("days")[d] }); }));
     ws.value = String(st.settings.weekStart);
     ws.addEventListener("change", function () { change(function () { st.settings.weekStart = +ws.value; }); });
-    v.appendChild(card(T("settings"), [h("div", { "class": "sp-fields" }, [h("label", { "class": "field" }, [T("weekStart"), ws])])]));
+    var lang = h("select", { "class": "select", "aria-label": "Language / اللغة" }, [h("option", { value: "en", text: "English" }), h("option", { value: "ar", text: "العربية" })]);
+    lang.value = st.lang;
+    lang.addEventListener("change", function () { change(function () { st.lang = lang.value; }); });
+    v.appendChild(card(T("settings"), [h("div", { "class": "sp-fields" }, [h("label", { "class": "field" }, ["Language / اللغة", lang]), h("label", { "class": "field" }, [T("weekStart"), ws])])]));
+
+    var rot = h("label", { "class": "check" }, [check(st.settings.rotation, function (on) {
+      change(function () { st.settings.rotation = on; if (on && !st.settings.anchor) st.settings.anchor = weekStartOf(todayStr()); });
+    }, T("rotationOn")), T("rotationOn")]);
+    var rk = [rot];
+    if (st.settings.rotation) {
+      var which = h("select", { "class": "select", "aria-label": T("thisWeekIs") }, [h("option", { value: "A", text: T("weekA") }), h("option", { value: "B", text: T("weekB") })]);
+      which.value = weekLetter(todayStr());
+      which.addEventListener("change", function () {
+        change(function () { st.settings.anchor = addDays(weekStartOf(todayStr()), which.value === "A" ? 0 : -7); ttWeek = ""; });
+      });
+      rk.push(h("div", { "class": "sp-fields" }, [h("label", { "class": "field" }, [T("thisWeekIs"), which])]));
+    }
+    v.appendChild(card(T("rotation"), rk));
+
+    var inc = { classes: true, exams: true, sessions: true, tasks: false };
+    v.appendChild(card(T("calendar"), [h("p", { "class": "muted sp-p", text: T("calendarP") }),
+      h("div", { "class": "stack sp-incs" }, ["classes", "exams", "sessions", "tasks"].map(function (k) {
+        var label = T("inc" + k.charAt(0).toUpperCase() + k.slice(1));
+        return h("label", { "class": "check" }, [check(inc[k], function (on) { inc[k] = on; }, label), label]);
+      })),
+      h("div", { "class": "row mt" }, [btn(T("exportIcs"), function () { exportIcs(inc); }, "primary", "download")])]));
+
+    v.appendChild(card(T("shortcuts"), [h("div", { "class": "sp-keys" }, shortcutList())]));
 
     var file = h("input", { type: "file", accept: ".json,application/json", hidden: true });
     file.addEventListener("change", function () { if (file.files[0]) importFile(file.files[0]); file.value = ""; });
@@ -654,6 +751,137 @@
       change(function () { st = d; }, { undo: T("imported") });
     });
   }
+
+
+  // ---------- calendar (.ics) ----------
+  function icsText(x) { return String(x).replace(/\\/g, "\\\\").replace(/;/g, "\;").replace(/,/g, "\\,").replace(/\r?\n/g, "\\n"); }
+  // RFC 5545: lines longer than 75 octets are folded (CRLF + space); never split a UTF-8 character.
+  function fold(line) {
+    var enc = new TextEncoder(), out = "", cur = "", n = 0;
+    Array.from(line).forEach(function (ch) {
+      var b = enc.encode(ch).length;
+      if (n + b > 74) { out += cur + "\r\n "; cur = ""; n = 1; }
+      cur += ch; n += b;
+    });
+    return out + cur;
+  }
+  function icsDate(d) { return d.replace(/-/g, ""); }
+  function icsDT(d, t) { return icsDate(d) + "T" + t.replace(":", "") + "00"; }
+  function plusMinutes(t, m) { var x = +t.slice(0, 2) * 60 + +t.slice(3) + m; x = Math.min(x, 23 * 60 + 59); return pad(Math.floor(x / 60)) + ":" + pad(x % 60); }
+  function buildIcs(inc, today) {
+    today = today || todayStr();
+    var now = new Date(), stamp = now.getUTCFullYear() + pad(now.getUTCMonth() + 1) + pad(now.getUTCDate()) + "T" + pad(now.getUTCHours()) + pad(now.getUTCMinutes()) + pad(now.getUTCSeconds()) + "Z";
+    var ev = [];
+    function add(id, summary, start, end, extra) {
+      ev.push(["BEGIN:VEVENT", "UID:" + id + "@study-planner.s3eidat.github.io", "DTSTAMP:" + stamp].concat(start, end, ["SUMMARY:" + icsText(summary)], extra || [], ["END:VEVENT"]));
+    }
+    var lastExam = st.exams.reduce(function (m, e) { return e.date > m ? e.date : m; }, "");
+    var until = lastExam > today ? lastExam : addDays(today, 16 * 7);
+    if (inc.classes) st.classes.forEach(function (c) {
+      var s = subj(c.subject) || { name: "?" };
+      var first = addDays(today, (c.day - dow(today) + 7) % 7);
+      if (st.settings.rotation && c.week !== "all" && weekLetter(first) !== c.week) first = addDays(first, 7);
+      var rr = "RRULE:FREQ=WEEKLY;" + (st.settings.rotation && c.week !== "all" ? "INTERVAL=2;" : "") + "UNTIL=" + icsDate(until) + "T235959";
+      add(c.id, s.name + " (" + T(c.kind) + ")", ["DTSTART:" + icsDT(first, c.start)], ["DTEND:" + icsDT(first, c.end)],
+        [rr].concat(c.room || s.room ? ["LOCATION:" + icsText(c.room || s.room)] : []));
+    });
+    if (inc.exams) st.exams.forEach(function (e) {
+      var loc = e.room ? ["LOCATION:" + icsText(e.room)] : [], desc = e.topics.length ? ["DESCRIPTION:" + icsText(e.topics.join("\n"))] : [];
+      if (e.time) add(e.id, T("exam") + ": " + examName(e), ["DTSTART:" + icsDT(e.date, e.time)], ["DTEND:" + icsDT(e.date, plusMinutes(e.time, 120))], loc.concat(desc));
+      else add(e.id, T("exam") + ": " + examName(e), ["DTSTART;VALUE=DATE:" + icsDate(e.date)], ["DTEND;VALUE=DATE:" + icsDate(addDays(e.date, 1))], loc.concat(desc));
+    });
+    if (inc.sessions) st.sessions.forEach(function (x) {
+      if (x.done || x.date < today) return;
+      add(x.id, T("revise") + ": " + sessionLabel(x) + " — " + examName(exam(x.exam)) + " (" + x.mins + " " + T("minutes") + ")",
+        ["DTSTART;VALUE=DATE:" + icsDate(x.date)], ["DTEND;VALUE=DATE:" + icsDate(addDays(x.date, 1))], ["TRANSP:TRANSPARENT"]);
+    });
+    if (inc.tasks) st.tasks.forEach(function (t) {
+      if (t.done || !t.due) return;
+      add(t.id, t.title + (subjName(t.subject) ? " — " + subjName(t.subject) : ""), ["DTSTART;VALUE=DATE:" + icsDate(t.due)], ["DTEND;VALUE=DATE:" + icsDate(addDays(t.due, 1))],
+        ["TRANSP:TRANSPARENT"].concat(t.notes ? ["DESCRIPTION:" + icsText(t.notes)] : []));
+    });
+    if (!ev.length) return "";
+    var lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//S3eidat Tools//Study Planner//EN", "CALSCALE:GREGORIAN", "X-WR-CALNAME:" + icsText(T("title"))];
+    ev.forEach(function (e) { lines = lines.concat(e); });
+    lines.push("END:VCALENDAR");
+    return lines.map(fold).join("\r\n") + "\r\n";
+  }
+  function exportIcs(inc) {
+    var txt = buildIcs(inc);
+    if (!txt) return S3.toast(T("nothingToExport"), "error");
+    S3.download(txt, "study-planner-" + todayStr() + ".ics", "text/calendar");
+    S3.done();
+  }
+
+  // ---------- keyboard ----------
+  function shortcutList() {
+    return [["1 – 7", T("scTabs")], ["N", T("scNew")], ["?", T("scHelp")], ["Esc", T("scClose")]].map(function (k) {
+      return h("div", { "class": "row" }, [h("kbd", { text: k[0] }), h("span", { "class": "muted", text: k[1] })]);
+    });
+  }
+  function showHelp() {
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": T("shortcuts"), dir: st.lang === "ar" ? "rtl" : "ltr" });
+    var sheet = h("div", { "class": "s3-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: T("shortcuts") }), h("button", { type: "button", "class": "btn ghost icon", "aria-label": T("close"), "data-close": true }, [icon("x")])]),
+      h("div", { "class": "sp-keys" }, shortcutList())]);
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m || e.target.closest("[data-close]")) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m);
+    sheet.querySelector("button").focus();
+  }
+  function newItem() {
+    ({ today: editTask, tasks: editTask, timetable: editClass, exams: editExam, plan: editExam, subjects: editSubject }[view] || function () {})(null);
+  }
+  document.addEventListener("keydown", function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey || e.defaultPrevented) return;
+    var tg = e.target, tag = tg && tg.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || (tg && tg.isContentEditable) || $(".s3-modal")) return;
+    if (/^[1-7]$/.test(e.key)) { e.preventDefault(); go(VIEWS[+e.key - 1]); }
+    else if (e.key === "n" || e.key === "N") { e.preventDefault(); newItem(); }
+    else if (e.key === "?") { e.preventDefault(); showHelp(); }
+  });
+
+  // ---------- self-test (no side effects: works on a copy and restores the real state) ----------
+  window.S3_SELFTEST = async function () {
+    var real = st, ok = true;
+    function expect(c) { if (!c) ok = false; }
+    try {
+      expect(clean(null) === null && clean({ foo: 1 }) === null && clean({ subjects: [] }).sessions.length === 0);
+      var missing = Object.keys(EN).filter(function (k) { return AR[k] == null; });
+      expect(missing.length === 0);
+      st = clean({ subjects: [{ id: "s1", name: "Math" }], exams: [
+        { id: "e1", subject: "s1", title: "Mid", date: "2026-01-15", time: "09:00", topics: ["A", "B", "C", "D"], level: 2 },
+        { id: "e2", subject: "s1", title: "Quiz", date: "2026-01-09", topics: [], level: 1 }
+      ], settings: { minutes: [60, 60, 60, 60, 60, 0, 60], session: 30, weekStart: 1 } });
+      replan("2026-01-05");
+      var e1 = st.sessions.filter(function (x) { return x.exam === "e1"; }), e2 = st.sessions.filter(function (x) { return x.exam === "e2"; });
+      expect(e1.length === 7 && e2.length === 4);
+      expect(st.sessions.every(function (x) { return x.date >= "2026-01-05" && x.date < exam(x.exam).date; }));
+      var perDay = {}; st.sessions.forEach(function (x) { perDay[x.date] = (perDay[x.date] || 0) + 1; });
+      expect(Object.keys(perDay).every(function (d) { return perDay[d] <= Math.floor(st.settings.minutes[dow(d)] / 30); }));
+      expect(!perDay["2026-01-09"] || perDay["2026-01-09"] === 0); // Friday has 0 minutes
+      expect(e1.filter(function (x) { return x.final; }).length === 1 && e1.filter(function (x) { return x.final; })[0].date === "2026-01-14");
+      expect(e1.some(function (x) { return x.topic === "A"; }) && e1.some(function (x) { return x.topic === "D"; }));
+      // tick two, a week passes: done ones stay, the rest is rebuilt from the new day
+      st.sessions[0].done = true; st.sessions[1].done = true;
+      var keep = [st.sessions[0].id, st.sessions[1].id];
+      replan("2026-01-08");
+      expect(keep.every(function (id) { return st.sessions.some(function (x) { return x.id === id && x.done; }); }));
+      expect(st.sessions.filter(function (x) { return !x.done; }).every(function (x) { return x.date >= "2026-01-08"; }));
+      // A/B weeks alternate; ics is well formed and folded
+      st.settings.anchor = "2026-01-05"; st.settings.rotation = true;
+      expect(weekLetter("2026-01-07") === "A" && weekLetter("2026-01-12") === "B" && weekLetter("2026-01-19") === "A" && weekLetter("2025-12-29") === "B");
+      st.classes = [{ id: "c1", subject: "s1", day: 2, start: "08:30", end: "10:00", kind: "lecture", week: "B", room: "قاعة طويلة جدًا جدًا جدًا جدًا جدًا جدًا جدًا جدًا جدًا جدًا جدًا" }];
+      var ics = buildIcs({ classes: true, exams: true, sessions: true, tasks: true }, "2026-01-05");
+      var enc = new TextEncoder();
+      expect(ics.indexOf("BEGIN:VCALENDAR") === 0 && ics.indexOf("DTSTART:20260113T083000") > 0 && ics.indexOf("INTERVAL=2") > 0);
+      expect(ics.split("\r\n").every(function (l) { return enc.encode(l).length <= 75; }));
+    } catch (err) { ok = false; }
+    st = real;
+    return ok;
+  };
 
   // ---------- example ----------
   function loadExample() {
@@ -701,6 +929,9 @@
     root.setAttribute("lang", st.lang);
     $("#sp-title").textContent = T("title");
     $("#sp-sub").textContent = T("sub");
+    var act = $("#sp-actions"); act.textContent = "";
+    act.appendChild(h("button", { type: "button", "class": "btn ghost small", lang: st.lang === "ar" ? "en" : "ar", onclick: function () { change(function () { st.lang = st.lang === "ar" ? "en" : "ar"; }); } }, [T("lang")]));
+    act.appendChild(h("button", { type: "button", "class": "btn ghost small sp-help", "aria-label": T("shortcuts"), title: T("shortcuts"), onclick: showHelp }, ["?"]));
     var tabs = $("#sp-tabs"); tabs.textContent = "";
     VIEWS.forEach(function (k) {
       tabs.appendChild(h("button", { type: "button", "aria-pressed": String(view === k), "data-view": k, onclick: function () { go(k); } }, [T(k)]));
