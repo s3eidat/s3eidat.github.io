@@ -47,5 +47,12 @@
   "tagline": "Timer, timesheet, billable reports and invoices",
   "category": "Productivity",
   "alt": "Toggl Track"
+ },
+ {
+  "slug": "floor-plan",
+  "name": "Floor Plan",
+  "tagline": "2D floor plans with room areas and PDF to scale",
+  "category": "Design",
+  "alt": "RoomSketcher"
  }
 ]

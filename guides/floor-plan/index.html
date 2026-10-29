@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Free Floor Plan Maker Online, with Room Areas and PDF</title>
+<meta name="description" content="Draw a 2D floor plan free in your browser: walls with lengths, rooms with m² areas, doors, windows and furniture, then export a PDF to scale. No sign-up.">
+<link rel="canonical" href="https://s3eidat.github.io/guides/floor-plan/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<script src="/kit/kit.js"></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type": "Question", "name": "Is this floor plan maker free?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Drawing, room areas, furniture, PNG export and PDF export to scale are all free, with no account and no watermark."}},
+    {"@type": "Question", "name": "How is the room area worked out?", "acceptedAnswer": {"@type": "Answer", "text": "Each room is a shape you draw, and its area is calculated from that shape's corners. Draw rooms along the inside of the walls if you want the usable floor area."}},
+    {"@type": "Question", "name": "Can I print the plan to scale?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Export a PDF, choose A4, A3 or US Letter and a scale such as 1:50 or 1:100 (or let it pick the biggest that fits), then print at 100% or actual size. The page has a scale bar so you can check."}},
+    {"@type": "Question", "name": "Can I use feet instead of metres?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Switch Units to feet in the Plan panel. Lengths show in feet and inches and areas in square feet."}},
+    {"@type": "Question", "name": "Does it do 3D?", "acceptedAnswer": {"@type": "Answer", "text": "No. It is a 2D floor plan tool. It does not make 3D views or photo-like renders."}}
+  ]
+}
+</script>
+</head>
+<body data-more="off">
+<main class="s3-main prose">
+  <h1>Draw a floor plan online for free, with room areas and a PDF to scale</h1>
+  <p>If you need a quick 2D floor plan of a flat, a house or an office, to plan furniture, show a landlord, or check how many square metres a room really is, open <b>Floor Plan</b>. You draw walls and rooms on a grid, it shows every wall's length and every room's area, and you can export a PDF at a real scale. It's a free alternative to RoomSketcher for 2D plans, and nothing you draw is uploaded.</p>
+  <p><a class="btn primary big" href="/floor-plan/">Open Floor Plan</a></p>
+
+  <h2>Step by step</h2>
+  <ol>
+    <li>Open <a href="/floor-plan/">Floor Plan</a>. To see how a finished plan looks first, choose <b>File → Load example flat</b>.</li>
+    <li>Pick <b>Room</b> and drag a rectangle. The room gets walls around it automatically (untick "Add walls around new rooms" to turn that off), a name and its area. For an L-shaped or angled room, click its corners one by one and click the first corner again to close it.</li>
+    <li>Pick <b>Wall</b> to draw single walls: click to start, click at each corner, and double-click or press Enter to finish. Lengths appear as you draw. Walls snap to the grid, to other wall ends and to 15° angles; hold Alt for free drawing.</li>
+    <li>Pick <b>Door</b> or <b>Window</b> and click on a wall. Drag it along the wall to move it; in the panel on the right, set its width, and flip a door's swing or hinge side.</li>
+    <li>Click furniture in the <b>Furniture</b> list (beds, sofa, tables, kitchen, bathroom, desk, stairs and more) and click on the plan to place it. Drag to move, press R to turn it 90°, and drag the corner dot or type a width and depth to resize.</li>
+    <li>Click any wall to type its exact length, or a room to rename it and pick its colour. Drag the dots at the corners to reshape. Ctrl+Z undoes.</li>
+    <li>Press <b>Export</b>. Choose <b>Save PDF</b> with the paper size, orientation and scale, or <b>Save PNG</b> for an image. Use <b>File → Save plan file</b> to keep a copy you can open again later.</li>
+  </ol>
+
+  <h2>Who it helps</h2>
+  <ul>
+    <li><b>People moving house</b> who want to know if the sofa and the double bed will fit before moving day.</li>
+    <li><b>Renters and landlords</b> who need a simple plan with room sizes for a listing or a contract.</li>
+    <li><b>Students</b> in architecture, interior design or engineering who need a quick sketch plan at 1:50 or 1:100.</li>
+    <li><b>Small offices</b> planning desks, and anyone checking how many square metres they are really paying for.</li>
+  </ul>
+
+  <h2>Why it's private</h2>
+  <p>Floor Plan is a static page. Your plan is saved in your browser's storage on your device and is never uploaded. The PNG and PDF are made by your browser, and the page's security policy blocks it from sending data to other websites. It works offline after the first visit.</p>
+
+  <h2>Tips and limits</h2>
+  <ul>
+    <li><b>Areas come from rooms, not walls.</b> A room's area is the shape you drew. Draw it along the inside faces of the walls for usable floor area, or along the centre lines for a rough total.</li>
+    <li><b>Joined walls move together.</b> Dragging a wall's end also moves the ends of walls that meet it there, so corners stay closed.</li>
+    <li><b>Printing to scale:</b> print the PDF at 100% or "actual size", not "fit to page", and check with the scale bar. If the plan doesn't fit at the scale you chose, the export tells you; pick "Biggest that fits".</li>
+    <li><b>Units:</b> metres and square metres, or feet and inches with square feet.</li>
+    <li><b>2D only.</b> No 3D view, and no CAD formats such as DWG or DXF.</li>
+    <li><b>Keyboard:</b> W walls, M rooms, D door, I window, T text, U measure, V select, F fit, ? for the full list.</li>
+  </ul>
+
+  <h2>FAQ</h2>
+  <h3>Is this floor plan maker free?</h3>
+  <p>Yes. Drawing, room areas, furniture, PNG export and PDF export to scale are all free, with no account and no watermark.</p>
+  <h3>How is the room area worked out?</h3>
+  <p>Each room is a shape you draw, and its area is calculated from that shape's corners. Draw rooms along the inside of the walls if you want the usable floor area.</p>
+  <h3>Can I print the plan to scale?</h3>
+  <p>Yes. Export a PDF, choose A4, A3 or US Letter and a scale such as 1:50 or 1:100 (or let it pick the biggest that fits), then print at 100% or actual size. The page has a scale bar so you can check.</p>
+  <h3>Can I use feet instead of metres?</h3>
+  <p>Yes. Switch Units to feet in the Plan panel. Lengths show in feet and inches and areas in square feet.</p>
+  <h3>Does it do 3D?</h3>
+  <p>No. It is a 2D floor plan tool. It does not make 3D views or photo-like renders.</p>
+
+  <h2>Related tools</h2>
+  <ul>
+    <li><a href="/unit-convert/">Unit Convert</a>: switch between metres, feet and other units.</li>
+    <li><a href="/whiteboard/">Whiteboard</a>: sketch ideas freehand first.</li>
+    <li><a href="/pdf-merge/">PDF Merge</a>: put several floor plans into one PDF.</li>
+    <li><a href="/images-to-pdf/">Images to PDF</a>: add photos of the rooms to your plan.</li>
+    <li><a href="/guides/">All guides</a></li>
+  </ul>
+</main>
+</body>
+</html>
