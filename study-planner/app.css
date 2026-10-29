@@ -1,0 +1,101 @@
+/* Study Planner — layout on top of /kit/kit.css */
+.sp-head { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; padding: 22px 0 14px; }
+.sp-head h1 { margin: 0 0 4px; font-size: clamp(24px, 4vw, 32px); letter-spacing: -.025em; line-height: 1.15; }
+.sp-head p { margin: 0; max-width: 620px; }
+.sp-tabs { display: flex; flex-wrap: nowrap; overflow-x: auto; max-width: 100%; scrollbar-width: none; margin-bottom: 16px; }
+.sp-tabs::-webkit-scrollbar { display: none; }
+.sp-tabs button { white-space: nowrap; flex: none; }
+.sp-h { margin: 0; font-size: 18px; letter-spacing: -.01em; }
+.sp-bar-row { margin-bottom: 12px; }
+.sp-card-h { margin-bottom: 10px; }
+.sp-card-h h2, .sp-card-h h3 { margin: 0; font-size: 15px; }
+.sp-p { margin: 0 0 12px; }
+.sp-center { justify-content: center; margin-top: 12px; }
+.sp-date { margin: 0 0 10px; color: var(--text-2); font-weight: 600; }
+.sp-stats { margin-bottom: 14px; }
+.sp-stats .stat b { font-size: 20px; }
+.sp-stats .stat span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sp-today { align-items: start; }
+.sp-welcome h2 { font-size: 20px; }
+.sp-welcome p { max-width: 620px; }
+.sp-ic { display: inline-flex; }
+.sp-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+
+/* rows */
+.sp-item { display: flex; align-items: center; gap: 10px; padding: 9px 2px; border-top: 1px solid var(--line); min-width: 0; }
+.card > .sp-item:first-of-type, .sp-card-h + .sp-item { border-top: 0; }
+.sp-item-main { flex: 1; min-width: 0; display: grid; gap: 1px; text-align: start; }
+.sp-item-main b { font-weight: 600; overflow-wrap: anywhere; }
+.sp-item-main .faint { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+button.sp-item-main:hover b { color: var(--accent); }
+.sp-item.is-done .sp-item-main b { text-decoration: line-through; color: var(--text-3); }
+.sp-item .chip { flex: none; }
+.sp-list { padding: 6px 16px; }
+
+/* classes */
+.sp-class { display: grid; gap: 1px; width: 100%; text-align: start; padding: 8px 10px 8px 12px; margin-top: 6px; border-radius: 10px;
+  background: var(--surface-2); border: 1px solid var(--line); border-inline-start: 4px solid var(--c); }
+.sp-class:hover { border-color: var(--line-strong); border-inline-start-color: var(--c); }
+.sp-class-t { font-size: 12px; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.sp-class b { font-weight: 600; overflow-wrap: anywhere; }
+.sp-week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.sp-day { padding: 10px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line); min-width: 0; }
+.sp-day.is-today { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.sp-day-h { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+.sp-day-h b { font-size: 13px; overflow: hidden; text-overflow: ellipsis; }
+.sp-none { display: block; padding: 6px 0; }
+@media (max-width: 900px) { .sp-week { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .sp-week { grid-template-columns: minmax(0, 1fr); } }
+
+/* exams */
+.sp-exams { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.sp-exam { display: grid; gap: 6px; text-align: start; width: 100%; border-top: 4px solid var(--c); }
+.sp-exam:hover { border-color: var(--line-strong); border-top-color: var(--c); }
+.sp-exam b { font-size: 15px; overflow-wrap: anywhere; }
+.sp-exam-mini { display: flex; align-items: center; gap: 10px; width: 100%; text-align: start; padding: 8px 0; border-top: 1px solid var(--line); }
+.sp-card-h + .sp-exam-mini { border-top: 0; }
+.sp-exam-mini .grow { display: grid; gap: 3px; }
+.sp-exam-mini b { font-weight: 600; overflow-wrap: anywhere; }
+.sp-bar { height: 6px; border-radius: 99px; background: var(--surface-3); overflow: hidden; }
+.sp-bar span { display: block; height: 100%; background: var(--accent); border-radius: 99px; transition: width var(--dur) var(--ease); }
+.sp-warn { color: var(--warn); font-size: 12.5px; }
+.sp-past { margin-top: 18px; }
+.sp-past summary { cursor: pointer; color: var(--text-2); font-weight: 600; margin-bottom: 10px; }
+
+/* plan */
+.sp-time { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.sp-time .input { padding: 8px; text-align: center; }
+@media (max-width: 560px) { .sp-time { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.sp-len { max-width: 220px; margin-top: 12px; }
+.sp-agenda { display: grid; gap: 10px; margin-top: 14px; }
+.sp-agenda-day { padding: 12px 16px; }
+.sp-agenda-day.is-today { border-color: var(--accent); }
+.sp-agenda-day h3 { font-size: 14px; }
+.sp-banner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 14px; margin: 12px 0; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); }
+.sp-banner.warn { border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
+.sp-banner.ok { border-color: color-mix(in srgb, var(--ok) 45%, transparent); color: var(--ok); }
+
+/* subjects */
+.sp-subjects { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.sp-subject { display: grid; gap: 4px; text-align: start; width: 100%; border-inline-start: 5px solid var(--c); }
+.sp-subject:hover { border-color: var(--line-strong); border-inline-start-color: var(--c); }
+.sp-subject b { font-size: 15px; overflow-wrap: anywhere; }
+
+/* form */
+.sp-form { width: min(560px, 100%); }
+.sp-form h2 { margin: 0; }
+.sp-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 14px 0 16px; }
+.sp-fields .sp-wide { grid-column: 1 / -1; }
+@media (max-width: 480px) { .sp-fields { grid-template-columns: minmax(0, 1fr); } }
+.sp-form .textarea { min-height: 110px; }
+.sp-form-foot { gap: 8px; }
+.sp-swatches { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.sp-sw { width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; box-shadow: 0 0 0 1px var(--line-strong) inset; }
+.sp-sw[aria-pressed="true"] { border-color: var(--text); }
+.sp-swatches input[type="color"] { width: 40px; height: 32px; }
+
+@media print {
+  .sp-tabs, .sp-head .row, .sp-bar-row .btn, .sp-day-h .btn, .sp-banner .btn, .sp-card-h .btn { display: none !important; }
+  .sp-week { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+  .card, .sp-day { break-inside: avoid; box-shadow: none; }
+}
