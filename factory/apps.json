@@ -96,5 +96,12 @@
   "tagline": "Build HTML emails from blocks, export free",
   "category": "Design",
   "alt": "Mailchimp"
+ },
+ {
+  "slug": "mind-map",
+  "name": "Mind Map",
+  "tagline": "Keyboard-first mind maps with PNG, PDF export",
+  "category": "Productivity",
+  "alt": "MindMeister"
  }
 ]

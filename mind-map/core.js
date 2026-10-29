@@ -181,9 +181,13 @@
     if (!top) throw new Error("not freemind");
     function firstNode(el) { for (var c = el.firstElementChild; c; c = c.nextElementSibling) if (c.localName === "node") return c; return null; }
     function conv(el, depth) {
-      var text = el.getAttribute("TEXT");
-      if (text == null) { var rc = el.getElementsByTagName("richcontent")[0]; text = rc ? rc.textContent.trim() : ""; }
-      var n = node(String(text).slice(0, 2000));
+      var text = el.getAttribute("TEXT"), note = "";
+      for (var r = el.firstElementChild; r; r = r.nextElementSibling) if (r.localName === "richcontent") {
+        var t = (r.textContent || "").replace(/\s+/g, " ").trim(), ty = (r.getAttribute("TYPE") || "").toUpperCase();
+        if (ty === "NOTE" || ty === "DETAILS") note = note ? note + " " + t : t; else if (text == null) text = t;
+      }
+      var n = node(String(text == null ? "" : text).slice(0, 2000));
+      if (note) n.note = note.slice(0, 5000);
       if (depth === 1) { var pos = el.getAttribute("POSITION"); if (pos === "left") n.side = "l"; else if (pos === "right") n.side = "r"; }
       if (el.getAttribute("FOLDED") === "true") n.col = true;
       if (depth < 40) for (var c = el.firstElementChild; c; c = c.nextElementSibling) if (c.localName === "node") n.children.push(conv(c, depth + 1));

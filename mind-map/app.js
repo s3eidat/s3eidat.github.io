@@ -382,7 +382,7 @@
       opt("Project plan", function () { openMap(M.template("project")); })]);
   }
   function openPop() {
-    var items = [opt("Open a file…", function () { pick(".json,.mm,.md,.markdown,.txt,.opml,application/json,text/plain,text/markdown", openFile); }, ".mindmap.json, .mm, .md, .txt"),
+    var items = [opt("Open a file…", function () { pick(".json,.mm,.md,.markdown,.txt,application/json,text/plain,text/markdown", openFile); }, ".mindmap.json, .mm, .md, .txt"),
       h("div", { "class": "sep" }), h("div", { "class": "hd", text: "Saved in this browser" })];
     list().forEach(function (x) { items.push(opt((x.id === map.id ? "• " : "") + (x.name || "Mind map"), function () { if (x.id !== map.id) { var m = loadMap(x.id); if (m) openMap(m); } }, (x.n || 1) + " topics")); });
     items.push(h("div", { "class": "sep" }), opt("Delete this map…", function () {
