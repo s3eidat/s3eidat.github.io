@@ -616,7 +616,17 @@
       btn("+", function () { zoomAt(1.25, box.getBoundingClientRect().left + W() / 2, box.getBoundingClientRect().top + H() / 2); }, "ghost icon small", "", "Zoom in (+)"),
       btn("Fit", fit, "ghost small", "", "Fit the plan on screen (F)")
     ]));
+    tb.lastChild.appendChild(btn("?", help, "ghost icon small", "", "Keyboard shortcuts (?)"));
     var a = $("#fp-actions");
+    var menu = h("details", { "class": "fp-menu" }, [h("summary", { "class": "btn" }, [icon("file"), "File"])]);
+    var list = h("div", { "class": "fp-menu-list", role: "menu" });
+    [["New plan", newPlan], ["Open plan file…", openPlan], ["Save plan file", savePlan], ["Load example flat", example]].forEach(function (it) {
+      list.appendChild(h("button", { type: "button", role: "menuitem", onclick: function () { menu.open = false; it[1](); } }, [it[0]]));
+    });
+    menu.appendChild(list);
+    menu.addEventListener("toggle", function () { if (!menu.open) return; list.style.left = ""; list.style.right = ""; if (list.getBoundingClientRect().left < 8) { list.style.left = "0"; list.style.right = "auto"; } });
+    document.addEventListener("click", function (e) { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+    a.appendChild(menu);
     a.appendChild(btn("Export", exportDialog, "primary", "download"));
   }
   function syncTools() {
@@ -752,6 +762,84 @@
     document.addEventListener("keydown", onKey);
     document.body.appendChild(m); sheet.querySelector("button").focus();
   }
+
+
+  // ---------- files and example ----------
+  function replacePlan(p, msg) {
+    var before = snapshot();
+    plan = p; sel = null; past.push(before); future = []; saveSoon();
+    $("#fp-name").value = plan.name; setTool("select"); fit();
+    var t = S3.toast(msg + " ");
+    t.appendChild(h("button", { "class": "btn small", type: "button", onclick: function () { undo(); $("#fp-name").value = plan.name; fit(); t.remove(); } }, ["Undo"]));
+  }
+  function newPlan() { replacePlan(blank(), "New plan"); }
+  function savePlan() {
+    S3.download(JSON.stringify(Object.assign({ app: "s3eidat-floor-plan", saved: new Date().toISOString() }, plan)), fileBase() + ".floorplan.json", "application/json");
+    S3.done();
+  }
+  function openPlan() {
+    var inp = h("input", { type: "file", accept: ".json,application/json", hidden: true });
+    inp.addEventListener("change", function () {
+      var f = inp.files[0]; inp.remove(); if (!f) return;
+      S3.readFile(f, "text").then(function (txt) {
+        var d; try { d = clean(JSON.parse(txt)); } catch (e) { d = null; }
+        if (!d) return S3.toast("That isn't a Floor Plan file", "error");
+        replacePlan(d, "Opened " + (d.name || "plan"));
+      });
+    });
+    document.body.appendChild(inp); inp.click();
+  }
+  function example() {
+    var W2 = function (x1, y1, x2, y2, t) { return { id: uid(), x1: x1, y1: y1, x2: x2, y2: y2, t: t }; };
+    var walls = [W2(0, 0, 900, 0, 20), W2(900, 0, 900, 760, 20), W2(900, 760, 0, 760, 20), W2(0, 760, 0, 0, 20),
+      W2(520, 0, 520, 420, 10), W2(520, 260, 900, 260, 10), W2(760, 260, 760, 420, 10), W2(0, 420, 900, 420, 10), W2(450, 420, 450, 760, 10)];
+    function op(kind, wi, t, w, flip, hinge) { return { id: uid(), kind: kind, wall: walls[wi].id, t: t, w: w, flip: !!flip, hinge: !!hinge }; }
+    function f(kind, x, y, rot) { return { id: uid(), kind: kind, x: x, y: y, w: FMAP[kind][2], d: FMAP[kind][3], rot: rot || 0 }; }
+    function room(name, c, pts) { return { id: uid(), name: name, color: c, pts: pts }; }
+    var p = clean({
+      name: "Example flat", unit: plan.unit, walls: walls,
+      rooms: [room("Living room", ROOM_COLORS[0], [[0, 0], [520, 0], [520, 420], [0, 420]]), room("Kitchen", ROOM_COLORS[2], [[520, 0], [900, 0], [900, 260], [520, 260]]),
+        room("Bathroom", ROOM_COLORS[5], [[520, 260], [760, 260], [760, 420], [520, 420]]), room("Hall", ROOM_COLORS[6], [[760, 260], [900, 260], [900, 420], [760, 420]]),
+        room("Bedroom", ROOM_COLORS[1], [[0, 420], [450, 420], [450, 760], [0, 760]]), room("Bedroom 2", ROOM_COLORS[4], [[450, 420], [900, 420], [900, 760], [450, 760]])],
+      items: [op("door", 1, 340 / 760, 90, true), op("door", 7, 300 / 900, 80, true), op("door", 7, 610 / 900, 80, true, true), op("door", 6, .5, 70), op("door", 4, 150 / 420, 90),
+        op("window", 0, 250 / 900, 160), op("window", 0, 700 / 900, 120), op("window", 3, 170 / 760, 140), op("window", 2, 250 / 900, 140), op("window", 2, 680 / 900, 140),
+        f("sofa", 250, 360), f("coffee", 250, 260), f("tv", 250, 40), f("armchair", 90, 250, 90), f("round", 430, 110), f("chair", 430, 50), f("chair", 430, 170, 180),
+        f("counter", 620, 40), f("sink", 720, 40), f("stove", 790, 40), f("fridge", 860, 45), f("toilet", 560, 300), f("basin", 640, 290), f("shower", 712, 372),
+        f("bed2", 225, 650, 180), f("wardrobe", 380, 458), f("nightstand", 120, 728), f("bed1", 840, 650, 180), f("desk", 560, 718, 180), f("office", 560, 660), f("plant", 120, 40)]
+    });
+    replacePlan(p, "Example loaded");
+  }
+
+  // ---------- self-test (on copies; the real plan is put back) ----------
+  window.S3_SELFTEST = async function () {
+    var real = plan, ok = true;
+    function expect(c) { if (!c) ok = false; }
+    try {
+      expect(clean(null) === null && clean({ walls: "x" }) === null);
+      var c = clean({ walls: [{ id: "a", x1: 0, y1: 0, x2: 400, y2: 0, t: 999 }], items: [{ kind: "door", wall: "a", t: 2, w: 80 }, { kind: "door", wall: "gone" }, { kind: "spaceship" }, { kind: "label", x: 0, y: 0, text: "<b>x</b>" }],
+        rooms: [{ pts: [[0, 0], [400, 0], [400, 300], [0, 300]], name: "R" }, { pts: [[0, 0]] }] });
+      expect(c.walls[0].t === 60 && c.items.length === 2 && c.items[0].t === 1 && c.rooms.length === 1);
+      expect(area(c.rooms[0].pts) === 120000 && centroid(c.rooms[0].pts)[0] === 200 && centroid(c.rooms[0].pts)[1] === 150);
+      plan = c;
+      var markup = '<svg xmlns="http://www.w3.org/2000/svg">' + planSvg({ px: 1, dims: true }) + "</svg>";
+      var doc = new DOMParser().parseFromString(markup, "image/svg+xml");
+      expect(!doc.getElementsByTagName("parsererror").length && markup.indexOf("<b>") < 0 && markup.indexOf("12.0 m²") > 0 && markup.indexOf("4.00 m") > 0);
+      plan.unit = "ft"; expect(fmtLen(30.48 * 10) === "10′ 0″" && fmtArea(929.0304 * 50) === "50 ft²"); plan.unit = "m";
+      // snapping: 15° steps and grid lengths from an anchor
+      var sp = snap(103, 52, [0, 0], false);
+      expect(Math.abs(Math.atan2(sp[1], sp[0]) * 180 / Math.PI - 30) < .05 && Math.abs(Math.hypot(sp[0], sp[1]) - 115) < .2);
+      // PDF: one page with a valid cross-reference table
+      var pg = await pdfPage("a4", "landscape", "fit", true);
+      expect(pg.scale === 25 && pg.fits); // 460×360 cm with margins needs 1:25 on A4
+      var small = document.createElement("canvas"); small.width = 40; small.height = 30;
+      var j = await canvasJpeg(small), pdf = new Uint8Array(await buildPdf([{ w: 100, h: 80, px: [40, 30], jpeg: j }]).arrayBuffer()), txt = "";
+      for (var i = 0; i < pdf.length; i++) txt += String.fromCharCode(pdf[i]);
+      var sx = +/startxref\n(\d+)/.exec(txt)[1], xl = txt.slice(sx).split("\n"), cnt = +xl[1].split(" ")[1];
+      for (var k = 1; k < cnt; k++) expect(txt.substr(+xl[2 + k].slice(0, 10), (k + " 0 obj").length) === k + " 0 obj");
+    } catch (err) { ok = false; }
+    plan = real;
+    return ok;
+  };
 
   // ---------- start ----------
   $("#fp-name").value = plan.name;

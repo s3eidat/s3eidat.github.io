@@ -49,3 +49,9 @@
 .fp-h3 { margin: 14px 0 8px; font-size: 14px; }
 .fp-keys { display: grid; gap: 7px; }
 .fp-keys kbd { min-width: 150px; text-align: center; }
+.fp-menu { position: relative; }
+.fp-menu summary { list-style: none; cursor: pointer; }
+.fp-menu summary::-webkit-details-marker { display: none; }
+.fp-menu-list { position: absolute; right: 0; top: calc(100% + 6px); z-index: 40; min-width: 210px; padding: 6px; border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-pop); display: grid; }
+.fp-menu-list button { text-align: start; padding: 8px 10px; border-radius: 8px; font-size: 13.5px; color: var(--text); }
+.fp-menu-list button:hover, .fp-menu-list button:focus-visible { background: var(--surface-2); }
