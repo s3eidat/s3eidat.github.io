@@ -110,5 +110,12 @@
   "tagline": "Handwrite on PDFs and notebooks, export free",
   "category": "PDF & Docs",
   "alt": "GoodNotes"
+ },
+ {
+  "slug": "link-page",
+  "name": "Link Page",
+  "tagline": "Link in bio page you host anywhere, free",
+  "category": "Design",
+  "alt": "Linktree"
  }
 ]
