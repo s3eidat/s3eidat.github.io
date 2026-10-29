@@ -169,7 +169,7 @@
 
   // ---------- preview (shadow DOM keeps the email's styles away from the page) ----------
   var PREVIEW = false;
-  var host = $("#eb-host"), shadow = host.attachShadow ? host.attachShadow({ mode: "open" }) : null, device = "desktop";
+  var host = $("#eb-host"), shadow = host.attachShadow ? host.attachShadow({ mode: "open" }) : null, device = window.innerWidth < 700 ? "mobile" : "desktop";
   function preview() {
     var s = D.settings, root = shadow || host;
     var css = "<style>:host{display:block}*{box-sizing:border-box}img{max-width:100%}table{border-collapse:collapse}a{color:" + s.link + "}" +
@@ -376,6 +376,82 @@
     document.body.appendChild(m); sheet.querySelector(".btn.primary").focus();
   }
 
+
+  // ---------- files, templates, help ----------
+  function replace(d2, msg) {
+    var before = JSON.stringify(D);
+    D = d2; sel = D.blocks[0] ? D.blocks[0].id : null; past.push(before); future = []; save(); renderAll();
+    var t = S3.toast(msg + " "); t.appendChild(h("button", { "class": "btn small", type: "button", onclick: function () { undo(); t.remove(); } }, ["Undo"]));
+  }
+  function saveProject() { S3.download(JSON.stringify(Object.assign({ app: "s3eidat-email-builder", saved: new Date().toISOString() }, D)), fileBase() + ".email.json", "application/json"); S3.done(); }
+  function openProject() {
+    var inp = h("input", { type: "file", accept: ".json,application/json", hidden: true });
+    inp.addEventListener("change", function () {
+      var f = inp.files[0]; inp.remove(); if (!f) return;
+      S3.readFile(f, "text").then(function (txt) { var d; try { d = clean(JSON.parse(txt)); } catch (e) { d = null; } if (!d) return S3.toast("That isn't an Email Builder project", "error"); replace(d, "Opened " + (d.name || "email")); });
+    });
+    document.body.appendChild(inp); inp.click();
+  }
+  function B(t, o) { return Object.assign(newBlock(t), o || {}); }
+  function template(kind) {
+    var d = blank(), st2 = d.settings;
+    if (kind === "newsletter") {
+      d.name = "Monthly newsletter"; st2.pre = "This month: three things worth your time"; st2.bg = "#eef2f6"; st2.link = "#2563eb";
+      d.blocks = [B("heading", { html: "This month at Your Company", size: 30 }), B("text", { html: "<p>Hi there,</p><p>Here is a short round-up of what we worked on, what's coming next, and one thing we think you'll like.</p>" }),
+        B("image", { alt: "Feature picture" }), B("heading", { html: "1. The big news", size: 22 }), B("text", { html: "<p>Describe the most important update in two or three sentences. Say why it matters to the reader.</p>" }),
+        B("button", { label: "Read the full story", bg: "#2563eb" }), B("divider"),
+        B("columns", { cols: [{ src: "", alt: "", html: "<p><b>2. Second story</b><br>A short teaser that makes people click.</p>" }, { src: "", alt: "", html: "<p><b>3. Third story</b><br>Another short teaser with a link.</p>" }] }),
+        B("divider"), B("social", { links: [{ label: "Instagram", url: "" }, { label: "LinkedIn", url: "" }, { label: "Website", url: "" }] }), B("footer")];
+    } else if (kind === "announce") {
+      d.name = "Announcement"; st2.pre = "Something new is here"; st2.bg = "#111827"; st2.content = "#ffffff"; st2.link = "#db2777";
+      d.blocks = [B("spacer", { h: 12 }), B("heading", { html: "Introducing something new", size: 34, align: "center" }), B("text", { html: "<p>One sentence that explains what it is and who it is for.</p>", size: 18, align: "center" }),
+        B("image", { alt: "Product picture" }), B("button", { label: "See it now", bg: "#db2777", align: "center" }), B("text", { html: "<p>Questions? Just reply to this email.</p>", size: 14, align: "center" }), B("footer")];
+    } else if (kind === "event") {
+      d.name = "Event invitation"; st2.pre = "You're invited"; st2.bg = "#f4f1ea"; st2.link = "#b45309"; st2.font = "georgia";
+      d.blocks = [B("heading", { html: "You're invited", size: 34, align: "center" }), B("text", { html: "<p>Join us for an evening of talks, food and good company.</p>", size: 18, align: "center" }), B("divider", { color: "#e2d8c3" }),
+        B("text", { html: "<p><b>When:</b> Thursday, 20 November, 7:00 pm<br><b>Where:</b> Venue name, Street, City<br><b>Dress code:</b> Smart casual</p>", align: "center" }),
+        B("button", { label: "RSVP", bg: "#b45309", align: "center" }), B("text", { html: "<p>Please let us know by 15 November.</p>", size: 14, align: "center" }), B("footer")];
+    } else {
+      d.name = "Welcome email"; st2.pre = "Thanks for joining. Here's how to get started"; st2.link = "#0e7490";
+      d.blocks = [B("heading", { html: "Welcome aboard!", size: 30 }), B("text", { html: "<p>Thanks for signing up. Here are three quick ways to get the most out of it:</p><p><b>1.</b> Set up your profile.<br><b>2.</b> Try your first project.<br><b>3.</b> Invite a friend.</p>" }),
+        B("button", { label: "Get started" }), B("text", { html: "<p>If you have any questions, just reply. A real person reads every message.</p>" }), B("footer")];
+    }
+    replace(clean(d), "Template loaded");
+  }
+  function help() {
+    var keys = [["↑ ↓", "Select the block above / below"], ["Del", "Delete the selected block"], ["Ctrl+B / Ctrl+I", "Bold / italic in text"], ["Ctrl+K", "Add a link in text"], ["Ctrl+Z / Ctrl+Shift+Z", "Undo / redo"], ["?", "Show this help"]];
+    var m = h("div", { "class": "s3-modal", role: "dialog", "aria-modal": "true", "aria-label": "Keyboard shortcuts" });
+    var sheet = h("div", { "class": "s3-sheet" }, [h("div", { "class": "row between" }, [h("h2", { text: "Keyboard shortcuts" }), btn("", close, "ghost icon", "x", "Close")]),
+      h("div", { "class": "eb-keys" }, keys.map(function (k) { return h("div", { "class": "row" }, [h("kbd", { text: k[0] }), h("span", { "class": "muted", text: k[1] })]); }))]);
+    m.appendChild(sheet);
+    function close() { m.remove(); document.removeEventListener("keydown", onKey); }
+    function onKey(e) { if (e.key === "Escape") close(); }
+    m.addEventListener("click", function (e) { if (e.target === m) close(); });
+    document.addEventListener("keydown", onKey);
+    document.body.appendChild(m); sheet.querySelector("button").focus();
+  }
+
+  // ---------- self-test (works on a copy; the real email is put back) ----------
+  window.S3_SELFTEST = async function () {
+    var real = D, ok = true;
+    function expect(c) { if (!c) ok = false; }
+    try {
+      expect(sanitize('<p onclick="x()">Hi <b>there</b><script>alert(1)</script><img src=x onerror=y><a href="javascript:alert(1)">bad</a> <a href="https://a.com">ok</a></p>') === '<p>Hi <b>there</b>bad <a href="https://a.com">ok</a></p>');
+      expect(sanitize("<div>a</div><strong>b</strong><em>c</em>&lt;tag&gt;") === "<p>a</p><b>b</b><i>c</i>&lt;tag&gt;");
+      expect(safeUrl("example.com/x") === "https://example.com/x" && safeUrl("javascript:alert(1)") === "" && safeUrl("mailto:a@b.c") === "mailto:a@b.c");
+      var c = clean({ blocks: [{ t: "image", src: "javascript:x" }, { t: "nope" }, { t: "button", url: "data:text/html,x", bg: "red" }], settings: { width: 9999, font: "comic" } });
+      expect(c.blocks.length === 2 && c.blocks[0].src === "" && c.blocks[1].url === "https://" && c.blocks[1].bg === "#0e7490" && c.settings.width === 760 && c.settings.font === "arial");
+      D = clean({ name: "T <x>", settings: { dir: "rtl", pre: "Pre & co" }, blocks: [{ t: "heading", html: "Hi", align: "left" }, { t: "image", src: "" }, { t: "button", label: "Go", url: "https://a.com" }, { t: "social", links: [] }] });
+      var html = emailHtml();
+      expect(/^<!doctype html>/.test(html) && html.indexOf("<title>T &lt;x&gt;</title>") > 0 && html.indexOf("Pre &amp; co") > 0 && html.indexOf('dir="rtl"') > 0);
+      expect(html.indexOf("text-align:right") > 0 && html.indexOf("add a picture") < 0 && html.indexOf("Social links") < 0 && html.indexOf('href="https://a.com"') > 0);
+      expect(new DOMParser().parseFromString(html, "text/html").querySelectorAll("table").length >= 3);
+      expect(plainText().indexOf("HI") === 0 && plainText().indexOf("Go: https://a.com") > 0);
+    } catch (e) { ok = false; }
+    D = real;
+    return ok;
+  };
+
   // ---------- page ----------
   function stats() { var kb = Math.round(emailHtml().length / 102.4) / 10; $("#eb-stats").textContent = D.blocks.length + " blocks · " + kb + " KB of HTML · nothing is uploaded"; }
   function pbar() {
@@ -390,6 +466,19 @@
     var a = $("#eb-actions");
     a.appendChild(btn("", undo, "ghost icon", "", "Undo (Ctrl+Z)")); a.lastChild.textContent = "↶";
     a.appendChild(btn("", redo, "ghost icon", "", "Redo (Ctrl+Shift+Z)")); a.lastChild.textContent = "↷";
+    a.appendChild(btn("?", help, "ghost icon", "", "Keyboard shortcuts (?)"));
+    var menu = h("details", { "class": "eb-menu" }, [h("summary", { "class": "btn" }, [icon("file"), "File"])]);
+    var list = h("div", { "class": "eb-menu-list", role: "menu" });
+    [["New blank email", function () { replace(blank(), "New email"); }], ["Open project file…", openProject], ["Save project file", saveProject], null,
+     ["Template: Newsletter", function () { template("newsletter"); }], ["Template: Announcement", function () { template("announce"); }],
+     ["Template: Event invitation", function () { template("event"); }], ["Template: Welcome email", function () { template("welcome"); }]].forEach(function (it) {
+      if (!it) return list.appendChild(h("hr"));
+      list.appendChild(h("button", { type: "button", role: "menuitem", onclick: function () { menu.open = false; it[1](); } }, [it[0]]));
+    });
+    menu.appendChild(list);
+    menu.addEventListener("toggle", function () { if (!menu.open) return; list.style.left = ""; list.style.right = ""; if (list.getBoundingClientRect().left < 8) { list.style.left = "0"; list.style.right = "auto"; } });
+    document.addEventListener("click", function (e) { if (menu.open && !menu.contains(e.target)) menu.open = false; });
+    a.appendChild(menu);
     a.appendChild(btn("Export", exportDialog, "primary", "download"));
   }
   $("#eb-name").addEventListener("input", function (e) { D.name = e.target.value.slice(0, 100); save(); });
@@ -406,6 +495,7 @@
     if (e.key === "ArrowDown" && i < D.blocks.length - 1) { e.preventDefault(); sel = D.blocks[i + 1].id; preview(); layers(); inspector(); scrollToSel(); }
     else if (e.key === "ArrowUp" && i > 0) { e.preventDefault(); sel = D.blocks[i - 1].id; preview(); layers(); inspector(); scrollToSel(); }
     else if ((e.key === "Delete" || e.key === "Backspace") && i >= 0) { e.preventDefault(); var del = $("#eb-right .eb-del"); if (del) del.click(); }
+    else if (e.key === "?") help();
   });
   actions();
   renderAll();
