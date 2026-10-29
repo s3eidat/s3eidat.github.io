@@ -218,7 +218,7 @@
   function btnCss(t) {
     var b = t.btn, r = b.shape === "pill" ? "999px" : b.shape === "square" ? "4px" : "14px", s = "border-radius:" + r + ";";
     if (b.style === "outline") s += "background:transparent;color:" + b.fg + ";border:2px solid " + b.bg;
-    else if (b.style === "soft") s += "background:" + rgba(b.bg, 0.16) + ";color:" + b.fg + ";border:2px solid " + rgba(b.bg, 0.1);
+    else if (b.style === "soft") s += "background:" + rgba(b.bg, 0.16) + ";color:" + b.fg + ";border:2px solid " + rgba(b.bg, 0.1) + ";-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)";
     else if (b.style === "hard") s += "background:" + b.bg + ";color:" + b.fg + ";border:2px solid " + t.text + ";box-shadow:4px 4px 0 " + t.text;
     else s += "background:" + b.bg + ";color:" + b.fg + ";border:2px solid " + b.bg;
     return s;

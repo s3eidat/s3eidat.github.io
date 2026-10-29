@@ -1,7 +1,9 @@
 # Link Page — TODO
 
-Core done: profile (photo, name, bio), links/headers/text with drag reorder, icons, highlight, hide; paste links;
-social icons; 12 themes + custom background/buttons/font; live phone preview (exactly the export); one-file HTML
-export with no scripts; QR code (own encoder, decoded with jsQR in tests); hosting steps; pages in the browser,
-templates, save/open file, undo/redo.
-For `full`: dark/light app UI check, keyboard pass, image background end to end, larger pages, final Playwright pass.
+Full: everything checked at 1280px and 390px (touch drag, Preview tab), light and dark app UI, Arabic/RTL pages,
+image backgrounds with darkening, contact-link helper (WhatsApp with message, email, call, SMS), keyboard
+shortcuts, undo/redo, several pages with images in storage, hostile project files, QR decoded with jsQR.
+
+Later ideas (not promised anywhere):
+- Save-contact (vCard) button, link thumbnails.
+- Scheduled links (would need a script in the exported page).

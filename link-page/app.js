@@ -222,7 +222,8 @@
   }
   function blockMenu(anchor, b, i) {
     var items = [];
-    if (b.type === "link") items.push(opt(b.feat ? "Stop highlighting" : "Highlight this link", function () { edit(function () { b.feat = !b.feat; }); }, "stands out"));
+    if (b.type === "link") items.push(opt(b.feat ? "Stop highlighting" : "Highlight this link", function () { edit(function () { b.feat = !b.feat; }); }, "stands out"),
+      opt("Make it a WhatsApp, email or call link…", function () { contactSheet(b); }));
     items.push(opt("Move up", function () { moveBlock(i, -1); }, "Alt+↑"), opt("Move down", function () { moveBlock(i, 1); }, "Alt+↓"),
       opt("Duplicate", function () { var c = L.block(b.type, b); edit(function () { page.blocks.splice(i + 1, 0, c); }); }),
       opt("Add a link below", function () { addBlock("link", i + 1); }),
@@ -236,6 +237,33 @@
     var own = h("input", { "class": "input", maxlength: "16", placeholder: "Or type / paste an emoji", "aria-label": "Your own emoji", style: "min-height:34px;padding:4px 10px" });
     own.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); var v = own.value.trim(); closePop(); edit(function () { b.emoji = v; }); } });
     pop(anchor, [h("div", { "class": "hd", text: "Icon" }), grid, own, b.emoji ? opt("No icon", function () { edit(function () { b.emoji = ""; }); }) : null].filter(Boolean));
+  }
+  // Builds wa.me / mailto: / tel: / sms: addresses so people don't have to know the formats.
+  function contactSheet(b) {
+    var kind = "whatsapp";
+    var val = h("input", { "class": "input", dir: "ltr", maxlength: "200", "aria-label": "Number or email", autocomplete: "off" });
+    var msg = h("textarea", { "class": "textarea", rows: "2", maxlength: "500", dir: "auto", "aria-label": "Message", placeholder: "Hi! I'd like to order…", style: "min-height:0;font-family:var(--font);font-size:14px" });
+    var msgField = field("Ready-made message (optional)", msg), hint = h("p", { "class": "faint", style: "margin:0;font-size:12.5px" });
+    function sync() {
+      var em = kind === "email";
+      val.placeholder = em ? "you@example.com" : "+962 79 123 4567";
+      val.type = em ? "email" : "tel";
+      msgField.hidden = kind === "phone";
+      hint.textContent = kind === "whatsapp" ? "Use the full number with the country code, for example 962 for Jordan." : kind === "email" ? "Opens the visitor's email app." : kind === "sms" ? "Opens the text messages app on phones." : "Starts a call on phones.";
+    }
+    var kinds = seg([["whatsapp", "WhatsApp"], ["email", "Email"], ["phone", "Call"], ["sms", "Text message"]], kind, function (v) { kind = v; sync(); }, "Link type");
+    sync();
+    sheet("Contact link", h("div", { style: "display:grid;gap:12px" }, [kinds, field(kind === "email" ? "Email" : "Number or email", val), hint, msgField]), [
+      { label: "Cancel", cls: "ghost", run: function () {} },
+      { label: "Use this", cls: "primary", run: function () {
+        var v = val.value.trim(), m = msg.value.trim(), url = "", digits = v.replace(/\D/g, "").replace(/^00/, "");
+        if (kind === "whatsapp" && digits.length >= 6) url = "https://wa.me/" + digits + (m ? "?text=" + encodeURIComponent(m) : "");
+        else if (kind === "email" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) url = "mailto:" + v + (m ? "?body=" + encodeURIComponent(m) : "");
+        else if (kind === "phone" && digits.length >= 3) url = "tel:" + (v.charAt(0) === "+" ? "+" : "") + v.replace(/\D/g, "");
+        else if (kind === "sms" && digits.length >= 3) url = "sms:" + (v.charAt(0) === "+" ? "+" : "") + v.replace(/\D/g, "") + (m ? "?body=" + encodeURIComponent(m) : "");
+        if (!url) { S3.toast(kind === "email" ? "Check the email address" : "Check the number", "error"); val.focus(); return false; }
+        edit(function () { b.url = url; if (!b.title.trim()) b.title = kind === "whatsapp" ? "Message me on WhatsApp" : kind === "email" ? "Email me" : kind === "sms" ? "Text me" : "Call me"; if (!b.emoji) b.emoji = kind === "email" ? "✉️" : kind === "phone" ? "📞" : "💬"; });
+      } }]);
   }
   function pasteSheet() {
     var ta = h("textarea", { "class": "textarea", rows: "8", dir: "auto", placeholder: "One link per line, for example:\nMy shop | myshop.com\nYouTube - https://youtube.com/@me\nhttps://example.com/blog", "aria-label": "Links to add" });
