@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' data: blob:; connect-src 'self' data: blob:; worker-src 'self' blob:; manifest-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Storyboard — free storyboard maker with animatic and PDF export | S3eidat Tools</title>
+<meta name="description" content="Free storyboard maker: sketch or drop images into frames, add shot type, action and dialogue, play an animatic and export a PDF. No sign-up, no uploads.">
+<link rel="canonical" href="https://s3eidat.github.io/storyboard/">
+<link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/kit/kit.css">
+<link rel="stylesheet" href="/hub.css">
+<link rel="stylesheet" href="app.css">
+<script src="/kit/kit.js"></script>
+</head>
+<body data-tool="storyboard">
+<main class="s3-main sb" id="sb">
+  <div class="sb-head">
+    <div class="grow sb-titlebox">
+      <label class="sr" for="sb-title">Storyboard title</label>
+      <input id="sb-title" class="sb-title" type="text" maxlength="120" placeholder="Untitled storyboard" dir="auto" autocomplete="off">
+      <p class="faint" id="sb-stats"></p>
+    </div>
+    <div class="row sb-tools" id="sb-tools"></div>
+  </div>
+  <section id="sb-grid" class="sb-grid" aria-label="Frames"></section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
