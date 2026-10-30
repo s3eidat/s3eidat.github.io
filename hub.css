@@ -79,3 +79,9 @@
 .hub-ad-copy h2 { margin: 0; font-size: clamp(24px, 3.4vw, 34px); font-weight: 750; letter-spacing: -.03em; line-height: 1.1; }
 .hub-ad-copy p { margin: 0; color: var(--text-2); }
 @media (max-width: 680px) { .hub-ad { grid-template-columns: 1fr; padding: 18px; gap: 18px; } .hub-ad-video { max-width: 320px; margin: 0 auto; } .hub-ad-copy { justify-items: center; text-align: center; } }
+.hub-ai { display: flex; gap: 20px; align-items: center; justify-content: space-between; margin-top: 32px; border-color: var(--accent); }
+.hub-ai h2 { margin: 10px 0 6px; font-size: 20px; }
+.hub-ai p { margin: 0 0 12px; }
+.hub-ai-cmd { display: inline-block; font: 14px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; padding: 8px 12px; border-radius: 10px; background: var(--surface-2, rgba(127,127,127,.12)); user-select: all; }
+.hub-ai-links { display: flex; flex-direction: column; gap: 8px; flex: none; }
+@media (max-width: 760px) { .hub-ai { flex-direction: column; align-items: stretch; } .hub-ai-links { flex-direction: row; flex-wrap: wrap; } }
