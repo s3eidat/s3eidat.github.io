@@ -85,3 +85,9 @@
 .hub-ai-cmd { display: inline-block; font: 14px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; padding: 8px 12px; border-radius: 10px; background: var(--surface-2, rgba(127,127,127,.12)); user-select: all; }
 .hub-ai-links { display: flex; flex-direction: column; gap: 8px; flex: none; }
 @media (max-width: 760px) { .hub-ai { flex-direction: column; align-items: stretch; } .hub-ai-links { flex-direction: row; flex-wrap: wrap; } }
+.hub-app { display: flex; gap: 20px; align-items: center; justify-content: space-between; margin-top: 24px; border-color: var(--accent); }
+.hub-app h2 { margin: 10px 0 6px; font-size: 20px; }
+.hub-app p { margin: 0 0 10px; }
+.hub-app-soon { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; }
+.hub-app-links { display: flex; flex-direction: column; align-items: stretch; gap: 8px; flex: none; }
+@media (max-width: 760px) { .hub-app { flex-direction: column; align-items: stretch; } }
