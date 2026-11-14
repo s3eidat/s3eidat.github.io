@@ -182,4 +182,5 @@
   <url><loc>https://s3eidat.github.io/xml-format/</loc></url>
   <url><loc>https://s3eidat.github.io/yaml-json/</loc></url>
   <url><loc>https://s3eidat.github.io/zakat-calc/</loc></url>
+  <url><loc>https://s3eidat.github.io/templates/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
