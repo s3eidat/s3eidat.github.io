@@ -327,3 +327,6 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 /* header link to s3eidatGPT (the owner's AI app) */
 .s3-top .s3-gpt { gap: 7px; }
 .s3-top .s3-gpt img { width: 18px; height: 18px; display: block; }
+
+/* CineSites nav link is text-only: hide it where nav labels collapse */
+@media (max-width: 560px) { .s3-top .s3-web { display: none; } }

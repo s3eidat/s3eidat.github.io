@@ -5,74 +5,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<title>Cinematic Website Templates for Garages &amp; Roofers — S3eidat</title>
-<meta name="description" content="Scroll-animated, video-background website templates for garages, MOT centres and roofing companies. One HTML file, edit in 5 minutes, host anywhere. From $29.">
-<meta property="og:title" content="Cinematic website templates for local trades">
-<meta property="og:description" content="Video-background, scroll-animated one-page sites for garages and roofers. One HTML file. From $29.">
-<meta property="og:image" content="https://s3eidat.github.io/templates/garage.jpg">
+<title>CineSites: Cinematic Websites for Local Businesses (Templates from $29)</title>
+<meta name="description" content="CineSites: scroll-animated, video-background websites for plumbers, cleaners, barbers, garages and roofers. Download a template from $29, or get yours built and live in 48 hours for $199.">
+<meta property="og:title" content="CineSites: cinematic websites for local businesses">
+<meta property="og:description" content="Video-background, scroll-animated one-page sites for plumbers, cleaners, barbers, garages and roofers. Templates from $29, done-for-you in 48 hours.">
+<meta property="og:image" content="https://s3eidat.github.io/templates/barber.jpg">
+<meta name="theme-color" content="#0b0d10">
 <link rel="icon" href="/kit/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/kit/kit.css">
 <link rel="stylesheet" href="/hub.css">
 <script src="/kit/kit.js"></script>
 <style>
-.tp-hero{padding:44px 0 10px;text-align:center;display:grid;justify-items:center;gap:12px}
-.tp-hero h1{margin:0;font-size:clamp(30px,5vw,48px);letter-spacing:-.03em;max-width:820px}
-.tp-hero p{margin:0;color:var(--text-2);max-width:620px;font-size:17px}
-.tp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;margin:28px 0}
+.tp-hero{padding:44px 0 6px;text-align:center;display:grid;justify-items:center;gap:12px}
+.tp-badge{font:600 12px/1 ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--text-2)}
+.tp-hero h1{margin:0;font-size:clamp(32px,5.4vw,56px);letter-spacing:-.035em;max-width:860px;line-height:1.02}
+.tp-hero p{margin:0;color:var(--text-2);max-width:640px;font-size:17px}
+.dfy{display:grid;grid-template-columns:1.2fr 1fr;gap:22px;align-items:center;padding:26px;margin:26px 0 8px;border-radius:22px;background:linear-gradient(135deg,rgba(201,161,90,.16),rgba(46,155,255,.10)),var(--surface);border:1px solid rgba(201,161,90,.45)}
+.dfy h2{margin:0 0 8px;font-size:clamp(22px,3vw,30px);letter-spacing:-.02em}
+.dfy ul{margin:10px 0 0;padding-left:18px;color:var(--text-2)}
+.dfy .tp-row{justify-content:flex-end}
+.dfy .tp-price{font-size:34px}
+@media (max-width:720px){.dfy{grid-template-columns:1fr}.dfy .tp-row{justify-content:flex-start}}
+.tp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin:22px 0}
 .tp-card{display:grid;gap:12px;align-content:start}
-.tp-card img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:14px;border:1px solid var(--line, #2a2a2a);display:block}
+.tp-card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;border-radius:14px;border:1px solid var(--line, #2a2a2a);display:block;transition:transform .35s}
+.tp-card a:hover img{transform:scale(1.015)}
 .tp-card h2{margin:0;font-size:21px}
 .tp-card p{margin:0;color:var(--text-2)}
 .tp-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .tp-price{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-right:auto}
+.tp-bundles{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
 .tp-bundle{text-align:center;padding:26px}
 .tp-bundle .tp-row{justify-content:center}
 .tp-feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:26px 0}
 .tp-feat .card h3{margin:0 0 6px;font-size:16px}
 .tp-feat .card p{margin:0;color:var(--text-2);font-size:14px}
 .tp-soon{opacity:.6;pointer-events:none}
+.tp-faq h3{margin:16px 0 4px;font-size:16px}.tp-faq p{margin:0;color:var(--text-2)}
 </style>
 </head>
 <body data-more="off">
 <main class="s3-main">
   <section class="tp-hero">
-    <h1>Cinematic websites for garages &amp; roofers</h1>
-    <p>Full-screen video, scroll animations and a live "test readout" that makes a local business look like a big brand. One HTML file: change the name and phone number, upload, done.</p>
+    <span class="tp-badge">CineSites · by S3eidat</span>
+    <h1>Websites that feel like a movie trailer, for local businesses</h1>
+    <p>Full-screen video that plays as you scroll, live "job readouts", a sideways how-it-works reel and a giant call-to-action. Looks like a big agency built it. One HTML file you can host anywhere.</p>
   </section>
 
-  <section class="tp-grid">
+  <section class="dfy" aria-label="Done-for-you website">
+    <div>
+      <h2>Don't want to touch code? We build it for you.</h2>
+      <p class="muted" style="margin:0">Your business name, services, prices, phone and map in a CineSite, live within 48 hours.</p>
+      <ul><li>Pick any style below</li><li>Preview link within 48 hours, one round of changes included</li><li>You own the files, host them anywhere</li></ul>
+    </div>
+    <div class="tp-row"><span class="tp-price">$199</span><a class="btn buy" data-product="dfy" href="#">Get My Website Built</a></div>
+  </section>
+
+  <section class="tp-grid" aria-label="Templates">
+    <article class="card tp-card">
+      <a href="/templates/preview/plumber/" target="_blank" rel="noopener"><img src="/templates/plumber.jpg" alt="Plumbing website template preview" width="1280" height="800" loading="lazy"></a>
+      <h2>Plumbing &amp; Heating</h2>
+      <p>Pipework film, a live leak-test readout, upfront price cards and a pinned how-it-works reel.</p>
+      <div class="tp-row"><span class="tp-price">$29</span><a class="btn ghost" href="/templates/preview/plumber/" target="_blank" rel="noopener">Live Preview</a><a class="btn buy" data-product="plumber" href="#">Buy Now</a></div>
+    </article>
+    <article class="card tp-card">
+      <a href="/templates/preview/cleaning/" target="_blank" rel="noopener"><img src="/templates/cleaning.jpg" alt="Cleaning company website template preview" width="1280" height="800" loading="lazy"></a>
+      <h2>Cleaning Company</h2>
+      <p>Fresh, bright design with a "clean report" readout, simple pricing and a re-clean guarantee.</p>
+      <div class="tp-row"><span class="tp-price">$29</span><a class="btn ghost" href="/templates/preview/cleaning/" target="_blank" rel="noopener">Live Preview</a><a class="btn buy" data-product="cleaning" href="#">Buy Now</a></div>
+    </article>
+    <article class="card tp-card">
+      <a href="/templates/preview/barber/" target="_blank" rel="noopener"><img src="/templates/barber.jpg" alt="Barber shop website template preview" width="1280" height="800" loading="lazy"></a>
+      <h2>Barber Shop</h2>
+      <p>Black and gold, serif type, a fade-in-progress readout, a price menu and opening hours.</p>
+      <div class="tp-row"><span class="tp-price">$29</span><a class="btn ghost" href="/templates/preview/barber/" target="_blank" rel="noopener">Live Preview</a><a class="btn buy" data-product="barber" href="#">Buy Now</a></div>
+    </article>
     <article class="card tp-card">
       <a href="/templates/preview/garage/" target="_blank" rel="noopener"><img src="/templates/garage.jpg" alt="Garage and MOT website template preview" width="1280" height="800" loading="lazy"></a>
       <h2>Garage &amp; MOT</h2>
-      <p>Workshop film that plays as you scroll, a live MOT readout, a self-ticking checklist, number-plate booking, a sideways "how it works" reel, drifting reviews and a giant call-to-action finale.</p>
-      <div class="tp-row"><span class="tp-price">$29</span>
-        <a class="btn ghost" href="/templates/preview/garage/" target="_blank" rel="noopener">Live Preview</a>
-        <a class="btn buy" data-product="garage" href="#">Buy Now</a></div>
+      <p>Workshop film, a live MOT readout, self-ticking checklist and number-plate booking box.</p>
+      <div class="tp-row"><span class="tp-price">$29</span><a class="btn ghost" href="/templates/preview/garage/" target="_blank" rel="noopener">Live Preview</a><a class="btn buy" data-product="garage" href="#">Buy Now</a></div>
     </article>
     <article class="card tp-card">
       <a href="/templates/preview/roofer/" target="_blank" rel="noopener"><img src="/templates/roofer.jpg" alt="Roofing company website template preview" width="1280" height="800" loading="lazy"></a>
       <h2>Roofing</h2>
-      <p>Drone film of rooftops, a live roof-survey readout, an iris reveal, a sideways "how it works" reel, drifting reviews and a giant free-quote finale.</p>
-      <div class="tp-row"><span class="tp-price">$29</span>
-        <a class="btn ghost" href="/templates/preview/roofer/" target="_blank" rel="noopener">Live Preview</a>
-        <a class="btn buy" data-product="roofer" href="#">Buy Now</a></div>
+      <p>Drone film over rooftops, a roof-survey readout, an iris reveal and a free-quote finale.</p>
+      <div class="tp-row"><span class="tp-price">$29</span><a class="btn ghost" href="/templates/preview/roofer/" target="_blank" rel="noopener">Live Preview</a><a class="btn buy" data-product="roofer" href="#">Buy Now</a></div>
     </article>
   </section>
 
-  <section class="card tp-bundle">
-    <h2 style="margin-top:0">Both templates: the Trades Bundle</h2>
-    <p class="muted">Garage + Roofing, for freelancers and agencies who build sites for local businesses.</p>
-    <div class="tp-row"><span class="tp-price" style="margin:0 8px 0 0">$49 <s class="faint" style="font-size:16px">$58</s></span>
-      <a class="btn buy" data-product="bundle" href="#">Buy the Bundle</a></div>
+  <section class="tp-bundles" aria-label="Bundles">
+    <div class="card tp-bundle">
+      <h2 style="margin-top:0">All-Trades Bundle</h2>
+      <p class="muted">All 5 templates. For freelancers and agencies who build sites for local businesses.</p>
+      <div class="tp-row"><span class="tp-price" style="margin:0 8px 0 0">$79 <s class="faint" style="font-size:16px">$145</s></span><a class="btn buy" data-product="all" href="#">Buy All 5</a></div>
+    </div>
+    <div class="card tp-bundle">
+      <h2 style="margin-top:0">Garage + Roofing Pack</h2>
+      <p class="muted">The two trades templates, together.</p>
+      <div class="tp-row"><span class="tp-price" style="margin:0 8px 0 0">$49 <s class="faint" style="font-size:16px">$58</s></span><a class="btn buy" data-product="bundle" href="#">Buy the Pack</a></div>
+    </div>
   </section>
 
   <section class="tp-feat">
-    <div class="card"><h3>Instant download</h3><p>Pay on Stripe's secure checkout and you're sent straight to your download page.</p></div>
+    <div class="card"><h3>Instant download</h3><p>Pay on Stripe's secure checkout and you go straight to your download page.</p></div>
     <div class="card"><h3>Edit in 5 minutes</h3><p>One HTML file and a README. Find &amp; replace the name, town and phone. No coding, no build tools.</p></div>
-    <div class="card"><h3>Host anywhere</h3><p>GitHub Pages, Netlify, cPanel, or any web host. Works on phones and desktops.</p></div>
+    <div class="card"><h3>Fast and accessible</h3><p>Respects reduced-motion settings, has a skip link and works on phones and desktops.</p></div>
     <div class="card"><h3>Use it for clients</h3><p>Unlimited sites for yourself or your clients. Just don't resell the template itself.</p></div>
   </section>
-  <p class="faint center mt">Payments run on Stripe's own checkout page. This site never sees your card details. Questions? Use the contact link in the footer.</p>
+
+  <section class="card tp-faq">
+    <h2 style="margin-top:0">Questions</h2>
+    <h3>Do I need hosting?</h3><p>Any host works: GitHub Pages and Netlify are free. The README walks you through it.</p>
+    <h3>Can I change the colours and videos?</h3><p>Yes. Colours are one line at the top of the file, and you can swap the videos for your own footage.</p>
+    <h3>How does the done-for-you service work?</h3><p>After paying you fill in a short form (name, services, phone, links). You get a preview link within 48 hours and one round of changes.</p>
+    <h3>Refunds?</h3><p>Templates are digital downloads, so all sales are final, but if something doesn't work we'll fix it. For the done-for-you service, if we haven't started your site yet you can get a full refund.</p>
+  </section>
+  <p class="faint center mt">Payments run on Stripe's own checkout page. This site never sees your card details.</p>
 </main>
 <script src="/templates/templates.js"></script>
 </body>

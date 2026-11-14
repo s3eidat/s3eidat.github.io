@@ -219,6 +219,7 @@
       // language switch only on hub pages; tool pages themselves are not translated
       (tool.slug ? "" : '<a class="btn ghost small" href="' + (AR ? "/" : "/ar/") + '" lang="' + (AR ? "en" : "ar") + '">' + (AR ? "English" : "العربية") + "</a>") +
       // the owner's AI app, on every page (28 Oct 2026): one plain link, opens in a new tab, no script, no tracking
+      '<a class="btn ghost small s3-web" href="/templates/" title="' + L("CineSites: cinematic websites for local businesses", "CineSites: مواقع سينمائية للأعمال المحلية") + '"><span class="s3-lbl">' + L("Websites", "مواقع") + '</span></a>' +
       '<a class="btn ghost small s3-gpt" href="https://ai.s3eidat.com/?ref=s3tools-nav" target="_blank" rel="noopener" title="' + L("s3eidatGPT — AI that reads your PDFs, writes and studies with you", "s3eidatGPT — ذكاء اصطناعي يقرأ ملفاتك ويكتب ويذاكر معك") + '"><img src="' + esc(KIT_BASE) + 'gpt.png" alt="" width="18" height="18"><span class="s3-lbl">s3eidatGPT</span></a>' +
       '<a class="btn ghost small" href="' + home + '">' + icon("grid") + '<span class="s3-lbl">' + L("All tools", "كل الأدوات") + "</span></a>" +
       '<button class="btn ghost icon small" data-theme-toggle aria-label="' + L("Toggle theme", "تبديل المظهر") + '">' + icon("sun") + "</button>" +

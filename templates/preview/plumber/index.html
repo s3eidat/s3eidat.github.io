@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en-GB">
+<head><meta name="robots" content="noindex">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Plumbing Co. · Plumbing & heating</title>
+<meta name="description" content="Your Plumbing Co., Your City: Plumbing · Heating · Drains. Call 01234 567890.">
+<meta name="theme-color" content="#0E1114">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="https://images.pexels.com/videos/7584762/pexels-photo-7584762.jpeg?auto=compress&cs=tinysrgb&w=1600">
+<script>try{if(sessionStorage.getItem('intro')||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('seen')}catch(e){}</script>
+<style>
+:root{ --bg:#0B1220;--ink:#EAF1FF;--muted:#93A3BF;--line:#1E2A40;--panel:#111B2E;--accent:#2E9BFF;--on-accent:#04101F;
+      --body:"Inter",system-ui,sans-serif;
+      --display-font:900 1em/.92 "Archivo",system-ui,sans-serif;--display-track:-.02em;--display-case:none;
+      --eyebrow-font:600 12px/1 "IBM Plex Mono",monospace;--h3-font:700 23px/1.15 "Archivo",sans-serif;
+      --mark-font:900 21px/1 "Archivo",sans-serif;--mark-track:-.01em;--mark-case:none;
+      --map-filter:grayscale(1) invert(.9) hue-rotate(180deg) contrast(.9); }
+*{box-sizing:border-box;margin:0}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font:18px/1.55 var(--body);overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.demo{position:fixed;z-index:30;left:12px;bottom:12px;max-width:calc(100% - 24px);background:rgba(0,0,0,.78);backdrop-filter:blur(8px);color:#ddd;font:12px/1.4 var(--body);padding:8px 14px;border-radius:999px}
+.demo a{color:var(--accent)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* nav floats over the film, turns solid once you're past it */
+.nav{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:16px 22px;color:#fff;transition:background .4s,color .4s,top .3s}
+.nav.solid{background:var(--bg);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.mark{font:var(--mark-font);text-decoration:none;letter-spacing:var(--mark-track);text-transform:var(--mark-case)}
+.call{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font:700 15px/1 var(--body);padding:12px 18px;border-radius:999px;background:var(--accent);color:var(--on-accent);white-space:nowrap}
+
+/* ---------- the film: scrubbed by scroll ---------- */
+.cine{position:relative;height:360vh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center;background:var(--bg)}
+.frame{position:absolute;inset:0;overflow:hidden;will-change:transform,border-radius;transform-origin:50% 50%}
+.frame video,.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.shade{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,.05) 32%,rgba(0,0,0,.15) 60%,rgba(0,0,0,.75) 100%)}
+.cap{position:absolute;left:0;right:0;bottom:12vh;padding:0 24px;color:#fff;text-align:center;opacity:0}
+.cap.on{pointer-events:auto}
+.cap .eyebrow{font:var(--eyebrow-font);letter-spacing:.16em;text-transform:uppercase;opacity:.85;margin-bottom:18px}
+.cap h1,.cap .big{font:var(--display-font);letter-spacing:var(--display-track);text-transform:var(--display-case);line-height:.9;margin:0 auto;max-width:14ch}
+.cap h1{font-size:clamp(54px,10.5vw,150px)}
+.cap .big{font-size:clamp(90px,19vw,260px)}
+.cap .small{font:600 clamp(18px,2.2vw,24px)/1.35 var(--body);margin-top:14px;opacity:.92}
+.w{display:inline-block;opacity:0;transform:translateY(.45em);transition:opacity .6s,transform .6s cubic-bezier(.2,.7,.2,1)}
+.cap.on .w{opacity:1;transform:none}
+.ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:28px}
+.ghost{display:inline-flex;align-items:center;text-decoration:none;font:700 15px/1 var(--body);padding:12px 18px;border-radius:999px;border:1.5px solid rgba(255,255,255,.7);color:#fff}
+.hint{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:#fff;font:600 12px/1 var(--body);letter-spacing:.2em;text-transform:uppercase;opacity:.75;transition:opacity .4s}
+.hint::after{content:"";display:block;width:1.5px;height:34px;margin:10px auto 0;background:linear-gradient(#fff,transparent);animation:drip 1.6s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+.bar{position:absolute;left:0;bottom:0;height:3px;background:var(--accent);width:0}
+
+/* ---------- second film revealed through an expanding circle ---------- */
+.reveal-film{position:relative;height:240vh}
+.reveal-film .stage{background:var(--bg)}
+.iris{position:absolute;inset:0;clip-path:circle(6% at 50% 50%);will-change:clip-path}
+.iris video,.iris img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.iris::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.iris-copy{position:relative;z-index:2;color:#fff;text-align:center;padding:0 24px;opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.iris-copy.on{opacity:1;transform:none}
+.iris-copy h2{font:var(--display-font);font-size:clamp(46px,8vw,112px);letter-spacing:var(--display-track);text-transform:var(--display-case);line-height:.92;max-width:13ch;margin:0 auto 18px}
+.iris-copy p{max-width:40ch;margin:0 auto;font-size:19px;opacity:.9}
+.iris-label{position:absolute;z-index:2;color:var(--ink);font:var(--eyebrow-font);letter-spacing:.16em;text-transform:uppercase;top:50%;left:50%;transform:translate(-50%,calc(-50% - 13vh));transition:opacity .4s}
+
+section.block{padding:110px 0}
+h2.h{font:var(--display-font);font-size:clamp(40px,6vw,76px);letter-spacing:var(--display-track);text-transform:var(--display-case);line-height:.95;margin-bottom:14px}
+.sub{color:var(--muted);max-width:54ch;margin-bottom:44px}
+.rise{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s cubic-bezier(.2,.7,.2,1)}
+.rise.in{opacity:1;transform:none}
+
+.svc{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.svc div{background:var(--bg);padding:30px 24px 32px;transition:background .3s}
+.svc div:hover{background:var(--panel)}
+.svc h3{font:var(--h3-font);margin-bottom:8px}
+.svc p{color:var(--muted);font-size:16px}
+
+.count{display:flex;flex-wrap:wrap;gap:24px 60px;align-items:flex-end;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:40px 0}
+.count b{display:block;font:var(--display-font);font-size:clamp(70px,11vw,140px);line-height:.85;letter-spacing:var(--display-track)}
+.count span{color:var(--muted);font-weight:600}
+
+.visit{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:start}
+.visit dl{display:grid;gap:20px}
+.visit dt{font:var(--eyebrow-font);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.visit dd{margin:0;font-size:21px;font-weight:600}
+.map{width:100%;aspect-ratio:4/3;border:0;border-radius:18px;filter:var(--map-filter)}
+footer{padding:40px 0 70px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+
+/* intro: name words drift together while the counter runs */
+.pre{position:fixed;inset:0;z-index:60;background:#0B0D0F;color:#F2F2EE;display:flex;flex-direction:column;justify-content:space-between;padding:22px;overflow:hidden}
+html.seen .pre{display:none}
+.pre-top{display:flex;justify-content:space-between;gap:16px;font:var(--eyebrow-font);letter-spacing:.16em;text-transform:uppercase;opacity:.65}
+.pre-name{display:flex;justify-content:center;gap:14vw;white-space:nowrap;font:var(--display-font);font-size:clamp(34px,6.5vw,92px);letter-spacing:var(--display-track);text-transform:var(--display-case)}
+.pre-name span{display:inline-block}
+.pre-n{align-self:flex-end;font:var(--display-font);font-size:clamp(64px,13vw,170px);line-height:.8;font-variant-numeric:tabular-nums}
+
+/* HUD readout over the film */
+.hud{position:absolute;top:86px;left:22px;z-index:3;color:#fff;font:500 12px/1.55 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.06em;text-transform:uppercase;background:rgba(10,12,14,.4);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.16);border-radius:10px;padding:12px 14px;min-width:260px}
+.hud-t{display:flex;justify-content:space-between;gap:16px;opacity:.75;margin-bottom:8px}
+.hud-t i{font-style:normal;color:#FF5A4E;animation:rec 1.2s steps(2) infinite}
+@keyframes rec{50%{opacity:0}}
+.hud dl{display:grid;gap:2px}
+.hud dl div{display:flex;justify-content:space-between;gap:22px}
+.hud dt{opacity:.7}
+.hud dd{margin:0;font-variant-numeric:tabular-nums}
+.hud dd.ok::after{content:" \2713";color:#6BD49A}
+.hud-s{margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.16)}
+@media (max-width:520px){.hud{top:66px;left:12px;font-size:10px;min-width:0;padding:9px 11px}.pre-name{gap:8vw;flex-wrap:wrap;white-space:normal;row-gap:.05em;font-size:30px}.pre-top{font-size:10px}}
+
+/* ticker band */
+.ticker{position:relative;z-index:2;overflow:hidden;background:var(--accent);color:var(--on-accent);transform:rotate(-1.6deg) scale(1.04);margin:36px 0 0;padding:14px 0}
+.tk-track{display:flex;width:max-content;will-change:transform}
+.tk-track span{font:var(--display-font);font-size:clamp(28px,4.2vw,56px);letter-spacing:var(--display-track);text-transform:var(--display-case);white-space:nowrap;padding-right:.4em}
+
+/* hover / active states */
+.call,.ghost{transition:transform .25s cubic-bezier(.2,.7,.2,1),background-color .25s,color .25s,box-shadow .25s}
+.call:hover{box-shadow:0 10px 30px -8px var(--accent)}
+.ghost:hover{background:#fff;color:#111}
+.call:active,.ghost:active{transform:scale(.96)}
+.skip{position:fixed;left:12px;top:-60px;z-index:80;background:var(--accent);color:var(--on-accent);padding:10px 14px;border-radius:8px;font-weight:700;text-decoration:none}
+.skip:focus{top:12px}
+
+/* film grain over everything (cheap: one tiny SVG, no JS) */
+.grain{pointer-events:none;position:fixed;inset:-50%;z-index:70;opacity:.06;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-2%,6%)}80%{transform:translate(5%,2%)}100%{transform:translate(0,0)}}
+
+/* custom cursor (mouse only) */
+.cur{position:fixed;left:0;top:0;z-index:75;pointer-events:none;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--accent);mix-blend-mode:difference;opacity:0;transition:width .3s,height .3s,margin .3s,opacity .3s}
+.cur.on{opacity:1}.cur.big{width:64px;height:64px;margin:-32px 0 0 -32px}
+@media (hover:none){.cur{display:none}}
+
+/* how it works: pinned, scrolls sideways */
+.proc{position:relative;overflow:hidden;background:var(--panel)}
+.proc-pin{height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;gap:38px}
+.proc-head{padding:0 24px;max-width:1180px;margin:0 auto;width:100%}
+.proc-track{display:flex;gap:24px;padding:0 24px;width:max-content;will-change:transform}
+.step{position:relative;flex:none;width:min(78vw,440px);min-height:300px;border:1px solid var(--line);border-radius:22px;padding:30px 28px;background:var(--bg);display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.step b{font:var(--display-font);font-size:clamp(84px,10vw,140px);line-height:.8;color:transparent;-webkit-text-stroke:1.5px var(--accent);letter-spacing:var(--display-track)}
+.step h3{font:var(--h3-font);margin:22px 0 8px}
+.step p{color:var(--muted);font-size:16px}
+.step::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:var(--fill,0%);background:var(--accent)}
+.proc-progress{height:2px;background:var(--line);margin:0 24px;max-width:1132px;position:relative}
+.proc-progress i{position:absolute;inset:0 auto 0 0;width:0;background:var(--accent)}
+
+/* reviews: two marquees running opposite ways */
+.quotes{padding:110px 0 90px;overflow:hidden}
+.q-row{display:flex;gap:18px;width:max-content;will-change:transform;margin-top:18px}
+.q{flex:none;width:min(80vw,380px);border:1px solid var(--line);border-radius:18px;padding:22px 22px 20px;background:var(--panel)}
+.q .stars{color:var(--accent);letter-spacing:.12em;font-size:15px}
+.q p{margin:10px 0 14px;font-size:17px}
+.q span{color:var(--muted);font-size:14px;font-weight:600}
+
+/* finale: giant call to action that fills in as you scroll */
+.finale{padding:120px 0 80px;text-align:center;overflow:hidden}
+.finale .eyebrow{font:var(--eyebrow-font);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+.fin-big{display:block;text-decoration:none;font:var(--display-font);font-size:clamp(64px,15vw,240px);line-height:.85;letter-spacing:var(--display-track);text-transform:var(--display-case);
+  background:linear-gradient(90deg,var(--accent) 0 var(--p,0%),transparent var(--p,0%));-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-stroke:1.5px var(--ink)}
+.fin-sub{margin-top:26px;color:var(--muted)}
+
+/* SplitText masks: leave room for descenders */
+.word-mask,.line-mask{padding-bottom:.22em;margin-bottom:-.22em}
+@media (max-width:520px){.nav .num{display:none}.mark{font-size:18px}.nav{padding:14px 16px}}
+
+
+.prices{padding:120px 0 0}
+.plist{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:10px}
+.pc{border:1px solid var(--line);border-radius:18px;padding:26px 24px;background:var(--panel);transition:transform .3s,border-color .3s}
+.pc:hover{transform:translateY(-4px);border-color:var(--accent)}
+.pc h3{font:var(--h3-font);margin-bottom:6px}
+.pc .from{font:var(--display-font);font-size:46px;line-height:1;margin:14px 0 6px;color:var(--accent);letter-spacing:var(--display-track)}
+.pc p{color:var(--muted);font-size:15px}
+.pc ul{list-style:none;padding:0;margin-top:14px;display:grid;gap:6px;font-size:15px}
+.pc li::before{content:"✓ ";color:var(--accent);font-weight:700}
+
+
+@media (max-width:760px){.visit{grid-template-columns:1fr}.cine{height:300vh}.cap{bottom:16vh}section.block{padding:80px 0}}
+@media (prefers-reduced-motion:reduce){
+  .cine,.reveal-film{height:auto}.stage{position:relative;height:100svh}
+  .cap{opacity:1!important;position:relative;bottom:auto}.cap:not(:first-of-type){display:none}
+  .w,.rise,.iris-copy{opacity:1!important;transform:none!important;filter:none!important;transition:none}
+  .iris{clip-path:none!important}.iris-label,.hint{display:none}
+  .course,.ridge{opacity:1!important;transform:none!important}
+  .grain,.hud-t i{animation:none}.cur{display:none}
+  .proc-pin{height:auto;padding:90px 0}.proc-track{flex-wrap:wrap;width:auto}.step{width:min(100%,440px)}
+  .fin-big{--p:100%}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+<div class="cur" id="cur" aria-hidden="true"></div>
+<div class="pre" id="pre" aria-hidden="true">
+  <div class="pre-top"><span>Your City</span><span>Plumbing · Heating · Drains</span></div>
+  <div class="pre-name" id="pre-name"><span>Your</span><span>Plumbing</span><span>Co.</span></div>
+  <div class="pre-n" id="pre-n">0</div>
+</div>
+
+<nav class="nav" id="nav">
+  <a class="mark" href="#">Your Plumbing Co.</a>
+  <a class="call" href="tel:+441234567890">Call<span class="num"> 01234 567890</span></a>
+</nav>
+
+<section class="cine" id="cine" aria-label="Introduction">
+  <div class="stage">
+    <div class="frame" id="frame">
+      <video id="film" aria-hidden="true" muted playsinline preload="auto" poster="https://images.pexels.com/videos/7584762/pexels-photo-7584762.jpeg?auto=compress&cs=tinysrgb&w=1600" src="https://videos.pexels.com/video-files/7584762/7584762-hd_1280_720_25fps.mp4"></video>
+      <div class="shade"></div>
+    </div>
+    <div class="cap" data-from="0" data-to=".3">
+      <p class="eyebrow">Plumbing · Heating · Drains · Your City</p>
+      <h1 class="split">Leaks fixed. Today.</h1>
+    </div>
+    <div class="cap" data-from=".3" data-to=".62">
+      <p class="big split">4.9★</p>
+      <p class="small">180 Google reviews. From homeowners all over the city.</p>
+    </div>
+    <div class="cap" data-from=".62" data-to="1.01">
+      <p class="big split" style="font-size:clamp(54px,9vw,128px)">Call a plumber.</p>
+      <div class="ctas"><a class="call" href="tel:+441234567890">Call 01234 567890</a><a class="ghost" href="#visit">Find us</a></div>
+    </div>
+    <div class="hud" id="hud" aria-hidden="true"><p class="hud-t"><span>Leak check · Line 1</span><i>● REC</i></p><dl><div><dt>Pressure</dt><dd data-from="0" data-to="3.2" data-dec="1" data-suf=" bar">0.0 bar</dd></div><div><dt>Flow rate</dt><dd data-from="0" data-to="14" data-dec="0" data-suf=" L/min">0 L/min</dd></div><div><dt>Temp</dt><dd data-from="12" data-to="60" data-dec="0" data-suf="°C">12°C</dd></div><div><dt>Leak loss</dt><dd data-from="18" data-to="0" data-dec="0" data-suf="%">18%</dd></div></dl><p class="hud-s">Status: <b id="hud-status" data-pass="SEALED">Testing…</b></p></div>
+    <div class="hint" id="hint">Scroll</div>
+    <div class="bar" id="bar"></div>
+  </div>
+</section>
+
+<div id="main"></div>
+<div class="ticker" aria-hidden="true"><div class="tk-track" id="tk"><span>Emergency repairs ✦ Drains & blockages ✦ Boilers & heating ✦ Bathrooms ✦ 4.9★ on Google ✦ Your City ✦ Emergency repairs ✦ Drains & blockages ✦ Boilers & heating ✦ Bathrooms ✦ 4.9★ on Google ✦ Your City ✦ </span><span>Emergency repairs ✦ Drains & blockages ✦ Boilers & heating ✦ Bathrooms ✦ 4.9★ on Google ✦ Your City ✦ Emergency repairs ✦ Drains & blockages ✦ Boilers & heating ✦ Bathrooms ✦ 4.9★ on Google ✦ Your City ✦ </span></div></div>
+
+<section class="prices"><div class="wrap"><h2 class="h">Upfront pricing</h2><p class="sub rise">No call-out surprises. Prices start from:</p><div class="plist"><article class="pc rise"><h3>Call-out & diagnosis</h3><div class="from">$89</div><p>We find exactly what's wrong.</p><ul><li>Same-day slots</li><li>Credited to the repair</li></ul></article><article class="pc rise"><h3>Drain unblock</h3><div class="from">$149</div><p>Sinks, toilets, showers and drains.</p><ul><li>Camera check</li><li>Most done in an hour</li></ul></article><article class="pc rise"><h3>Water heater / boiler</h3><div class="from">$199</div><p>Service, repair or replace.</p><ul><li>All major brands</li><li>Safety tested</li></ul></article></div></div></section>
+
+<section class="reveal-film" id="iris-sec" aria-label="Fixed right the first time.">
+  <div class="stage">
+    <p class="iris-label" id="iris-label">Behind the walls</p>
+    <div class="iris" id="iris"><video id="film2" aria-hidden="true" muted playsinline loop preload="none" poster="https://images.pexels.com/videos/9890450/pexels-photo-9890450.jpeg?auto=compress&cs=tinysrgb&w=1600" src="https://videos.pexels.com/video-files/9890450/9890450-hd_1280_720_30fps.mp4"></video></div>
+    <div class="iris-copy" id="iris-copy"><h2>Fixed right the first time.</h2><p>Leaks, blockages, boilers and new bathrooms: we find the cause, explain it, then fix it for good.</p></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2 class="h rise">What we fix</h2>
+    <p class="sub rise">Emergency call-outs or planned jobs. Upfront prices before any work starts.</p>
+    <div class="svc rise"><div><h3>Emergency repairs</h3><p>Burst pipes, leaks and no hot water, sorted fast.</p></div>
+<div><h3>Drains & blockages</h3><p>Sinks, toilets and drains cleared and camera-checked.</p></div>
+<div><h3>Boilers & heating</h3><p>Installs, servicing and repairs for every major brand.</p></div>
+<div><h3>Bathrooms</h3><p>Full bathroom fits, from first pipe to last tile.</p></div></div>
+  </div>
+</section>
+
+<section class="block" style="padding-top:0">
+  <div class="wrap">
+    <div class="count rise">
+      <div><b data-count="180">0</b><span>Google reviews</span></div>
+      <div><b>4.9</b><span>average rating out of 5</span></div>
+      <div><b>24/7</b><span>emergency call-outs</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="proc" id="proc" aria-label="How it works">
+  <div class="proc-pin">
+    <div class="proc-head"><h2 class="h">How it works</h2></div>
+    <div class="proc-track" id="proc-track"><article class="step"><b>01</b><div><h3>Call or book</h3><p>Tell us what's wrong. Emergencies get the next free plumber.</p></div></article><article class="step"><b>02</b><div><h3>Upfront price</h3><p>We diagnose, explain and price it before any work starts.</p></div></article><article class="step"><b>03</b><div><h3>Fixed properly</h3><p>Quality parts, tidy work, everything tested before we leave.</p></div></article><article class="step"><b>04</b><div><h3>Guaranteed</h3><p>Parts and labour guaranteed, so you're covered if anything's off.</p></div></article></div>
+    <div class="proc-progress" aria-hidden="true"><i id="proc-bar"></i></div>
+  </div>
+</section>
+
+<section class="quotes" aria-label="Reviews">
+  <div class="wrap"><h2 class="h">What customers say</h2></div>
+  <div class="q-row" id="q1"><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>Replace this with a real customer review. Short and specific works best.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>Paste your best Google review here, word for word, with the customer's first name.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>A third real review goes here. Mention the service and the town if you can.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>Replace this with a real customer review. Short and specific works best.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>Paste your best Google review here, word for word, with the customer's first name.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>A third real review goes here. Mention the service and the town if you can.</p><span>Customer name · Google review</span></figure></div>
+  <div class="q-row" id="q2"><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>A third real review goes here. Mention the service and the town if you can.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>Paste your best Google review here, word for word, with the customer's first name.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>Replace this with a real customer review. Short and specific works best.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>A third real review goes here. Mention the service and the town if you can.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>Paste your best Google review here, word for word, with the customer's first name.</p><span>Customer name · Google review</span></figure><figure class="q"><div class="stars" aria-label="5 stars">★★★★★</div><p>Replace this with a real customer review. Short and specific works best.</p><span>Customer name · Google review</span></figure></div>
+</section>
+
+<section class="block" id="visit" style="padding-top:20px">
+  <div class="wrap visit">
+    <div class="rise">
+      <h2 class="h">Book a plumber</h2>
+      <dl>
+        <div><dt>Phone</dt><dd><a href="tel:+441234567890">01234 567890</a></dd></div>
+        <div><dt>Address</dt><dd>123 Main Street, Your City</dd></div>
+        <div><dt>Covering</dt><dd>Your city and surrounding areas</dd></div>
+      </dl>
+    </div>
+    <iframe class="map rise" loading="lazy" title="Map to Your Plumbing Co." src="https://maps.google.com/maps?q=Your+Plumbing+Co.%2C+123+Main+Street%2C+Your+City&z=14&output=embed"></iframe>
+  </div>
+</section>
+
+<section class="finale" id="finale">
+  <div class="wrap">
+    <p class="eyebrow">Your City · Plumbing · Heating · Drains</p>
+    <a class="fin-big" id="fin-big" href="tel:+441234567890">Call a plumber.</a>
+    <p class="fin-sub">Call <a href="tel:+441234567890">01234 567890</a></p>
+  </div>
+</section>
+
+<div class="wrap"><footer>© Your Plumbing Co., Your City. Footage: Pexels.</footer></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrambleTextPlugin.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(()=>{
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const touch = matchMedia('(hover: none)').matches;
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const film=$('#film'), film2=$('#film2'), nav=$('#nav');
+const SPAN=10;
+
+function fallback(){
+  $$('.rise').forEach(e=>e.classList.add('in'));
+  $$('.cap').forEach((c,i)=>{c.style.opacity=i?0:1});
+  $('#iris').style.clipPath='none'; $('#iris-copy').classList.add('on');
+  if(!reduce){film.loop=true;film.play().catch(()=>{});}
+  $$('[data-count]').forEach(b=>b.textContent=b.dataset.count);
+  $('#pre').style.display='none';
+  $$('#hud dd').forEach(dd=>{dd.textContent=(+dd.dataset.to).toFixed(+dd.dataset.dec)+dd.dataset.suf;dd.classList.add('ok')});
+  $('#hud-status').textContent=$('#hud-status').dataset.pass;
+  $$('.step').forEach(s=>s.style.setProperty('--fill','100%'));
+  const fb=$('#fin-big'); if(fb) fb.style.setProperty('--p','100%');
+}
+
+function motion(){
+  gsap.registerPlugin(ScrollTrigger,SplitText,...(window.ScrambleTextPlugin?[ScrambleTextPlugin]:[]));
+
+  // weighted smooth scrolling, driven by GSAP's ticker so the scrub never stutters
+  if(window.Lenis && !touch){
+    const lenis=window.lenis=new Lenis({lerp:.085});
+    lenis.on('scroll',ScrollTrigger.update);
+    gsap.ticker.add(t=>lenis.raf(t*1000)); gsap.ticker.lagSmoothing(0);
+    $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1){e.preventDefault();lenis.scrollTo(id,{duration:1.6})}}));
+  }
+
+  // ---- intro: counter to 100 while the name pulls together, then the curtain lifts
+  const pre=$('#pre'); let heroDelay=0;
+  if(getComputedStyle(pre).display!=='none'){
+    window.lenis&&lenis.stop();
+    const n={v:0}, num=$('#pre-n');
+    const intro=gsap.timeline()
+      .from('#pre-name span',{yPercent:110,autoAlpha:0,stagger:.08,duration:.8,ease:'power3.out'},0)
+      .fromTo('#pre-name',{gap:innerWidth<520?'8vw':'14vw'},{gap:'0.28em',duration:1.5,ease:'expo.inOut'},0)
+      .to(n,{v:100,duration:1.5,ease:'power2.inOut',onUpdate:()=>num.textContent=Math.round(n.v)},0)
+      .to(pre,{yPercent:-100,duration:1,ease:'expo.inOut'},'+=.15')
+      .add(()=>{pre.style.display='none';window.lenis&&lenis.start();try{sessionStorage.setItem('intro','1')}catch(e){}});
+    heroDelay=intro.duration()-.55;
+  }
+
+  // ---- the film: video time, captions and the final shrink all hang off one scrubbed timeline
+  const caps=$$('.cap');
+  const words=caps.map(c=>SplitText.create(c.querySelector('.split'),{type:'words',mask:'words'}).words);
+  gsap.set(caps,{autoAlpha:0});
+  const tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#cine',start:'top top',end:'bottom bottom',scrub:1.1}});
+  tl.to('#bar',{width:'100%',duration:10},0).to('#hint',{autoAlpha:0,duration:.25},.05);
+  tl.fromTo('#frame video',{scale:1.18},{scale:1,duration:10},0);
+  if(!touch){
+    const v={t:.01};
+    tl.to(v,{t:SPAN,duration:10,onUpdate(){
+      if(film.readyState<2||film.seeking) return;
+      const t=Math.min(v.t,(film.duration||SPAN)-.05);
+      if(Math.abs(film.currentTime-t)>.02) film.currentTime=t;
+    }},0);
+  } else { film.loop=true; film.play().catch(()=>{}); }
+
+  // caption 1 lands on load, then each caption owns a slice of the scroll
+  gsap.set(caps[0],{autoAlpha:1});
+  gsap.from(words[0],{yPercent:115,duration:1.2,stagger:.07,ease:'expo.out',delay:heroDelay+.25});
+  gsap.from(caps[0].querySelector('.eyebrow'),{autoAlpha:0,y:12,duration:1,delay:heroDelay+.15});
+  const win=[[0,2.9],[3.1,6.1],[6.3,10]];
+  caps.forEach((c,i)=>{
+    const [a,b]=win[i], rest=c.querySelectorAll('.small,.ctas,.eyebrow');
+    if(i){
+      tl.set(c,{autoAlpha:1},a)
+        .fromTo(words[i],{yPercent:115},{yPercent:0,stagger:.12,duration:.9,ease:'power3.out'},a)
+        .fromTo(rest,{autoAlpha:0,y:24},{autoAlpha:1,y:0,duration:.7,ease:'power2.out'},a+.45);
+    }
+    if(i<caps.length-1) tl.to(c,{autoAlpha:0,y:-50,filter:'blur(12px)',duration:.7,ease:'power2.in'},b-.7);
+  });
+  tl.to('#frame',{scale:.87,borderRadius:30,duration:1.7,ease:'power2.inOut'},8.3);
+
+  // HUD: each reading runs as you scroll, then the verdict scrambles in
+  gsap.from('#hud',{autoAlpha:0,x:-24,duration:.9,ease:'power3.out',delay:heroDelay+.7});
+  $$('#hud dd').forEach((dd,i)=>{
+    const to=+dd.dataset.to, from=+dd.dataset.from, dec=+dd.dataset.dec, suf=dd.dataset.suf, o={v:from};
+    const show=()=>{dd.textContent=o.v.toFixed(dec)+suf;dd.classList.toggle('ok',Math.abs(o.v-to)<Math.pow(10,-dec)/2)};
+    show(); tl.to(o,{v:to,duration:1.5,onUpdate:show},.3+i*1.6);
+  });
+  const st=$('#hud-status');
+  if(window.ScrambleTextPlugin) tl.to(st,{duration:.9,scrambleText:{text:st.dataset.pass,chars:'XO#/+-',speed:.5}},7.1);
+  tl.fromTo(st,{color:'#ffffff'},{color:'#6BD49A',duration:.3},7.9).to('#hud',{autoAlpha:0,y:-10,duration:.5},9.2);
+
+  // ---- ticker: drifts on its own, whips along (or backwards) with scroll speed
+  const loop=gsap.to('#tk',{xPercent:-50,repeat:-1,duration:26,ease:'none'});
+  loop.totalTime(26*400);
+  let settle;
+  ScrollTrigger.create({start:0,end:'max',onUpdate(self){
+    const v=self.getVelocity(), d=v<0?-1:1;
+    loop.timeScale(d*(1+Math.min(Math.abs(v)/220,7)));
+    settle&&settle.kill(); settle=gsap.to(loop,{timeScale:d,duration:1.1,ease:'power2.out'});
+  }});
+
+  ScrollTrigger.create({trigger:'#cine',start:'bottom bottom',onEnter:()=>nav.classList.add('solid'),onLeaveBack:()=>nav.classList.remove('solid')});
+
+  // ---- second film opens through an iris
+  const irisWords=SplitText.create('#iris-copy h2',{type:'words',mask:'words'}).words;
+  gsap.set('#iris-copy',{transition:'none',autoAlpha:0,y:0});
+  gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:'#iris-sec',start:'top top',end:'bottom bottom',scrub:1,
+      onToggle:s=>s.isActive?film2.play().catch(()=>{}):film2.pause()}})
+    .to('#iris-label',{autoAlpha:0,duration:.08},.02)
+    .fromTo('#iris',{clipPath:'circle(6% at 50% 50%)'},{clipPath:'circle(78% at 50% 50%)',duration:.6},0)
+    .fromTo('#iris video',{scale:1.35},{scale:1,duration:1},0)
+    .set('#iris-copy',{autoAlpha:1},.5)
+    .fromTo(irisWords,{yPercent:115},{yPercent:0,stagger:.025,duration:.18,ease:'power3.out'},.5)
+    .fromTo('#iris-copy p',{autoAlpha:0,y:20},{autoAlpha:1,y:0,duration:.15},.62);
+
+  // ---- section headings rise line by line, everything else fades up in batches
+  $$('h2.h').forEach(h=>{
+    h.classList.remove('rise'); gsap.set(h,{transition:'none',opacity:1,transform:'none'});
+    const lines=SplitText.create(h,{type:'lines',mask:'lines'}).lines;
+    gsap.from(lines,{yPercent:110,duration:1.1,stagger:.1,ease:'expo.out',scrollTrigger:{trigger:h,start:'top 85%'}});
+  });
+  gsap.set('.rise',{transition:'none',autoAlpha:0,y:40});
+  ScrollTrigger.batch('.rise',{start:'top 88%',onEnter:els=>gsap.to(els,{autoAlpha:1,y:0,duration:1,stagger:.12,ease:'power3.out'})});
+
+  // services drift up at different speeds
+  $$('.svc > div').forEach((d,i)=>gsap.fromTo(d,{y:30+(i%3)*40},{y:0,ease:'none',scrollTrigger:{trigger:'.svc',start:'top bottom',end:'top 25%',scrub:1}}));
+  // map slides in from the side
+  gsap.fromTo('.map',{x:60},{x:0,ease:'none',scrollTrigger:{trigger:'#visit',start:'top bottom',end:'top 30%',scrub:1}});
+
+  $$('[data-count]').forEach(b=>{const o={v:0};ScrollTrigger.create({trigger:b,start:'top 88%',once:true,
+    onEnter:()=>gsap.to(o,{v:+b.dataset.count,duration:1.8,ease:'power2.out',onUpdate:()=>b.textContent=Math.round(o.v)})})});
+
+  // ---- how it works: pin the section and slide the steps sideways
+  const track=$('#proc-track'), steps=$$('.step');
+  const dist=()=>Math.max(0,track.scrollWidth-innerWidth+48);
+  const ptl=gsap.timeline({scrollTrigger:{trigger:'#proc',start:'top top',end:()=>'+='+dist()*1.15,pin:'.proc-pin',scrub:1,invalidateOnRefresh:true}});
+  ptl.to(track,{x:()=>-dist(),ease:'none',duration:1},0).to('#proc-bar',{width:'100%',ease:'none',duration:1},0);
+  steps.forEach((s,i)=>{
+    const at=i/Math.max(1,steps.length-1)*.85;
+    ptl.fromTo(s,{'--fill':'0%'},{'--fill':'100%',ease:'none',duration:.2},at)
+       .fromTo(s.querySelector('b'),{rotate:-8,yPercent:20},{rotate:0,yPercent:0,ease:'power2.out',duration:.2},Math.max(0,at-.1));
+  });
+
+  // ---- reviews: two rows drifting opposite ways, nudged by scroll speed
+  const q1=gsap.to('#q1',{xPercent:-50,repeat:-1,duration:40,ease:'none'});
+  const q2=gsap.fromTo('#q2',{xPercent:-50},{xPercent:0,repeat:-1,duration:46,ease:'none'});
+  ScrollTrigger.create({trigger:'.quotes',start:'top bottom',end:'bottom top',onUpdate(self){
+    const k=1+Math.min(Math.abs(self.getVelocity())/400,4);
+    gsap.to([q1,q2],{timeScale:k,duration:.3,overwrite:true,onComplete:()=>gsap.to([q1,q2],{timeScale:1,duration:1})});
+  }});
+
+  // ---- finale: the giant call to action fills with colour as it scrolls in
+  gsap.fromTo('#fin-big',{'--p':'0%'},{'--p':'100%',ease:'none',scrollTrigger:{trigger:'#finale',start:'top 85%',end:'center 55%',scrub:1}});
+  gsap.from('#fin-big',{yPercent:30,autoAlpha:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:'#finale',start:'top 85%'}});
+
+  // ---- cursor + magnetic buttons (mouse only)
+  if(!touch){
+    const cur=$('#cur'), cx=gsap.quickTo(cur,'x',{duration:.25,ease:'power3'}), cy=gsap.quickTo(cur,'y',{duration:.25,ease:'power3'});
+    addEventListener('pointermove',e=>{cur.classList.add('on');cx(e.clientX);cy(e.clientY)},{passive:true});
+    document.addEventListener('pointerleave',()=>cur.classList.remove('on'));
+    $$('.call,.ghost,.fin-big,.step').forEach(el=>{
+      el.addEventListener('pointerenter',()=>cur.classList.add('big'));
+      el.addEventListener('pointerleave',()=>cur.classList.remove('big'));
+    });
+    $$('.call,.ghost').forEach(el=>{
+      const mx=gsap.quickTo(el,'x',{duration:.4,ease:'power3'}), my=gsap.quickTo(el,'y',{duration:.4,ease:'power3'});
+      el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();mx((e.clientX-r.left-r.width/2)*.3);my((e.clientY-r.top-r.height/2)*.4)});
+      el.addEventListener('pointerleave',()=>{mx(0);my(0)});
+    });
+  }
+}
+
+if(reduce||!window.gsap||!window.SplitText) fallback(); else motion();
+
+})();
+</script>
+<a href="/templates/" style="position:fixed;z-index:99999;left:50%;bottom:16px;transform:translateX(-50%);background:#111;color:#fff;font:600 14px/1 system-ui,sans-serif;padding:12px 18px;border-radius:999px;box-shadow:0 10px 30px rgba(0,0,0,.4);text-decoration:none;border:1px solid #333">CineSites preview · Get this template →</a></body>
+</html>
