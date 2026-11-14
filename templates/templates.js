@@ -9,7 +9,8 @@
     barber: "https://buy.stripe.com/4gM28qesDbQv4Er7SicIE0d",
     bundle: "https://buy.stripe.com/3cIfZg98j5s70obgoOcIE0a",
     all: "https://buy.stripe.com/cNieVcdoz8Ej7QD2xYcIE0e",
-    dfy: "https://buy.stripe.com/bJe5kCbgr4o37QDfkKcIE0f"
+    dfy: "https://buy.stripe.com/bJe5kCbgr4o37QDfkKcIE0f",
+    site: "https://buy.stripe.com/cNi3cuesD3jZ8UH0pQcIE0g"
   };
   Array.prototype.forEach.call(document.querySelectorAll("a.buy"), function (a) {
     var url = LINKS[a.getAttribute("data-product")];
